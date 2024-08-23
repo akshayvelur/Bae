@@ -18,10 +18,9 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
-   
     print("delayed");
-     context.read<UserDetailsBloc>().add(SplashToWelcomeEvent());
-   //  func();
+    context.read<UserDetailsBloc>().add(SplashToWelcomeEvent());
+    //  func();
     // TODO: implement initState
     super.initState();
   }
@@ -30,9 +29,11 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return BlocListener<UserDetailsBloc, UserDetailsState>(
       listener: (context, state) {
-       if(state is NavigationToWelcomscreen){
-        Navigator.of(context).push(MaterialPageRoute(builder: (context) =>WelcomeScreen() ,));
-       }
+        if (state is NavigationToWelcomscreen) {
+          Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => WelcomeScreen(),
+          ));
+        }
       },
       child: Scaffold(
         body: Container(
@@ -53,5 +54,4 @@ class _SplashScreenState extends State<SplashScreen> {
       ),
     );
   }
-
 }
