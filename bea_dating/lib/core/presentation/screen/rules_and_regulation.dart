@@ -8,6 +8,7 @@ import 'package:bea_dating/core/presentation/widgets/basic_text/basic_text.dart'
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+// ignore: must_be_immutable
 class RulesAndRegulation extends StatelessWidget {
   RulesAndRegulation({super.key});
   AppFonts appFonts = AppFonts();

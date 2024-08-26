@@ -2,6 +2,7 @@ import 'package:bea_dating/core/presentation/utilit/fonts.dart';
 import 'package:bea_dating/core/presentation/utilit/mediaquery.dart';
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class BasicText extends StatelessWidget {
   BasicText({
     super.key,

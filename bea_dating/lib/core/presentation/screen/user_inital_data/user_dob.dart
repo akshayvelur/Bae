@@ -8,8 +8,9 @@ import 'package:bea_dating/core/presentation/widgets/userintroduction/User_green
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+// ignore: must_be_immutable
 class UserDob extends StatelessWidget {
-   UserDob({super.key});
+  UserDob({super.key});
 
   AppFonts appFonts = AppFonts();
 
@@ -30,11 +31,10 @@ class UserDob extends StatelessWidget {
           resizeToAvoidBottomInset: true,
           body: SingleChildScrollView(
             child: Container(
-              height: mediaqueryHight(100, context),
               width: mediaqueryWidth(100, context),
-              decoration: BoxDecoration(gradient: userbasicbclr),
+              decoration: BoxDecoration(color: whiteclr),
               child: Padding(
-                padding: const EdgeInsets.only(left: 12, right: 12),
+                padding: const EdgeInsets.only(left: 20, right: 20),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -83,7 +83,10 @@ class UserDob extends StatelessWidget {
                               .read<UserDetailsBloc>()
                               .add(DobToEnableLocationEvent());
                         },
-                        child: GreenNextbutton(appFonts: appFonts,content: "Next",),
+                        child: GreenNextbutton(
+                          appFonts: appFonts,
+                          content: "Next",
+                        ),
                       ),
                     ),
                   ],

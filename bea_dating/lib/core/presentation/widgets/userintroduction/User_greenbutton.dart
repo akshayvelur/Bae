@@ -1,8 +1,9 @@
 
 import 'package:bea_dating/core/presentation/utilit/fonts.dart';
 import 'package:bea_dating/core/presentation/utilit/mediaquery.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' show BlurStyle, BorderRadius, BoxDecoration, BoxShadow, BuildContext, Center, Color, Container, Radius, StatelessWidget, Text, Widget;
 
+// ignore: must_be_immutable
 class GreenNextbutton extends StatelessWidget {
   GreenNextbutton({
     super.key,

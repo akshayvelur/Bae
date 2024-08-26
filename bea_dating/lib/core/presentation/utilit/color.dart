@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -28,3 +26,6 @@ final Gradient userbasicbclr = LinearGradient(
   ],
 );
 final rulecontainerbclr = Color.fromARGB(30, 51, 50, 49);
+final blackclr=Colors.black;
+final whiteclr=Colors.white;
+final exbuttonGreen= Color(0xFF00C797);

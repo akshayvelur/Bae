@@ -24,4 +24,6 @@ class AppFonts {
   );
   var dateformat = GoogleFonts.lexend(
       fontSize: 14, color: const Color.fromARGB(255, 134, 134, 134));
+       var ButtonTextblack = GoogleFonts.aBeeZee(
+      color: Colors.black, fontSize: 14);
 }

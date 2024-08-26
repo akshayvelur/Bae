@@ -5,9 +5,9 @@ import 'package:bea_dating/core/presentation/utilit/fonts.dart';
 import 'package:bea_dating/core/presentation/utilit/mediaquery.dart';
 import 'package:bea_dating/core/presentation/widgets/welcome_screen_widgets/welcome_collab_containers.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+// ignore: must_be_immutable
 class WelcomeScreen extends StatelessWidget {
   WelcomeScreen({super.key});
   AppFonts appFonts = AppFonts();

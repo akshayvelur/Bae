@@ -7,10 +7,10 @@ import 'package:bea_dating/core/presentation/widgets/backbutton/back_button.dart
 import 'package:bea_dating/core/presentation/widgets/userintroduction/User_greenbutton.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'dart:developer';
 
+// ignore: must_be_immutable
 class EnableLocation extends StatelessWidget {
-   EnableLocation({super.key});
+  EnableLocation({super.key});
 
   AppFonts appFonts = AppFonts();
 
@@ -23,19 +23,19 @@ class EnableLocation extends StatelessWidget {
       child: BlocListener<UserDetailsBloc, UserDetailsState>(
         listener: (context, state) {
           if (state is NavigateToGenderSelectionState) {
-          //  log("Navigate to genderselct");
-             Navigator.of(context).push(MaterialPageRoute(builder: (context) =>GenderSelctionPage() ));
+            //  log("Navigate to genderselct");
+            Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) => GenderSelctionPage()));
           }
         },
         child: Scaffold(
           resizeToAvoidBottomInset: true,
           body: SingleChildScrollView(
             child: Container(
-              height: mediaqueryHight(100, context),
               width: mediaqueryWidth(100, context),
-              decoration: BoxDecoration(gradient: userbasicbclr),
+              decoration: BoxDecoration(color: whiteclr),
               child: Padding(
-                padding: const EdgeInsets.only(left: 12, right: 12),
+                padding: const EdgeInsets.only(left: 20, right: 20),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -93,7 +93,10 @@ class EnableLocation extends StatelessWidget {
                               .read<UserDetailsBloc>()
                               .add(EnableLocationToGenderselectEvent());
                         },
-                        child: GreenNextbutton(appFonts: appFonts,content: "Enable location",),
+                        child: GreenNextbutton(
+                          appFonts: appFonts,
+                          content: "Enable location",
+                        ),
                       ),
                     ),
                   ],

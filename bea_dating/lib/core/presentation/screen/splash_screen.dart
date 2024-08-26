@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:bea_dating/core/presentation/block/user_details_bloc.dart';
 import 'package:bea_dating/core/presentation/screen/welcome_screen.dart';
@@ -9,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SplashScreen extends StatefulWidget {
-  SplashScreen({super.key});
+ const SplashScreen({super.key});
 
   @override
   State<SplashScreen> createState() => _SplashScreenState();
@@ -20,8 +18,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     print("delayed");
     context.read<UserDetailsBloc>().add(SplashToWelcomeEvent());
-    //  func();
-    // TODO: implement initState
+   
     super.initState();
   }
 

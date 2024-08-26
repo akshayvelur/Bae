@@ -1,5 +1,6 @@
 import 'package:bea_dating/core/presentation/block/user_details_bloc.dart';
-import 'package:bea_dating/core/presentation/screen/user_inital_data/gender_interest.dart';
+import 'package:bea_dating/core/presentation/screen/user_inital_data/user_expectation.dart';
+
 import 'package:bea_dating/core/presentation/utilit/color.dart';
 import 'package:bea_dating/core/presentation/utilit/fonts.dart';
 import 'package:bea_dating/core/presentation/utilit/mediaquery.dart';
@@ -10,14 +11,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 // ignore: must_be_immutable
-class GenderSelctionPage extends StatelessWidget {
-  GenderSelctionPage({super.key});
+class GenderInterestPage extends StatelessWidget {
+  GenderInterestPage({super.key});
 
   AppFonts appFonts = AppFonts();
   Color menclr = whiteclr;
   Color women = whiteclr;
   Color other = whiteclr;
-  String? gender;
+  String? interested;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -28,7 +29,12 @@ class GenderSelctionPage extends StatelessWidget {
           listener: (context, state) {
             if (state is NavigateToGenderInterestedState) {
               Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => GenderInterestPage()));
+                builder: (context) => UserExpectationPage(),
+              ));
+            } else if (state is NavigateToExpectationState) {
+              Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => UserExpectationPage(),
+              ));
             }
           },
           builder: (context, state) {
@@ -36,8 +42,8 @@ class GenderSelctionPage extends StatelessWidget {
               menclr = state.menclr;
               women = state.womenclr;
               other = state.Otherclr;
-              gender = state.gender;
-              print(gender);
+              interested = state.gender;
+              print(interested);
             }
             return Scaffold(
               resizeToAvoidBottomInset: true,
@@ -66,46 +72,39 @@ class GenderSelctionPage extends StatelessWidget {
                           SizedBox(
                             height: mediaqueryHight(.05, context),
                           ),
-                          Text("What's your gender?",
+                          Text("Who are You interested in seeing?",
                               style: appFonts.commonheadfont),
                           SizedBox(
                             height: mediaqueryHight(.05, context),
                           ),
                           // women Gender container
                           GenderWidgetOne(
-                            women: women,
-                            appFonts: appFonts,
-                            cat: "Women",
-                          ),
+                              women: women, appFonts: appFonts, cat: "Women"),
                           SizedBox(
                             height: mediaqueryHight(.02, context),
                           ),
                           // men Gender container
                           GenderWidgetTwo(
-                            menclr: menclr,
-                            appFonts: appFonts,
-                            cat: "Men",
-                          ),
+                              menclr: menclr, appFonts: appFonts, cat: "Men"),
                           SizedBox(
                             height: mediaqueryHight(.02, context),
                           ),
                           // Other Gender container
                           GenderWidgetThree(
-                            other: other,
-                            appFonts: appFonts,
-                            cat: "Other",
-                          ),
+                              other: other,
+                              appFonts: appFonts,
+                              cat: "Everyone"),
                           SizedBox(
-                            height: mediaqueryHight(.41, context),
+                            height: mediaqueryHight(.37, context),
                           ),
                           Center(
                             // Navigate to Next page
                             child: GestureDetector(
                               onTap: () {
-                                if (gender != null) {
+                                if (interested != null) {
                                   context
                                       .read<UserDetailsBloc>()
-                                      .add(GenderSelectToGenderInterestEvent());
+                                      .add(InterestToExpectationEvent());
                                 }
                               },
                               child: GreenNextbutton(
