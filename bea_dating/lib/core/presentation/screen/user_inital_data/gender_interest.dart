@@ -4,6 +4,7 @@ import 'package:bea_dating/core/presentation/screen/user_inital_data/user_expect
 import 'package:bea_dating/core/presentation/utilit/color.dart';
 import 'package:bea_dating/core/presentation/utilit/fonts.dart';
 import 'package:bea_dating/core/presentation/utilit/mediaquery.dart';
+import 'package:bea_dating/core/presentation/utilit/page_transcation/fade_transition.dart';
 import 'package:bea_dating/core/presentation/widgets/backbutton/back_button.dart';
 import 'package:bea_dating/core/presentation/widgets/gender_widget/gender_widgets.dart';
 import 'package:bea_dating/core/presentation/widgets/userintroduction/User_greenbutton.dart';
@@ -27,14 +28,8 @@ class GenderInterestPage extends StatelessWidget {
         },
         child: BlocConsumer<UserDetailsBloc, UserDetailsState>(
           listener: (context, state) {
-            if (state is NavigateToGenderInterestedState) {
-              Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => UserExpectationPage(),
-              ));
-            } else if (state is NavigateToExpectationState) {
-              Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => UserExpectationPage(),
-              ));
+          if (state is NavigateToExpectationState) {
+              Navigator.of(context).push(FadeTransitionPageRoute(child: UserExpectationPage()));
             }
           },
           builder: (context, state) {

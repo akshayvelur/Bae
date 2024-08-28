@@ -4,6 +4,7 @@ import 'package:bea_dating/core/presentation/utilit/color.dart';
 import 'package:bea_dating/core/presentation/utilit/fonts.dart';
 import 'package:bea_dating/core/presentation/utilit/logo.dart';
 import 'package:bea_dating/core/presentation/utilit/mediaquery.dart';
+import 'package:bea_dating/core/presentation/utilit/page_transcation/fade_transition.dart';
 import 'package:bea_dating/core/presentation/widgets/basic_text/basic_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -17,8 +18,8 @@ class RulesAndRegulation extends StatelessWidget {
     return BlocListener<UserDetailsBloc, UserDetailsState>(
       listener: (context, state) {
         if (state is NavigateToNameFormState) {
-          Navigator.of(context)
-              .push(MaterialPageRoute(builder: (context) => UserName()));
+          Navigator.of(context).push(FadeTransitionPageRoute(child: UserName()));
+              
         }
       },
       child: Scaffold(
@@ -27,7 +28,7 @@ class RulesAndRegulation extends StatelessWidget {
           width: mediaqueryWidth(100, context),
           decoration: BoxDecoration(gradient: splashclr),
           child: Padding(
-            padding: const EdgeInsets.only(left: 18, right: 18),
+            padding: const EdgeInsets.only(left: 20, right: 20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

@@ -3,6 +3,7 @@ import 'package:bea_dating/core/presentation/screen/user_inital_data/enable_loca
 import 'package:bea_dating/core/presentation/utilit/color.dart';
 import 'package:bea_dating/core/presentation/utilit/fonts.dart';
 import 'package:bea_dating/core/presentation/utilit/mediaquery.dart';
+import 'package:bea_dating/core/presentation/utilit/page_transcation/fade_transition.dart';
 import 'package:bea_dating/core/presentation/widgets/backbutton/back_button.dart';
 import 'package:bea_dating/core/presentation/widgets/userintroduction/User_greenbutton.dart';
 import 'package:flutter/material.dart';
@@ -23,8 +24,7 @@ class UserDob extends StatelessWidget {
       child: BlocListener<UserDetailsBloc, UserDetailsState>(
         listener: (context, state) {
           if (state is NavigateToEnableLocationState) {
-            Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => EnableLocation()));
+            Navigator.of(context).push(FadeTransitionPageRoute(child: EnableLocation()));
           }
         },
         child: Scaffold(

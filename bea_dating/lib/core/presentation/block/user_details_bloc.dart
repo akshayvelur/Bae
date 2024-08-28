@@ -1,6 +1,7 @@
 import 'dart:async';
-
+import 'package:bea_dating/core/domin/usecase/authentication.dart';
 import 'package:bloc/bloc.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:meta/meta.dart';
 part 'user_details_event.dart';
 part 'user_details_state.dart';
@@ -28,8 +29,15 @@ class UserDetailsBloc extends Bloc<UserDetailsEvent, UserDetailsState> {
   }
 
   FutureOr<void> welcomeToRulePageEvent(
-      WelcomeToRulePageEvent event, Emitter<UserDetailsState> emit) {
-    emit(NavigationToRuleState());
+      WelcomeToRulePageEvent event, Emitter<UserDetailsState> emit) async {
+    Authentic authentic = Authentic();
+    UserCredential? userCredential =
+        await authentic.signInWithGoogle() as UserCredential;
+
+    if (userCredential.user != null) {
+      print("User :${userCredential.user?.email} Loged");
+      emit(NavigationToRuleState());
+    }
     print("navigate to Rule");
   }
 
@@ -91,7 +99,8 @@ class UserDetailsBloc extends Bloc<UserDetailsEvent, UserDetailsState> {
         expetation: event.expectation));
   }
 
-  FutureOr<void> exeptationToPresentationEvent(ExeptationToPresentationEvent event, Emitter<UserDetailsState> emit) {
- emit(NavigateToPresentation());
+  FutureOr<void> exeptationToPresentationEvent(
+      ExeptationToPresentationEvent event, Emitter<UserDetailsState> emit) {
+    emit(NavigateToPresentation());
   }
 }

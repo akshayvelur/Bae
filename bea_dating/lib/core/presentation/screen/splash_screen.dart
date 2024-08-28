@@ -3,6 +3,7 @@ import 'package:bea_dating/core/presentation/block/user_details_bloc.dart';
 import 'package:bea_dating/core/presentation/screen/welcome_screen.dart';
 import 'package:bea_dating/core/presentation/utilit/color.dart';
 import 'package:bea_dating/core/presentation/utilit/logo.dart';
+import 'package:bea_dating/core/presentation/utilit/page_transcation/fade_transition.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -27,9 +28,8 @@ class _SplashScreenState extends State<SplashScreen> {
     return BlocListener<UserDetailsBloc, UserDetailsState>(
       listener: (context, state) {
         if (state is NavigationToWelcomscreen) {
-          Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => WelcomeScreen(),
-          ));
+          Navigator.of(context).pushReplacement(FadeTransitionPageRoute(child: WelcomeScreen()));
+          
         }
       },
       child: Scaffold(

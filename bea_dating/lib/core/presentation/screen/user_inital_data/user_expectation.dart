@@ -3,6 +3,7 @@ import 'package:bea_dating/core/presentation/screen/user_inital_data/presentatio
 import 'package:bea_dating/core/presentation/utilit/color.dart';
 import 'package:bea_dating/core/presentation/utilit/fonts.dart';
 import 'package:bea_dating/core/presentation/utilit/mediaquery.dart';
+import 'package:bea_dating/core/presentation/utilit/page_transcation/fade_transition.dart';
 import 'package:bea_dating/core/presentation/widgets/backbutton/back_button.dart';
 import 'package:bea_dating/core/presentation/widgets/expectation/expectation_collab_widget.dart';
 import 'package:bea_dating/core/presentation/widgets/userintroduction/User_greenbutton.dart';
@@ -34,7 +35,7 @@ class UserExpectationPage extends StatelessWidget {
         },
         child: BlocConsumer<UserDetailsBloc,UserDetailsState>(listener: (context, state) {
           if(state is NavigateToPresentation){
-            Navigator.of(context).push(MaterialPageRoute(builder: (context) => PresentaionImagePage(),));
+            Navigator.of(context).push(FadeTransitionPageRoute(child: PresentaionImagePage()));
           }
         },
         builder: (context, state) {

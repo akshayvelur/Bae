@@ -163,15 +163,15 @@ class PresentaionImagePage extends StatelessWidget {
                     ),
 
                     SizedBox(
-                      height: mediaqueryHight(.1, context),
+                      height: mediaqueryHight(.2, context),
                     ),
                     Center(
                       // Navigate to Next page
                       child: GestureDetector(
                         onTap: () {
-                          context
-                              .read<UserDetailsBloc>()
-                              .add(DobToEnableLocationEvent());
+                          // context
+                          //     .read<UserDetailsBloc>()
+                          //     .add(DobToEnableLocationEvent());
                         },
                         child: GreenNextbutton(
                           appFonts: appFonts,

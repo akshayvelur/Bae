@@ -3,21 +3,30 @@ import 'package:bea_dating/core/presentation/screen/rules_and_regulation.dart';
 import 'package:bea_dating/core/presentation/utilit/color.dart';
 import 'package:bea_dating/core/presentation/utilit/fonts.dart';
 import 'package:bea_dating/core/presentation/utilit/mediaquery.dart';
+import 'package:bea_dating/core/presentation/utilit/page_transcation/fade_transition.dart';
 import 'package:bea_dating/core/presentation/widgets/welcome_screen_widgets/welcome_collab_containers.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 // ignore: must_be_immutable
-class WelcomeScreen extends StatelessWidget {
+class WelcomeScreen extends StatefulWidget {
   WelcomeScreen({super.key});
+
+  @override
+  State<WelcomeScreen> createState() => _WelcomeScreenState();
+}
+
+class _WelcomeScreenState extends State<WelcomeScreen> {
   AppFonts appFonts = AppFonts();
+
   @override
   Widget build(BuildContext context) {
     return BlocListener<UserDetailsBloc, UserDetailsState>(
       listener: (context, state) {
         if (state is NavigationToRuleState) {
-          Navigator.of(context).push(
-              MaterialPageRoute(builder: (context) => RulesAndRegulation()));
+          Navigator.of(context).push(FadeTransitionPageRoute(child:RulesAndRegulation() ));
         }
       },
       child: Scaffold(
@@ -29,7 +38,7 @@ class WelcomeScreen extends StatelessWidget {
           children: [
             const WelcomeColaberg(),
             SizedBox(
-              height: mediaqueryHight(.05, context),
+              height: mediaqueryHight(.08, context),
             ),
             Padding(
               padding: const EdgeInsets.only(left: 12, bottom: 0),
@@ -54,17 +63,18 @@ class WelcomeScreen extends StatelessWidget {
                 height: mediaqueryHight(.1, context),
                 width: mediaqueryWidth(.98, context),
                 child: Text(
-                  """chat get to know each other,and flirt face to face. enjoy safe discreet messageing""",
+                  """chat get to know each other,and flirt face to face. enjoy safe discreet messaging""",
                   style: appFonts.welcomecondent,
                   overflow: TextOverflow.clip,
                 ),
               ),
-            ),
+            ),  SizedBox(height:mediaqueryHight(.04, context),),
             Center(
               // Navigate to Next page
               child: GestureDetector(
                 onTap: () {
                   context.read<UserDetailsBloc>().add(WelcomeToRulePageEvent());
+               
                 },
                 child: Container(
                   height: mediaqueryHight(.05, context),
@@ -94,6 +104,7 @@ class WelcomeScreen extends StatelessWidget {
                         SizedBox(
                           width: mediaqueryWidth(.15, context),
                         ),
+                      
                         Text(
                           "Sign in with Google",
                           style: appFonts.nextbuttongreen,
@@ -104,21 +115,39 @@ class WelcomeScreen extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(
-              height: mediaqueryHight(.02, context),
-              // Loging OnTap
-            ),
-            Center(
-                child: GestureDetector(
-                    behavior: HitTestBehavior.opaque,
-                    onTap: () {},
-                    child: Text(
-                      "Already have a member? Login",
-                      style: appFonts.nextbuttonwhite,
-                    )))
+            // SizedBox(
+            //   height: mediaqueryHight(.02, context),
+            //   // Loging OnTap
+            // ),
+            // Center(
+            //     child: GestureDetector(
+            //         behavior: HitTestBehavior.opaque,
+            //         onTap: () {
+            //           signOutFromGoogle();
+            //         },
+            //         child: Text(
+            //           "Already have a member? Login",
+            //           style: appFonts.nextbuttonwhite,
+            //         )))
           ],
         ),
       )),
     );
+  }
+
+ 
+
+  Future<bool> signOutFromGoogle() async {
+    try {
+      await GoogleSignIn().signOut();
+      await FirebaseAuth.instance.signOut();
+   
+
+      print("sign out");
+      return true;
+    } catch (e) {
+      print(e);
+      return false;
+    }
   }
 }

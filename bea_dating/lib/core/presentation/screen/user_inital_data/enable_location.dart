@@ -3,6 +3,7 @@ import 'package:bea_dating/core/presentation/screen/user_inital_data/gender_sele
 import 'package:bea_dating/core/presentation/utilit/color.dart';
 import 'package:bea_dating/core/presentation/utilit/fonts.dart';
 import 'package:bea_dating/core/presentation/utilit/mediaquery.dart';
+import 'package:bea_dating/core/presentation/utilit/page_transcation/fade_transition.dart';
 import 'package:bea_dating/core/presentation/widgets/backbutton/back_button.dart';
 import 'package:bea_dating/core/presentation/widgets/userintroduction/User_greenbutton.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +26,7 @@ class EnableLocation extends StatelessWidget {
           if (state is NavigateToGenderSelectionState) {
             //  log("Navigate to genderselct");
             Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => GenderSelctionPage()));
+            FadeTransitionPageRoute(child: GenderSelctionPage()));
           }
         },
         child: Scaffold(
