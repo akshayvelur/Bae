@@ -1,8 +1,10 @@
 import 'package:bea_dating/core/presentation/block/user_details_bloc.dart';
+import 'package:bea_dating/core/presentation/screen/home_screen.dart';
 import 'package:bea_dating/core/presentation/screen/user_inital_data/enable_location.dart';
 import 'package:bea_dating/core/presentation/utilit/color.dart';
 import 'package:bea_dating/core/presentation/utilit/fonts.dart';
 import 'package:bea_dating/core/presentation/utilit/mediaquery.dart';
+import 'package:bea_dating/core/presentation/utilit/page_transcation/fade_transition.dart';
 import 'package:bea_dating/core/presentation/widgets/backbutton/back_button.dart';
 import 'package:bea_dating/core/presentation/widgets/userintroduction/User_greenbutton.dart';
 import 'package:flutter/material.dart';
@@ -22,9 +24,8 @@ class PresentaionImagePage extends StatelessWidget {
       },
       child: BlocListener<UserDetailsBloc, UserDetailsState>(
         listener: (context, state) {
-          if (state is NavigateToEnableLocationState) {
-            Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => EnableLocation()));
+          if (state is NavigateToHomeScreenState) {
+            Navigator.of(context).push(FadeTransitionPageRoute(child: HomeScreenPage()));
           }
         },
         child: Scaffold(
@@ -169,9 +170,7 @@ class PresentaionImagePage extends StatelessWidget {
                       // Navigate to Next page
                       child: GestureDetector(
                         onTap: () {
-                          // context
-                          //     .read<UserDetailsBloc>()
-                          //     .add(DobToEnableLocationEvent());
+                    context.read<UserDetailsBloc>().add(PresentationToHomeScreenEvent());
                         },
                         child: GreenNextbutton(
                           appFonts: appFonts,

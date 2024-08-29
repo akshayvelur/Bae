@@ -34,7 +34,7 @@ class UserExpectationPage extends StatelessWidget {
           FocusScope.of(context).unfocus();
         },
         child: BlocConsumer<UserDetailsBloc,UserDetailsState>(listener: (context, state) {
-          if(state is NavigateToPresentation){
+          if(state is NavigateToPresentationState){
             Navigator.of(context).push(FadeTransitionPageRoute(child: PresentaionImagePage()));
           }
         },

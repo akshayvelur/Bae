@@ -5,7 +5,10 @@ part of 'user_details_bloc.dart';
 abstract class UserDetailsState {}
 
 class UserDetailsInitial extends UserDetailsState {}
-class NavigationToWelcomscreen extends UserDetailsState{}
+class InitLodingSate extends UserDetailsState{}
+class NavigationToWelcomscreenState extends UserDetailsState{}
+class AccountVarifiedState extends UserDetailsState{
+}
 class NavigationToRuleState extends UserDetailsState{}
 class NavigateToNameFormState extends UserDetailsState{}
 class NavigateToDobState extends UserDetailsState{}
@@ -44,5 +47,6 @@ class ExpectationColorSelectedState extends UserDetailsState {
       required this.effectbFour,
       required this.effectbFive,required this.expetation});
 }
-class NavigateToPresentation extends UserDetailsState{}
+class NavigateToPresentationState extends UserDetailsState{}
+class NavigateToHomeScreenState extends UserDetailsState{}
 

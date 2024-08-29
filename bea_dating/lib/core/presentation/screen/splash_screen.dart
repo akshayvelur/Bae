@@ -1,5 +1,7 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:bea_dating/core/domin/usecase/authentication.dart';
 import 'package:bea_dating/core/presentation/block/user_details_bloc.dart';
+import 'package:bea_dating/core/presentation/screen/home_screen.dart';
 import 'package:bea_dating/core/presentation/screen/welcome_screen.dart';
 import 'package:bea_dating/core/presentation/utilit/color.dart';
 import 'package:bea_dating/core/presentation/utilit/logo.dart';
@@ -16,10 +18,10 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   @override
+ 
   void initState() {
-    print("delayed");
-    context.read<UserDetailsBloc>().add(SplashToWelcomeEvent());
-   
+ 
+   context.read<UserDetailsBloc>().add(SplashToWelcomeEvent());  
     super.initState();
   }
 
@@ -27,9 +29,11 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return BlocListener<UserDetailsBloc, UserDetailsState>(
       listener: (context, state) {
-        if (state is NavigationToWelcomscreen) {
+        if (state is NavigationToWelcomscreenState) {
           Navigator.of(context).pushReplacement(FadeTransitionPageRoute(child: WelcomeScreen()));
-          
+        }
+        if(state is AccountVarifiedState ){
+          Navigator.of(context).push(FadeTransitionPageRoute(child: HomeScreenPage()));
         }
       },
       child: Scaffold(

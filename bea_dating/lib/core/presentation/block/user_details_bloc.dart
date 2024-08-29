@@ -1,15 +1,18 @@
+// ignore_for_file: unnecessary_null_comparison
+
 import 'dart:async';
 import 'package:bea_dating/core/domin/usecase/authentication.dart';
 import 'package:bloc/bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:meta/meta.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 part 'user_details_event.dart';
 part 'user_details_state.dart';
 
 class UserDetailsBloc extends Bloc<UserDetailsEvent, UserDetailsState> {
   UserDetailsBloc() : super(UserDetailsInitial()) {
     on<SplashToWelcomeEvent>(splashToWelcomeEvent);
-    on<WelcomeToRulePageEvent>(welcomeToRulePageEvent);
+    on<GoogleLoginEvent>(googleLoginEvent);
     on<RuleToNameformEvent>(ruleToNameformEvent);
     on<NameToDobEvent>(nameToDobEvent);
     on<DobToEnableLocationEvent>(dobToEnableLocationEvent);
@@ -19,30 +22,48 @@ class UserDetailsBloc extends Bloc<UserDetailsEvent, UserDetailsState> {
     on<InterestToExpectationEvent>(interestToExpectationEvent);
     on<ExpectationtButtonSelectionEvent>(expectationtButtonSelectionEvent);
     on<ExeptationToPresentationEvent>(exeptationToPresentationEvent);
+    on<PresentationToHomeScreenEvent>(presentationToHomeScreenEvent);
   }
 
   FutureOr<void> splashToWelcomeEvent(
       SplashToWelcomeEvent event, Emitter<UserDetailsState> emit) async {
+          SharedPreferences prefs=await SharedPreferences.getInstance();
+         String? Userfind= prefs.getString("email");
+           await Future.delayed(Duration(seconds: 2));
+   if(Userfind!=null){
+     print("navigate to Homescreen");
+    // Existing user
+    emit(AccountVarifiedState());
+   }else{
+    //new user 
     print("navigate to welcome");
-    await Future.delayed(Duration(seconds: 2));
-    emit(NavigationToWelcomscreen());
+    emit(NavigationToWelcomscreenState());}
+   
   }
 
-  FutureOr<void> welcomeToRulePageEvent(
-      WelcomeToRulePageEvent event, Emitter<UserDetailsState> emit) async {
-    Authentic authentic = Authentic();
-    UserCredential? userCredential =
-        await authentic.signInWithGoogle() as UserCredential;
 
-    if (userCredential.user != null) {
-      print("User :${userCredential.user?.email} Loged");
+ 
+  //Google Login
+  FutureOr<void> googleLoginEvent(
+      GoogleLoginEvent event, Emitter<UserDetailsState> emit) async {
+     
+    Authentic authentic = Authentic();
+    final myuser =await authentic.signInWithGoogle() as UserCredential ;
+    if (myuser != null) {
+     // print(myuser.user?.email);
+      authentic.localStorage(myuser.user!.uid,myuser.user!.email!,myuser.user!.displayName!);
+      authentic.getLocalData();
+
       emit(NavigationToRuleState());
+    }else{
+         emit(InitLodingSate());
     }
     print("navigate to Rule");
   }
 
   FutureOr<void> ruleToNameformEvent(
       RuleToNameformEvent event, Emitter<UserDetailsState> emit) async {
+           
     emit(NavigateToNameFormState());
   }
 
@@ -101,6 +122,12 @@ class UserDetailsBloc extends Bloc<UserDetailsEvent, UserDetailsState> {
 
   FutureOr<void> exeptationToPresentationEvent(
       ExeptationToPresentationEvent event, Emitter<UserDetailsState> emit) {
-    emit(NavigateToPresentation());
+    emit(NavigateToPresentationState());
   }
+
+  FutureOr<void> presentationToHomeScreenEvent(PresentationToHomeScreenEvent event, Emitter<UserDetailsState> emit) {
+
+emit(NavigateToHomeScreenState());  }
+
+ 
 }

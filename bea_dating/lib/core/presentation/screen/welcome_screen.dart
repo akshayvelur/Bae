@@ -1,3 +1,6 @@
+
+
+import 'package:bea_dating/core/domin/usecase/authentication.dart';
 import 'package:bea_dating/core/presentation/block/user_details_bloc.dart';
 import 'package:bea_dating/core/presentation/screen/rules_and_regulation.dart';
 import 'package:bea_dating/core/presentation/utilit/color.dart';
@@ -5,10 +8,11 @@ import 'package:bea_dating/core/presentation/utilit/fonts.dart';
 import 'package:bea_dating/core/presentation/utilit/mediaquery.dart';
 import 'package:bea_dating/core/presentation/utilit/page_transcation/fade_transition.dart';
 import 'package:bea_dating/core/presentation/widgets/welcome_screen_widgets/welcome_collab_containers.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_sign_in/google_sign_in.dart';
+
+
 
 // ignore: must_be_immutable
 class WelcomeScreen extends StatefulWidget {
@@ -20,12 +24,17 @@ class WelcomeScreen extends StatefulWidget {
 
 class _WelcomeScreenState extends State<WelcomeScreen> {
   AppFonts appFonts = AppFonts();
-
+Authentic authentic=Authentic();
   @override
   Widget build(BuildContext context) {
     return BlocListener<UserDetailsBloc, UserDetailsState>(
       listener: (context, state) {
-        if (state is NavigationToRuleState) {
+        if(state is InitLodingSate){
+        
+        }
+        else if (state is NavigationToRuleState) {
+         Navigator.of(context).pop();
+     
           Navigator.of(context).push(FadeTransitionPageRoute(child:RulesAndRegulation() ));
         }
       },
@@ -68,12 +77,12 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                   overflow: TextOverflow.clip,
                 ),
               ),
-            ),  SizedBox(height:mediaqueryHight(.04, context),),
+            ),  SizedBox(height:mediaqueryHight(.02, context),),
             Center(
               // Navigate to Next page
               child: GestureDetector(
-                onTap: () {
-                  context.read<UserDetailsBloc>().add(WelcomeToRulePageEvent());
+                onTap: () async{
+                  context.read<UserDetailsBloc>().add(GoogleLoginEvent());
                
                 },
                 child: Container(
@@ -115,20 +124,20 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 ),
               ),
             ),
-            // SizedBox(
-            //   height: mediaqueryHight(.02, context),
-            //   // Loging OnTap
-            // ),
-            // Center(
-            //     child: GestureDetector(
-            //         behavior: HitTestBehavior.opaque,
-            //         onTap: () {
-            //           signOutFromGoogle();
-            //         },
-            //         child: Text(
-            //           "Already have a member? Login",
-            //           style: appFonts.nextbuttonwhite,
-            //         )))
+            SizedBox(
+              height: mediaqueryHight(.02, context),
+              // Loging OnTap
+            ),
+            Center(
+                child: GestureDetector(
+                    behavior: HitTestBehavior.opaque,
+                    onTap: () {
+                  authentic.signInWithGoogleAndCheckUser();
+                    },
+                    child: Text(
+                      "Already have a member? Login",
+                      style: appFonts.nextbuttonwhite,
+                    )))
           ],
         ),
       )),
@@ -137,17 +146,5 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
 
  
 
-  Future<bool> signOutFromGoogle() async {
-    try {
-      await GoogleSignIn().signOut();
-      await FirebaseAuth.instance.signOut();
-   
-
-      print("sign out");
-      return true;
-    } catch (e) {
-      print(e);
-      return false;
-    }
-  }
+  
 }
