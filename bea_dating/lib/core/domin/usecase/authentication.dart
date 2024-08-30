@@ -1,13 +1,17 @@
 
 import 'dart:developer';
+
+import 'package:bea_dating/core/presentation/block/user_details_bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 
 class Authentic{
+  final FirebaseFirestore _firestore=FirebaseFirestore.instance;
+  final FirebaseAuth _auth=FirebaseAuth.instance;
+  // signin with google
   Future<dynamic>signInWithGoogle()async{
    try {
       final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
@@ -19,61 +23,52 @@ class Authentic{
       
       UserCredential userCredential= await FirebaseAuth.instance.signInWithCredential(credential);
       final myuser=userCredential;
+     // bool existOr =UserExitOrNot(myuser.user!.uid);
+    //   if(existOr=true){
+       
+    //   }else{
+    //   createUser();
+    //  log("user fun");
+    //   return myuser;
+    //   }
   
-      return myuser;
 
     } catch (e) {
       print(e);
     }}
+//create user
+ Future <void> createUser()async{
+try{
+  //print("UiD${_auth.currentUser!.uid}");
+
+  final users=await _firestore.collection('users').doc(_auth.currentUser!.uid).set({
+    'uid':_auth.currentUser!.uid,
+    'defaultName':_auth.currentUser!.displayName,
+    'email':_auth.currentUser!.email,
+    
+  });             
+ 
+ log("database created");
+}catch(e){
+  log(e.toString());
+}
+ }
 //
+//User checking
+ Future <bool> UserExitOrNot()async{
+final docRef= await _firestore.collection('users').doc(_auth.currentUser!.uid);
+final snapshot=await docRef.get();
+if(snapshot.exists){
+  print("aiyoooo");
+ return true;
+}
+else{
+  print("araaaa");
+  //signOutFromGoogle();
+return false;
+}
 
- final FirebaseAuth _auth = FirebaseAuth.instance;
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-  Future<void> signInWithGoogleAndCheckUser() async {
-    try {
-      // Step 1: Sign in with Google
-      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-      if (googleUser == null) {
-        print("User cancelled the sign-in");
-        return;
-      }
-
-      final GoogleSignInAuthentication googleAuth =
-          await googleUser.authentication;
-      final OAuthCredential credential = GoogleAuthProvider.credential(
-        accessToken: googleAuth.accessToken,
-        idToken: googleAuth.idToken,
-      );
-
-      UserCredential userCredential =
-          await _auth.signInWithCredential(credential);
-      User? user = userCredential.user;
-
-      if (user != null) {
-        // Step 2: Check if user exists in Firestore
-        DocumentSnapshot userDoc =
-            await _firestore.collection('users').doc(user.uid).get();
-
-        if (userDoc.exists) {
-          // User already exists in Firestore
-          print("User already exists: ${user.email}");
-        } else {
-          // New user, create a new document in Firestore
-          print("New user, creating profile...");
-          await _firestore.collection('users').doc(user.uid).set({
-            'name': user.displayName,
-            'email': user.email,
-            'uid': user.uid,
-          });
-          print("User profile created for ${user.email}");
-        }
-      }
-    } catch (e) {
-      print("Error during Google sign-in: $e");
-    }
-  }
-
-//
+}
 
     Future<bool> signOutFromGoogle() async {
     try {
@@ -90,13 +85,13 @@ class Authentic{
   }
 
 
-  Future<void> localStorage(String uid,String email,String name)async{
+  Future<void> localStorage()async{
     try{
      print("MY LOCAL////////////////");
     SharedPreferences prefs=await SharedPreferences.getInstance();
-    prefs.setString('uid', uid);
-    prefs.setString('email', email);
-     prefs.setString('name',name );
+    prefs.setString('uid', _auth.currentUser!.uid);
+    prefs.setString('email',_auth.currentUser!.email!);
+     prefs.setString('name',_auth.currentUser!.displayName! );
     }catch(e){
       log("local Storage error${e}");
     }

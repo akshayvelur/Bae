@@ -1,6 +1,7 @@
 // ignore_for_file: unnecessary_null_comparison
 
 import 'dart:async';
+import 'dart:developer';
 import 'package:bea_dating/core/domin/usecase/authentication.dart';
 import 'package:bloc/bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -13,6 +14,7 @@ class UserDetailsBloc extends Bloc<UserDetailsEvent, UserDetailsState> {
   UserDetailsBloc() : super(UserDetailsInitial()) {
     on<SplashToWelcomeEvent>(splashToWelcomeEvent);
     on<GoogleLoginEvent>(googleLoginEvent);
+   on<AlreadyExistsuserEvent>(alreadyExistsuserEvent);
     on<RuleToNameformEvent>(ruleToNameformEvent);
     on<NameToDobEvent>(nameToDobEvent);
     on<DobToEnableLocationEvent>(dobToEnableLocationEvent);
@@ -47,20 +49,21 @@ class UserDetailsBloc extends Bloc<UserDetailsEvent, UserDetailsState> {
   FutureOr<void> googleLoginEvent(
       GoogleLoginEvent event, Emitter<UserDetailsState> emit) async {
      
-    Authentic authentic = Authentic();
-    final myuser =await authentic.signInWithGoogle() as UserCredential ;
-    if (myuser != null) {
-     // print(myuser.user?.email);
-      authentic.localStorage(myuser.user!.uid,myuser.user!.email!,myuser.user!.displayName!);
-      authentic.getLocalData();
-
-      emit(NavigationToRuleState());
-    }else{
-         emit(InitLodingSate());
-    }
-    print("navigate to Rule");
+    Authentic _authentic = Authentic();
+    await _authentic.signInWithGoogle();
+    emit(InitLodingSate());
+    print("my out");
+   bool out = await _authentic.UserExitOrNot();
+   if(out==true){
+      emit(NavigateToHomeScreenState());
+   }else{
+    emit(NavigationToRuleState());
+   }
   }
-
+//User Already Exist or Not checking event 
+FutureOr<void> alreadyExistsuserEvent(AlreadyExistsuserEvent event, Emitter<UserDetailsState> emit) {
+  emit(AccountVarifiedState());
+  }
   FutureOr<void> ruleToNameformEvent(
       RuleToNameformEvent event, Emitter<UserDetailsState> emit) async {
            
@@ -125,9 +128,17 @@ class UserDetailsBloc extends Bloc<UserDetailsEvent, UserDetailsState> {
     emit(NavigateToPresentationState());
   }
 
-  FutureOr<void> presentationToHomeScreenEvent(PresentationToHomeScreenEvent event, Emitter<UserDetailsState> emit) {
-
-emit(NavigateToHomeScreenState());  }
+  FutureOr<void> presentationToHomeScreenEvent(PresentationToHomeScreenEvent event, Emitter<UserDetailsState> emit)async {
+Authentic _authentic=Authentic();
+await _authentic.createUser();
+await _authentic.localStorage();
+print("helooo");
+emit(NavigateToHomeScreenState());  
+}
 
  
+
+
+
+  
 }

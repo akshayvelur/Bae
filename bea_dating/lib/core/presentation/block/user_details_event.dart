@@ -4,11 +4,7 @@ part of 'user_details_bloc.dart';
 abstract class UserDetailsEvent {}
 
 class SplashToWelcomeEvent extends UserDetailsEvent {}
-class AccountCheckingEvent extends UserDetailsEvent{
-  final UserShData;
-  AccountCheckingEvent({required this.UserShData});
-}
-
+class AlreadyExistsuserEvent extends UserDetailsEvent{}
 class GoogleLoginEvent extends UserDetailsEvent {}
 
 class RuleToNameformEvent extends UserDetailsEvent {}

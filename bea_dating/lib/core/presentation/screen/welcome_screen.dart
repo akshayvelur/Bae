@@ -2,6 +2,7 @@
 
 import 'package:bea_dating/core/domin/usecase/authentication.dart';
 import 'package:bea_dating/core/presentation/block/user_details_bloc.dart';
+import 'package:bea_dating/core/presentation/screen/home_screen.dart';
 import 'package:bea_dating/core/presentation/screen/rules_and_regulation.dart';
 import 'package:bea_dating/core/presentation/utilit/color.dart';
 import 'package:bea_dating/core/presentation/utilit/fonts.dart';
@@ -36,6 +37,9 @@ Authentic authentic=Authentic();
          Navigator.of(context).pop();
      
           Navigator.of(context).push(FadeTransitionPageRoute(child:RulesAndRegulation() ));
+        }
+        else if(state is NavigateToHomeScreenState){
+          Navigator.of(context).push(FadeTransitionPageRoute(child:HomeScreenPage()));
         }
       },
       child: Scaffold(
@@ -77,7 +81,7 @@ Authentic authentic=Authentic();
                   overflow: TextOverflow.clip,
                 ),
               ),
-            ),  SizedBox(height:mediaqueryHight(.02, context),),
+            ),  SizedBox(height:mediaqueryHight(.05, context),),
             Center(
               // Navigate to Next page
               child: GestureDetector(
@@ -124,20 +128,20 @@ Authentic authentic=Authentic();
                 ),
               ),
             ),
-            SizedBox(
-              height: mediaqueryHight(.02, context),
-              // Loging OnTap
-            ),
-            Center(
-                child: GestureDetector(
-                    behavior: HitTestBehavior.opaque,
-                    onTap: () {
-                  authentic.signInWithGoogleAndCheckUser();
-                    },
-                    child: Text(
-                      "Already have a member? Login",
-                      style: appFonts.nextbuttonwhite,
-                    )))
+            // SizedBox(
+            //   height: mediaqueryHight(.02, context),
+            //   // Loging OnTap
+            // ),
+            // Center(
+            //     child: GestureDetector(
+            //         behavior: HitTestBehavior.opaque,
+            //         onTap: () {
+            //      context.read<UserDetailsBloc>().add(AccountCheckingEvent());
+            //         },
+            //         child: Text(
+            //           "Already have a member? Login",
+            //           style: appFonts.nextbuttonwhite,
+            //         )))
           ],
         ),
       )),
