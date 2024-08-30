@@ -33,11 +33,11 @@ class GenderInterestPage extends StatelessWidget {
             }
           },
           builder: (context, state) {
-            if (state is GenderColorSelectedState) {
+            if (state is InterestColorSelectedState) {
               menclr = state.menclr;
               women = state.womenclr;
-              other = state.Otherclr;
-              interested = state.gender;
+              other = state.everyoneclr;
+              interested = state.genderInterest;
               print(interested);
             }
             return Scaffold(
@@ -73,19 +73,19 @@ class GenderInterestPage extends StatelessWidget {
                             height: mediaqueryHight(.05, context),
                           ),
                           // women Gender container
-                          GenderWidgetOne(
+                          InterestWidgetTwo(
                               women: women, appFonts: appFonts, cat: "Women"),
                           SizedBox(
                             height: mediaqueryHight(.02, context),
                           ),
                           // men Gender container
-                          GenderWidgetTwo(
+                          InterestWidgetOne(
                               menclr: menclr, appFonts: appFonts, cat: "Men"),
                           SizedBox(
                             height: mediaqueryHight(.02, context),
                           ),
                           // Other Gender container
-                          GenderWidgetThree(
+                          InterestWidgetThree(
                               other: other,
                               appFonts: appFonts,
                               cat: "Everyone"),
@@ -99,7 +99,7 @@ class GenderInterestPage extends StatelessWidget {
                                 if (interested != null) {
                                   context
                                       .read<UserDetailsBloc>()
-                                      .add(InterestToExpectationEvent());
+                                      .add(InterestToExpectationEvent(interest:interested.toString() ));
                                 }
                               },
                               child: GreenNextbutton(

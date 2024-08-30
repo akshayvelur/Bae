@@ -1,5 +1,4 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
-import 'package:bea_dating/core/domin/usecase/authentication.dart';
 import 'package:bea_dating/core/presentation/block/user_details_bloc.dart';
 import 'package:bea_dating/core/presentation/screen/home_screen.dart';
 import 'package:bea_dating/core/presentation/screen/welcome_screen.dart';

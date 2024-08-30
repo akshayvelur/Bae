@@ -105,7 +105,7 @@ class GenderSelctionPage extends StatelessWidget {
                                 if (gender != null) {
                                   context
                                       .read<UserDetailsBloc>()
-                                      .add(GenderSelectToGenderInterestEvent());
+                                      .add(GenderSelectToGenderInterestEvent(gender: gender.toString()));
                                 }
                               },
                               child: GreenNextbutton(

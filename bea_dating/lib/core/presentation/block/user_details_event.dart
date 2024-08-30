@@ -9,11 +9,20 @@ class GoogleLoginEvent extends UserDetailsEvent {}
 
 class RuleToNameformEvent extends UserDetailsEvent {}
 
-class NameToDobEvent extends UserDetailsEvent {}
+class NameToDobEvent extends UserDetailsEvent {
+  final userName;
+  NameToDobEvent({required this.userName});
+}
 
-class DobToEnableLocationEvent extends UserDetailsEvent {}
+class DobToEnableLocationEvent extends UserDetailsEvent {
+  final String dob;
+  DobToEnableLocationEvent({required this.dob});
+}
 
-class EnableLocationToGenderselectEvent extends UserDetailsEvent {}
+class EnableLocationToGenderselectEvent extends UserDetailsEvent {
+  final String location;
+  EnableLocationToGenderselectEvent({required this.location});
+}
 
 class GenderButtonSelctionEvent extends UserDetailsEvent {
   final menclr;
@@ -25,11 +34,27 @@ class GenderButtonSelctionEvent extends UserDetailsEvent {
       required this.Otherclr,
       required this.womenclr,
       required this.gender});
+}class InterestButtonSelctionEvent extends UserDetailsEvent {
+  final menclr;
+  final womenclr;
+  final Otherclr;
+  final gender;
+  InterestButtonSelctionEvent(
+      {required this.menclr,
+      required this.Otherclr,
+      required this.womenclr,
+      required this.gender});
 }
 
-class GenderSelectToGenderInterestEvent extends UserDetailsEvent {}
+class GenderSelectToGenderInterestEvent extends UserDetailsEvent {
+  final String gender;
+  GenderSelectToGenderInterestEvent({required this.gender});
+}
 
-class InterestToExpectationEvent extends UserDetailsEvent {}
+class InterestToExpectationEvent extends UserDetailsEvent {
+  final String interest;
+  InterestToExpectationEvent({required this.interest});
+}
 
 class ExpectationtButtonSelectionEvent extends UserDetailsEvent {
   final boxOne;
@@ -55,5 +80,8 @@ class ExpectationtButtonSelectionEvent extends UserDetailsEvent {
       required this.effectbFour,
       required this.effectbFive,required this.expectation});
 }
-class ExeptationToPresentationEvent extends UserDetailsEvent{}
+class ExeptationToPresentationEvent extends UserDetailsEvent{
+  final String  expectation;
+  ExeptationToPresentationEvent({required this.expectation});
+}
 class PresentationToHomeScreenEvent extends UserDetailsEvent{}

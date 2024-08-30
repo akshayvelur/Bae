@@ -1,6 +1,5 @@
 import 'package:bea_dating/core/presentation/block/user_details_bloc.dart';
 import 'package:bea_dating/core/presentation/screen/home_screen.dart';
-import 'package:bea_dating/core/presentation/screen/user_inital_data/enable_location.dart';
 import 'package:bea_dating/core/presentation/utilit/color.dart';
 import 'package:bea_dating/core/presentation/utilit/fonts.dart';
 import 'package:bea_dating/core/presentation/utilit/mediaquery.dart';
@@ -15,7 +14,8 @@ class PresentaionImagePage extends StatelessWidget {
   PresentaionImagePage({super.key});
 
   AppFonts appFonts = AppFonts();
-
+ 
+   
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -25,6 +25,7 @@ class PresentaionImagePage extends StatelessWidget {
       child: BlocListener<UserDetailsBloc, UserDetailsState>(
         listener: (context, state) {
           if (state is NavigateToHomeScreenState) {
+          
             Navigator.of(context).push(FadeTransitionPageRoute(child: HomeScreenPage()));
           }
         },

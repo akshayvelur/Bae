@@ -4,14 +4,13 @@ import 'dart:async';
 import 'dart:developer';
 import 'package:bea_dating/core/domin/usecase/authentication.dart';
 import 'package:bloc/bloc.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:meta/meta.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 part 'user_details_event.dart';
 part 'user_details_state.dart';
 
 class UserDetailsBloc extends Bloc<UserDetailsEvent, UserDetailsState> {
-  UserDetailsBloc() : super(UserDetailsInitial()) {
+  UserDetailsBloc() : super(UserDetailsInitial(username: '', dob: '', location: '', gender: '', genderInterest: '', expectation: '')) {
     on<SplashToWelcomeEvent>(splashToWelcomeEvent);
     on<GoogleLoginEvent>(googleLoginEvent);
    on<AlreadyExistsuserEvent>(alreadyExistsuserEvent);
@@ -20,6 +19,7 @@ class UserDetailsBloc extends Bloc<UserDetailsEvent, UserDetailsState> {
     on<DobToEnableLocationEvent>(dobToEnableLocationEvent);
     on<EnableLocationToGenderselectEvent>(enableLocationToGenderselct);
     on<GenderButtonSelctionEvent>(genderButtonSelctionEvent);
+    on<InterestButtonSelctionEvent>(interestButtonSelctionEvent);
     on<GenderSelectToGenderInterestEvent>(genderSelectToGenderInterestEvent);
     on<InterestToExpectationEvent>(interestToExpectationEvent);
     on<ExpectationtButtonSelectionEvent>(expectationtButtonSelectionEvent);
@@ -35,11 +35,11 @@ class UserDetailsBloc extends Bloc<UserDetailsEvent, UserDetailsState> {
    if(Userfind!=null){
      print("navigate to Homescreen");
     // Existing user
-    emit(AccountVarifiedState());
+    emit(AccountVarifiedState(username:state.username, dob: state.dob, location: state.location, gender:state.gender, genderInterest:state.genderInterest, expectation:state.expectation));
    }else{
     //new user 
     print("navigate to welcome");
-    emit(NavigationToWelcomscreenState());}
+    emit(NavigationToWelcomscreenState(username:state.username, dob: state.dob, location: state.location, gender:state.gender, genderInterest:state.genderInterest, expectation:state.expectation));}
    
   }
 
@@ -51,60 +51,71 @@ class UserDetailsBloc extends Bloc<UserDetailsEvent, UserDetailsState> {
      
     Authentic _authentic = Authentic();
     await _authentic.signInWithGoogle();
-    emit(InitLodingSate());
+    emit(InitLodingSate(username:state.username, dob: state.dob, location: state.location, gender:state.gender, genderInterest:state.genderInterest, expectation:state.expectation));
     print("my out");
    bool out = await _authentic.UserExitOrNot();
    if(out==true){
-      emit(NavigateToHomeScreenState());
+      emit(NavigateToHomeScreenState(username:state.username, dob: state.dob, location: state.location, gender:state.gender, genderInterest:state.genderInterest, expectation:state.expectation));
    }else{
-    emit(NavigationToRuleState());
+    emit(NavigationToRuleState(username:state.username, dob: state.dob, location: state.location, gender:state.gender, genderInterest:state.genderInterest, expectation:state.expectation));
    }
   }
 //User Already Exist or Not checking event 
 FutureOr<void> alreadyExistsuserEvent(AlreadyExistsuserEvent event, Emitter<UserDetailsState> emit) {
-  emit(AccountVarifiedState());
+  emit(AccountVarifiedState(username:state.username, dob: state.dob, location: state.location, gender:state.gender, genderInterest:state.genderInterest, expectation:state.expectation));
   }
   FutureOr<void> ruleToNameformEvent(
       RuleToNameformEvent event, Emitter<UserDetailsState> emit) async {
            
-    emit(NavigateToNameFormState());
+    emit(NavigateToNameFormState(username:state.username, dob: state.dob, location: state.location, gender:state.gender, genderInterest:state.genderInterest, expectation:state.expectation));
   }
 
   FutureOr<void> nameToDobEvent(
       NameToDobEvent event, Emitter<UserDetailsState> emit) {
-    emit(NavigateToDobState());
+    emit(NavigateToDobState(username:event.userName, dob: state.dob, location: state.location, gender:state.gender, genderInterest:state.genderInterest, expectation:state.expectation));
     print('navigate to Dob');
+    
   }
 
   FutureOr<void> dobToEnableLocationEvent(
       DobToEnableLocationEvent event, Emitter<UserDetailsState> emit) {
-    emit(NavigateToEnableLocationState());
+    emit(NavigateToEnableLocationState(username:state.username, dob: event.dob, location: state.location, gender:state.gender, genderInterest:state.genderInterest, expectation:state.expectation));
+
   }
 
   FutureOr<void> enableLocationToGenderselct(
       EnableLocationToGenderselectEvent event, Emitter<UserDetailsState> emit) {
-    emit(NavigateToGenderSelectionState());
+    emit(NavigateToGenderSelectionState(username:state.username, dob: state.dob, location: event.location, gender:state.gender, genderInterest:state.genderInterest, expectation:state.expectation));
+
   }
 
   FutureOr<void> genderButtonSelctionEvent(
       GenderButtonSelctionEvent event, Emitter<UserDetailsState> emit) {
+        print("gender");
+        print(state.gender);
     emit(GenderColorSelectedState(
         menclr: event.menclr,
         Otherclr: event.Otherclr,
         womenclr: event.womenclr,
-        gender: event.gender));
+         username:state.username, dob: state.dob, location: state.location, gender:event.gender, genderInterest:state.genderInterest, expectation:state.expectation));
     //log("colorchaged");
+  }
+   FutureOr<void> interestButtonSelctionEvent(InterestButtonSelctionEvent event, Emitter<UserDetailsState> emit) {
+emit(InterestColorSelectedState( menclr: event.menclr,
+        everyoneclr: event.Otherclr,
+        womenclr: event.womenclr,
+         username:state.username, dob: state.dob, location: state.location, gender:state.gender, genderInterest:event.gender, expectation:state.expectation));
   }
 
   FutureOr<void> genderSelectToGenderInterestEvent(
       GenderSelectToGenderInterestEvent event, Emitter<UserDetailsState> emit) {
     print("intrest");
-    emit(NavigateToGenderInterestedState());
+    emit(NavigateToGenderInterestedState(username:state.username, dob: state.dob, location: state.location, gender:event.gender, genderInterest:state.genderInterest, expectation:state.expectation));
   }
 
   FutureOr<void> interestToExpectationEvent(
       InterestToExpectationEvent event, Emitter<UserDetailsState> emit) {
-    emit(NavigateToExpectationState());
+    emit(NavigateToExpectationState(username:state.username, dob: state.dob, location: state.location, gender:state.gender, genderInterest:event.interest, expectation:state.expectation));
   }
 
   FutureOr<void> expectationtButtonSelectionEvent(
@@ -120,20 +131,22 @@ FutureOr<void> alreadyExistsuserEvent(AlreadyExistsuserEvent event, Emitter<User
         effectbThree: event.effectbThree,
         effectbFour: event.effectbFour,
         effectbFive: event.effectbFive,
-        expetation: event.expectation));
+       username:state.username, dob: state.dob, location: state.location, gender:state.gender, genderInterest:state.genderInterest, expectation:event.expectation));
   }
 
   FutureOr<void> exeptationToPresentationEvent(
       ExeptationToPresentationEvent event, Emitter<UserDetailsState> emit) {
-    emit(NavigateToPresentationState());
+    emit(NavigateToPresentationState(username:state.username, dob: state.dob, location: state.location, gender:state.gender, genderInterest:state.genderInterest, expectation:state.expectation));
   }
 
   FutureOr<void> presentationToHomeScreenEvent(PresentationToHomeScreenEvent event, Emitter<UserDetailsState> emit)async {
+
 Authentic _authentic=Authentic();
-await _authentic.createUser();
+await _authentic.createUser(state.username, state.dob,state.location,state.gender,state.genderInterest, state.expectation);
 await _authentic.localStorage();
-print("helooo");
-emit(NavigateToHomeScreenState());  
+log("datasubmitted");
+
+emit(NavigateToHomeScreenState(username:state.username, dob: state.dob, location: state.location, gender:state.gender, genderInterest:state.genderInterest, expectation:state.expectation));  
 }
 
  
@@ -141,4 +154,6 @@ emit(NavigateToHomeScreenState());
 
 
   
+
+ 
 }

@@ -14,7 +14,7 @@ class UserDob extends StatelessWidget {
   UserDob({super.key});
 
   AppFonts appFonts = AppFonts();
-
+ String ?dob;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -65,7 +65,9 @@ class UserDob extends StatelessWidget {
                     SizedBox(
                       height: mediaqueryHight(.02, context),
                     ),
-                    TextFormField(
+                    TextFormField(onChanged: (value) {
+                      dob=value;
+                    },
                       decoration: InputDecoration(
                           labelText: "DD/MM/YYYY",
                           border: OutlineInputBorder(
@@ -79,9 +81,10 @@ class UserDob extends StatelessWidget {
                       // Navigate to Next page
                       child: GestureDetector(
                         onTap: () {
+
                           context
                               .read<UserDetailsBloc>()
-                              .add(DobToEnableLocationEvent());
+                              .add(DobToEnableLocationEvent(dob: dob.toString()));
                         },
                         child: GreenNextbutton(
                           appFonts: appFonts,

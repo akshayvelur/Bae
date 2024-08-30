@@ -14,6 +14,7 @@ class UserName extends StatelessWidget {
   UserName({super.key});
 
   AppFonts appFonts = AppFonts();
+String ?username;
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +58,9 @@ class UserName extends StatelessWidget {
                     SizedBox(
                       height: mediaqueryHight(.02, context),
                     ),
-                    TextFormField(
+                    TextFormField(onChanged: (value) {
+                      username=value;
+                    },
                       decoration: InputDecoration(
                           labelText: "Name",
                           border: OutlineInputBorder(
@@ -71,7 +74,9 @@ class UserName extends StatelessWidget {
                       // Navigate to Next page
                       child: GestureDetector(
                         onTap: () {
-                          context.read<UserDetailsBloc>().add(NameToDobEvent());
+                       
+                        context.read<UserDetailsBloc>().add(NameToDobEvent(userName:username));
+                         
                         },
                         child: GreenNextbutton(
                           appFonts: appFonts,

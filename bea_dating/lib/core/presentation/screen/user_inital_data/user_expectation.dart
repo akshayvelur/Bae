@@ -50,7 +50,7 @@ class UserExpectationPage extends StatelessWidget {
            effectThree=state.effectbThree;
            effectFour=state.effectbFour;
            effectFive=state.effectbFive;  
-           expected=state.expetation;
+           expected=state.expectation;
 
             print(expected);
           }
@@ -108,7 +108,7 @@ class UserExpectationPage extends StatelessWidget {
                               if (expected != null) {
                                 context
                                     .read<UserDetailsBloc>()
-                                    .add(ExeptationToPresentationEvent());
+                                    .add(ExeptationToPresentationEvent(expectation: expected.toString()));
                               }
                             },
                             child: GreenNextbutton(

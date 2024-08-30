@@ -135,3 +135,133 @@ class GenderWidgetThree extends StatelessWidget {
   }
 }
 
+///
+// ignore: must_be_immutable
+class InterestWidgetOne extends StatelessWidget {
+  InterestWidgetOne({
+    super.key,
+    required this.menclr,
+    required this.appFonts,required this. cat
+  });
+
+  final Color menclr;
+  final AppFonts appFonts;
+  String cat;
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: () {
+        context.read<UserDetailsBloc>().add(
+           InterestButtonSelctionEvent(
+                menclr: blackclr,
+                Otherclr: whiteclr,
+                womenclr: whiteclr,
+                gender: cat));
+      },
+      child: Container(
+        height: mediaqueryHight(.05, context),
+        width: mediaqueryWidth(100, context),
+        decoration: BoxDecoration(
+            color: menclr,
+            borderRadius: BorderRadius.circular(20),
+            boxShadow: [
+              BoxShadow(
+                  color: blackclr, blurRadius: 2)
+            ]),
+        child: Center(
+            child: Text(
+          cat,
+          style: appFonts.nextbuttongreen,
+        )),
+      ),
+    );
+  }
+}
+
+// ignore: must_be_immutable
+class InterestWidgetTwo extends StatelessWidget {
+   InterestWidgetTwo({
+    super.key,
+    required this.women,
+    required this.appFonts,required this.cat
+  });
+
+  final Color women;
+  final AppFonts appFonts;
+  String cat;
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: () {
+        context.read<UserDetailsBloc>().add(
+            InterestButtonSelctionEvent(
+                menclr:whiteclr,
+                Otherclr: whiteclr,
+                womenclr:blackclr,
+                gender: cat));
+      },
+      child: Container(
+        height: mediaqueryHight(.05, context),
+        width: mediaqueryWidth(100, context),
+        decoration: BoxDecoration(
+            color: women,
+            borderRadius: BorderRadius.circular(20),
+            boxShadow: [
+              BoxShadow(
+                  color:blackclr, blurRadius: 2)
+            ]),
+        child: Center(
+            child: Text(
+          cat,
+          style: appFonts.nextbuttongreen,
+        )),
+      ),
+    );
+  }
+}
+
+// ignore: must_be_immutable
+class InterestWidgetThree extends StatelessWidget {
+   InterestWidgetThree({
+    super.key,
+    required this.other,
+    required this.appFonts,required this.cat
+  });
+
+  final Color other;
+  final AppFonts appFonts;
+  String cat;
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: () {
+        context.read<UserDetailsBloc>().add(
+            InterestButtonSelctionEvent(
+                menclr: whiteclr,
+                Otherclr:blackclr,
+                womenclr:whiteclr,
+                gender: cat));
+      },
+      child: Container(
+        height: mediaqueryHight(.05, context),
+        width: mediaqueryWidth(100, context),
+        decoration: BoxDecoration(
+            color: other,
+            borderRadius: BorderRadius.circular(20),
+            boxShadow: [
+              BoxShadow(
+                  color:blackclr, blurRadius: 2)
+            ]),
+        child: Center(
+            child: Text(
+          cat,
+          style: appFonts.nextbuttongreen,
+        )),
+      ),
+    );
+  }
+}
+

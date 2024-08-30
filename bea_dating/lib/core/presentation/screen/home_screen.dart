@@ -2,7 +2,6 @@ import 'package:bea_dating/core/domin/usecase/authentication.dart';
 import 'package:bea_dating/core/presentation/screen/welcome_screen.dart';
 import 'package:bea_dating/core/presentation/utilit/color.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 // ignore: must_be_immutable
 class HomeScreenPage extends StatelessWidget {

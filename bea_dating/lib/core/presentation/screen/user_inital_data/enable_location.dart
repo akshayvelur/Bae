@@ -14,7 +14,7 @@ class EnableLocation extends StatelessWidget {
   EnableLocation({super.key});
 
   AppFonts appFonts = AppFonts();
-
+ String location ="mylocation";
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -92,7 +92,7 @@ class EnableLocation extends StatelessWidget {
                         onTap: () {
                           context
                               .read<UserDetailsBloc>()
-                              .add(EnableLocationToGenderselectEvent());
+                              .add(EnableLocationToGenderselectEvent(location: location.toString()));
                         },
                         child: GreenNextbutton(
                           appFonts: appFonts,
