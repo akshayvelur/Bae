@@ -28,4 +28,8 @@ final Gradient userbasicbclr = LinearGradient(
 final rulecontainerbclr = Color.fromARGB(30, 51, 50, 49);
 final blackclr=Colors.black;
 final whiteclr=Colors.white;
+final blackshadow=Color.fromARGB(255, 72, 71, 71);
 final exbuttonGreen= Color(0xFF00C797);
+final useraboutContainer=Color.fromARGB(167, 14, 14, 14);
+
+final bottomBcr=Color.fromARGB(119, 72, 67, 67);

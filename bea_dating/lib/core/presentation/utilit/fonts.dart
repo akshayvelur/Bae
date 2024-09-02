@@ -1,3 +1,4 @@
+import 'package:bea_dating/core/presentation/utilit/color.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -22,8 +23,21 @@ class AppFonts {
   var commonheadfont = GoogleFonts.lexend(
     fontSize: 25,
   );
+    var userNamefont = GoogleFonts.lexend(
+    fontSize: 25,color: Colors.white);
+       var matchfont = GoogleFonts.lexend(
+    fontSize: 14,color: Colors.white);
+      var boostfont= GoogleFonts.lexend(
+    fontSize: 17,color: blackclr);
+
+     var userStatus = GoogleFonts.lexend(
+    fontSize: 12,color: Colors.white);
   var dateformat = GoogleFonts.lexend(
       fontSize: 14, color: const Color.fromARGB(255, 134, 134, 134));
        var ButtonTextblack = GoogleFonts.aBeeZee(
       color: Colors.black, fontSize: 14);
+        flexhead(final color,{double size=20}){
+          return GoogleFonts.ubuntu(
+      color:color,fontSize: size);
+        } 
 }

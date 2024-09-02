@@ -4,7 +4,9 @@ part of 'user_details_bloc.dart';
 abstract class UserDetailsEvent {}
 
 class SplashToWelcomeEvent extends UserDetailsEvent {}
-class AlreadyExistsuserEvent extends UserDetailsEvent{}
+
+class AlreadyExistsuserEvent extends UserDetailsEvent {}
+
 class GoogleLoginEvent extends UserDetailsEvent {}
 
 class RuleToNameformEvent extends UserDetailsEvent {}
@@ -34,7 +36,9 @@ class GenderButtonSelctionEvent extends UserDetailsEvent {
       required this.Otherclr,
       required this.womenclr,
       required this.gender});
-}class InterestButtonSelctionEvent extends UserDetailsEvent {
+}
+
+class InterestButtonSelctionEvent extends UserDetailsEvent {
   final menclr;
   final womenclr;
   final Otherclr;
@@ -78,10 +82,13 @@ class ExpectationtButtonSelectionEvent extends UserDetailsEvent {
       required this.effectbTwo,
       required this.effectbThree,
       required this.effectbFour,
-      required this.effectbFive,required this.expectation});
+      required this.effectbFive,
+      required this.expectation});
 }
-class ExeptationToPresentationEvent extends UserDetailsEvent{
-  final String  expectation;
+
+class ExeptationToPresentationEvent extends UserDetailsEvent {
+  final String expectation;
   ExeptationToPresentationEvent({required this.expectation});
 }
-class PresentationToHomeScreenEvent extends UserDetailsEvent{}
+
+class PresentationToHomeScreenEvent extends UserDetailsEvent {}

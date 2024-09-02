@@ -1,7 +1,7 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:bea_dating/core/presentation/block/user_details_bloc.dart';
-import 'package:bea_dating/core/presentation/screen/home_screen.dart';
-import 'package:bea_dating/core/presentation/screen/welcome_screen.dart';
+import 'package:bea_dating/core/presentation/screen/bottom_navigation/bottom_navigator.dart.dart';
+import 'package:bea_dating/core/presentation/screen/welcome&rule/welcome_screen.dart';
 import 'package:bea_dating/core/presentation/utilit/color.dart';
 import 'package:bea_dating/core/presentation/utilit/logo.dart';
 import 'package:bea_dating/core/presentation/utilit/page_transcation/fade_transition.dart';
@@ -32,7 +32,7 @@ class _SplashScreenState extends State<SplashScreen> {
           Navigator.of(context).pushReplacement(FadeTransitionPageRoute(child: WelcomeScreen()));
         }
         if(state is AccountVarifiedState ){
-          Navigator.of(context).push(FadeTransitionPageRoute(child: HomeScreenPage()));
+          Navigator.of(context).push(FadeTransitionPageRoute(child: BottomNavigationScreen()));
         }
       },
       child: Scaffold(

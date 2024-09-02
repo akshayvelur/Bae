@@ -14,7 +14,7 @@ class UserName extends StatelessWidget {
   UserName({super.key});
 
   AppFonts appFonts = AppFonts();
-String ?username;
+  String? username;
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +25,8 @@ String ?username;
       child: BlocListener<UserDetailsBloc, UserDetailsState>(
         listener: (context, state) {
           if (state is NavigateToDobState) {
-            Navigator.of(context).push(FadeTransitionPageRoute(child: UserDob()));
+            Navigator.of(context)
+                .push(FadeTransitionPageRoute(child: UserDob()));
           }
         },
         child: Scaffold(
@@ -58,9 +59,10 @@ String ?username;
                     SizedBox(
                       height: mediaqueryHight(.02, context),
                     ),
-                    TextFormField(onChanged: (value) {
-                      username=value;
-                    },
+                    TextFormField(
+                      onChanged: (value) {
+                        username = value;
+                      },
                       decoration: InputDecoration(
                           labelText: "Name",
                           border: OutlineInputBorder(
@@ -74,9 +76,9 @@ String ?username;
                       // Navigate to Next page
                       child: GestureDetector(
                         onTap: () {
-                       
-                        context.read<UserDetailsBloc>().add(NameToDobEvent(userName:username));
-                         
+                          context
+                              .read<UserDetailsBloc>()
+                              .add(NameToDobEvent(userName: username));
                         },
                         child: GreenNextbutton(
                           appFonts: appFonts,

@@ -28,7 +28,8 @@ class GenderSelctionPage extends StatelessWidget {
         child: BlocConsumer<UserDetailsBloc, UserDetailsState>(
           listener: (context, state) {
             if (state is NavigateToGenderInterestedState) {
-              Navigator.of(context).push(FadeTransitionPageRoute(child: GenderInterestPage()));
+              Navigator.of(context)
+                  .push(FadeTransitionPageRoute(child: GenderInterestPage()));
             }
           },
           builder: (context, state) {
@@ -103,9 +104,9 @@ class GenderSelctionPage extends StatelessWidget {
                             child: GestureDetector(
                               onTap: () {
                                 if (gender != null) {
-                                  context
-                                      .read<UserDetailsBloc>()
-                                      .add(GenderSelectToGenderInterestEvent(gender: gender.toString()));
+                                  context.read<UserDetailsBloc>().add(
+                                      GenderSelectToGenderInterestEvent(
+                                          gender: gender.toString()));
                                 }
                               },
                               child: GreenNextbutton(

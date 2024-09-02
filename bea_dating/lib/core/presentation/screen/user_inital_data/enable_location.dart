@@ -14,7 +14,7 @@ class EnableLocation extends StatelessWidget {
   EnableLocation({super.key});
 
   AppFonts appFonts = AppFonts();
- String location ="mylocation";
+  String location = "mylocation";
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -25,8 +25,8 @@ class EnableLocation extends StatelessWidget {
         listener: (context, state) {
           if (state is NavigateToGenderSelectionState) {
             //  log("Navigate to genderselct");
-            Navigator.of(context).push(
-            FadeTransitionPageRoute(child: GenderSelctionPage()));
+            Navigator.of(context)
+                .push(FadeTransitionPageRoute(child: GenderSelctionPage()));
           }
         },
         child: Scaffold(
@@ -90,9 +90,9 @@ class EnableLocation extends StatelessWidget {
                       // Navigate to Next page
                       child: GestureDetector(
                         onTap: () {
-                          context
-                              .read<UserDetailsBloc>()
-                              .add(EnableLocationToGenderselectEvent(location: location.toString()));
+                          context.read<UserDetailsBloc>().add(
+                              EnableLocationToGenderselectEvent(
+                                  location: location.toString()));
                         },
                         child: GreenNextbutton(
                           appFonts: appFonts,

@@ -12,7 +12,7 @@ class Authentic {
     try {
       final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
       final GoogleSignInAuthentication? googleAthu =
-          await googleUser?.authentication;
+          await googleUser?.authentication;                                                           
       final credential = GoogleAuthProvider.credential(
           accessToken: googleAthu?.accessToken, idToken: googleAthu?.idToken);
       print("sign In");
@@ -20,24 +20,30 @@ class Authentic {
       // ignore: unused_local_variable
       UserCredential userCredential =
           await FirebaseAuth.instance.signInWithCredential(credential);
-      
-   //   final myuser = userCredential;
-    
+
+      //   final myuser = userCredential;
     } catch (e) {
       print(e);
     }
   }
 
 //create user
-  Future<void> createUser(String name,String dob,String location,String gender,String interest,String expectation) async {
+  Future<void> createUser(String name, String dob, String location,
+      String gender, String interest, String expectation) async {
     try {
-      //print("UiD${_auth.currentUser!.uid}");
+    
       // ignore: unused_local_variable
       final users =
           await _firestore.collection('users').doc(_auth.currentUser!.uid).set({
         'uid': _auth.currentUser!.uid,
         'defaultName': _auth.currentUser!.displayName,
-        'email': _auth.currentUser!.email, 'name':name,'dob':dob,'location':location,'gender':gender,'interest':interest,'expectation':expectation
+        'email': _auth.currentUser!.email,
+        'name': name,
+        'dob': dob,
+        'location': location,
+        'gender': gender,
+        'interest': interest,
+        'expectation': expectation
       });
 
       log("database created");
@@ -45,12 +51,19 @@ class Authentic {
       log(e.toString());
     }
   }
+
   // Update Data
-  updateData(String name,String dob,String location,String gender,String interest,String expectation)async{
-  log("updateing...");
-  await _firestore.collection('users').doc(_auth.currentUser!.uid).update({
- 'name':name,'dob':dob,'location':location,'gender':gender,'interest':interest,'expectation':expectation
-  });
+  updateData(String name, String dob, String location, String gender,
+      String interest, String expectation) async {
+    log("updateing...");
+    await _firestore.collection('users').doc(_auth.currentUser!.uid).update({
+      'name': name,
+      'dob': dob,
+      'location': location,
+      'gender': gender,
+      'interest': interest,
+      'expectation': expectation
+    });
   }
 
 //
@@ -60,15 +73,15 @@ class Authentic {
         await _firestore.collection('users').doc(_auth.currentUser!.uid);
     final snapshot = await docRef.get();
     if (snapshot.exists) {
-      print("aiyoooo");
+   
       return true;
     } else {
-      print("araaaa");
+      
       //signOutFromGoogle();
       return false;
     }
   }
-
+//Sign out
   Future<bool> signOutFromGoogle() async {
     try {
       await GoogleSignIn().signOut();
@@ -82,7 +95,7 @@ class Authentic {
       return false;
     }
   }
-
+//Local storage
   Future<void> localStorage() async {
     try {
       print("MY LOCAL////////////////");

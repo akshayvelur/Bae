@@ -2,8 +2,8 @@
 
 import 'package:bea_dating/core/domin/usecase/authentication.dart';
 import 'package:bea_dating/core/presentation/block/user_details_bloc.dart';
-import 'package:bea_dating/core/presentation/screen/home_screen.dart';
-import 'package:bea_dating/core/presentation/screen/rules_and_regulation.dart';
+import 'package:bea_dating/core/presentation/screen/bottom_navigation/bottom_navigator.dart.dart';
+import 'package:bea_dating/core/presentation/screen/welcome&rule/rules_and_regulation.dart';
 import 'package:bea_dating/core/presentation/utilit/color.dart';
 import 'package:bea_dating/core/presentation/utilit/fonts.dart';
 import 'package:bea_dating/core/presentation/utilit/mediaquery.dart';
@@ -39,7 +39,7 @@ Authentic authentic=Authentic();
           Navigator.of(context).push(FadeTransitionPageRoute(child:RulesAndRegulation() ));
         }
         else if(state is NavigateToHomeScreenState){
-          Navigator.of(context).push(FadeTransitionPageRoute(child:HomeScreenPage()));
+          Navigator.of(context).push(FadeTransitionPageRoute(child:BottomNavigationScreen()));
         }
       },
       child: Scaffold(
