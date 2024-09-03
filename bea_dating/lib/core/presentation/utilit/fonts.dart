@@ -24,14 +24,14 @@ class AppFonts {
     fontSize: 25,
   );
     var userNamefont = GoogleFonts.lexend(
-    fontSize: 25,color: Colors.white);
+    fontSize: 20,color: const Color.fromARGB(255, 0, 0, 0));
        var matchfont = GoogleFonts.lexend(
-    fontSize: 14,color: Colors.white);
+    fontSize: 14,color: const Color.fromARGB(255, 0, 0, 0));
       var boostfont= GoogleFonts.lexend(
     fontSize: 17,color: blackclr);
 
      var userStatus = GoogleFonts.lexend(
-    fontSize: 12,color: Colors.white);
+    fontSize: 12,color: const Color.fromARGB(255, 0, 0, 0));
   var dateformat = GoogleFonts.lexend(
       fontSize: 14, color: const Color.fromARGB(255, 134, 134, 134));
        var ButtonTextblack = GoogleFonts.aBeeZee(

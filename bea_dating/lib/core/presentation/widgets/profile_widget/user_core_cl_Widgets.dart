@@ -21,7 +21,7 @@ final userOut;
       children: [
         CommonTextWidget(
           text: headline,
-          textfont: appFonts.flexhead(whiteclr, size: 14),
+          textfont: appFonts.flexhead(blackclr, size: 14),
         ),
         SizedBox(
       width: mediaqueryWidth(.08, context),
@@ -34,12 +34,12 @@ final userOut;
         height: mediaqueryHight(.04, context),
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
-            color: useraboutContainer),
+            color: whiteclr),
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: CommonTextWidget(
             text: userOut,
-            textfont: appFonts.flexhead(whiteclr, size: 14),
+            textfont: appFonts.flexhead(blackclr, size: 14),
           ),
         )),],
     );

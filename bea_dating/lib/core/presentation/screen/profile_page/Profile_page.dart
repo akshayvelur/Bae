@@ -17,67 +17,143 @@ class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: blackclr,
-      //
+      // backgroundColor: const Color.fromARGB(255, 52, 50, 50),
+
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        backgroundColor: blackclr,
+        backgroundColor: whiteclr,
         title: Text(
           "Bae",
-          style: subLogo,
+          style: subLogowhite,
         ),
         actions: [
-        
           IconButton(
-              onPressed: () { authentic.signOutFromGoogle();
+              onPressed: () {
+                authentic.signOutFromGoogle();
+
                 Navigator.of(context).pushReplacement(MaterialPageRoute(
                   builder: (context) => WelcomeScreen(),
-                ));},
+                ));
+              },
               icon: Icon(
                 Icons.edit_document,
-                color: whiteclr,
-              )),
-          IconButton(
-              onPressed: () {},
-              icon: Icon(
-                Icons.settings_applications_sharp,
-                color: whiteclr,
+                color: blackclr,
               ))
         ],
       ),
       body: SingleChildScrollView(
         child: Container(
-          color: blackclr,
+          color: whiteclr,
           child: Padding(
             padding: const EdgeInsets.only(left: 15, right: 15, top: 15),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
-                  height: mediaqueryHight(.5, context),
-                  width: mediaqueryWidth(1, context),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5),
-                      color: whiteclr,
-                      image: DecorationImage(
-                          image: AssetImage('assets/alone-boy.JPEG.jpg'),
-                          fit: BoxFit.cover),
-                      boxShadow: [
-                        BoxShadow(
-                          blurRadius: 2,
-                          color: blackshadow,
-                        )
-                      ]),
+                Row(
+                  children: [
+                    Container(
+                      height: mediaqueryHight(.2, context),
+                      width: mediaqueryWidth(.3, context),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5),
+                          color: whiteclr,
+                          image: DecorationImage(
+                              image: AssetImage('assets/alone-boy.JPEG.jpg'),
+                              fit: BoxFit.cover),
+                          boxShadow: [
+                            BoxShadow(
+                              blurRadius: 2,
+                              color: blackshadow,
+                            )
+                          ]),
+                    ),
+                    Column(
+                      children: [
+                        Column(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                left: 35,
+                                top: 5.9,
+                              ),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  GestureDetector(
+                                    onTap: () {},
+                                    child: FollowWidget(
+                                      appFonts: appFonts,
+                                      headline: 'match',
+                                      count: 10,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: mediaqueryWidth(.06, context),
+                                  ),
+                                  GestureDetector(
+                                      onTap: () {},
+                                      child: FollowWidget(
+                                          appFonts: appFonts,
+                                          count: 80,
+                                          headline: "Like"))
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: mediaqueryHight(.02, context),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 32),
+                          child: Container(
+                            height: mediaqueryHight(.045, context),
+                            width: mediaqueryHight(.13, context),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5),
+                              color: whiteclr,
+                              boxShadow: [
+                                BoxShadow(
+                                    color: blackshadow,
+                                    blurRadius: 2,
+                                    offset: Offset(2, 0),
+                                    blurStyle: BlurStyle.normal)
+                              ],
+                            ),
+                            child: Center(
+                              child: Row(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 8, right: 10),
+                                    child: Icon(
+                                      Icons.electric_bolt_outlined,
+                                      size: 18,
+                                    ),
+                                  ),
+                                  Text(
+                                    "Boost",
+                                    style: appFonts.boostfont,
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
                 SizedBox(
-                  height: mediaqueryHight(.03, context),
+                  height: mediaqueryHight(.02, context),
                 ),
                 UserBasicdata(appFonts: appFonts),
                 Container(
                   width: mediaqueryWidth(100, context),
                   height: mediaqueryHight(.29, context),
                   decoration: BoxDecoration(
-                      color: blackshadow,
+                      color: Color.fromARGB(255, 185, 182, 174),
                       borderRadius: BorderRadius.circular(10)),
                   child: GridView.builder(
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -92,7 +168,13 @@ class ProfilePage extends StatelessWidget {
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
                             color: whiteclr,
-                          ),child: Center(child: Icon(Icons.add,size: 30,),),
+                          ),
+                          child: Center(
+                            child: Icon(
+                              Icons.add,
+                              size: 30,
+                            ),
+                          ),
                         ),
                       );
                     },
@@ -105,7 +187,7 @@ class ProfilePage extends StatelessWidget {
                   width: mediaqueryWidth(100, context),
                   height: mediaqueryHight(.33, context),
                   decoration: BoxDecoration(
-                      color: blackshadow,
+                      color: Color.fromARGB(255, 177, 164, 155),
                       borderRadius: BorderRadius.circular(5)),
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -114,25 +196,41 @@ class ProfilePage extends StatelessWidget {
                       children: [
                         CommonTextWidget(
                           text: "Lifestyle habit",
-                          textfont: appFonts.flexhead(whiteclr, size: 20),
+                          textfont: appFonts.flexhead(blackclr, size: 20),
                         ),
                         SizedBox(
                           height: mediaqueryHight(.02, context),
                         ),
-                        UserCoreCollection(headline: "How often do you drink?",userOut: "Socially on  weekends",),
-                        SizedBox(height: mediaqueryHight(.01, context),),
-                         UserCoreCollection(headline: "How often do you smoke?",userOut: "No-smoker",),
-                          SizedBox(height: mediaqueryHight(.01, context),),
-                        UserCoreCollection(headline: "Do you workout?",userOut: "Everyday",),
+                        UserCoreCollection(
+                          headline: "How often do you drink?",
+                          userOut: "Socially on  weekends",
+                        ),
+                        SizedBox(
+                          height: mediaqueryHight(.01, context),
+                        ),
+                        UserCoreCollection(
+                          headline: "How often do you smoke?",
+                          userOut: "No-smoker",
+                        ),
+                        SizedBox(
+                          height: mediaqueryHight(.01, context),
+                        ),
+                        UserCoreCollection(
+                          headline: "Do you workout?",
+                          userOut: "Everyday",
+                        ),
                       ],
                     ),
                   ),
-                ),SizedBox(height: mediaqueryHight(.01, context),)
-                ,Container(
+                ),
+                SizedBox(
+                  height: mediaqueryHight(.01, context),
+                ),
+                Container(
                   width: mediaqueryWidth(100, context),
                   height: mediaqueryHight(.28, context),
                   decoration: BoxDecoration(
-                      color: blackshadow,
+                      color:  Color.fromARGB(255, 137, 150, 144),
                       borderRadius: BorderRadius.circular(5)),
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -146,11 +244,24 @@ class ProfilePage extends StatelessWidget {
                         // SizedBox(
                         //   height: mediaqueryHight(.02, context),
                         // ),
-                        UserCoreCollection(headline: "About",userOut: "Adventurous, tech-savvy",),
-                        SizedBox(height: mediaqueryHight(.01, context),),
-                         UserCoreCollection(headline: "Expectation ?",userOut: "Casual dating",),
-                          SizedBox(height: mediaqueryHight(.01, context),),
-                        UserCoreCollection(headline: "interest?",userOut: " tech innovation",),
+                        UserCoreCollection(
+                          headline: "About",
+                          userOut: "Adventurous, tech-savvy",
+                        ),
+                        SizedBox(
+                          height: mediaqueryHight(.01, context),
+                        ),
+                        UserCoreCollection(
+                          headline: "Expectation ?",
+                          userOut: "Casual dating",
+                        ),
+                        SizedBox(
+                          height: mediaqueryHight(.01, context),
+                        ),
+                        UserCoreCollection(
+                          headline: "interest?",
+                          userOut: " tech innovation",
+                        ),
                       ],
                     ),
                   ),

@@ -7,7 +7,7 @@ class HomeScreenPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-     body: Container(color: blackclr,height:30,),
+     body: Container(color: Color.fromARGB(255, 38, 38, 38),height:30,),
     );
   }
 }

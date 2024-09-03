@@ -18,8 +18,12 @@ class FollowWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            color: whiteclr,
+            boxShadow: [BoxShadow(blurRadius: 2,blurStyle: BlurStyle.inner)]),
         height: mediaqueryHight(.07, context),
-        width: mediaqueryHight(.07, context),
+        width: mediaqueryWidth(.2, context),
         child: Column(
           children: [
             Text(
@@ -35,44 +39,44 @@ class FollowWidget extends StatelessWidget {
   }
 }
 
-class MatchAndFollow extends StatelessWidget {
-  const MatchAndFollow({
-    super.key,
-    required this.appFonts,
-  });
+// class MatchAndFollow extends StatelessWidget {
+//   const MatchAndFollow({
+//     super.key,
+//     required this.appFonts,
+//   });
 
-  final AppFonts appFonts;
+//   final AppFonts appFonts;
 
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      //color: whiteclr,
-      height: mediaqueryHight(.08, context),
-      width: mediaqueryWidth(0.47, context),
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(
-              left: 35,
-              top: 5.9,
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                FollowWidget(
-                  appFonts: appFonts,
-                  headline: 'match',
-                  count: 10,
-                ),
-                FollowWidget(appFonts: appFonts, count: 80, headline: "Like")
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container(
+//       //color: whiteclr,
+//       height: mediaqueryHight(.08, context),
+//       width: mediaqueryWidth(0.47, context),
+//       child: Column(
+//         children: [
+//           Padding(
+//             padding: const EdgeInsets.only(
+//               left: 35,
+//               top: 5.9,
+//             ),
+//             child: Row(
+//               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//               children: [
+//                 FollowWidget(
+//                   appFonts: appFonts,
+//                   headline: 'match',
+//                   count: 10,
+//                 ),
+//                 FollowWidget(appFonts: appFonts, count: 80, headline: "Like")
+//               ],
+//             ),
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+// }
 
 class UserBasicdata extends StatefulWidget {
   const UserBasicdata({
@@ -98,11 +102,11 @@ class _UserBasicdataState extends State<UserBasicdata> {
     return Container(
       // color: whiteclr,
       width: mediaqueryWidth(100, context),
-      height: mediaqueryHight(.17, context),
+      height: mediaqueryHight(.12, context),
       child: Row(
         children: [
           Container(
-            //color: whiteclr,
+            //color: blackclr,
             width: mediaqueryWidth(.45, context),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -123,41 +127,10 @@ class _UserBasicdataState extends State<UserBasicdata> {
           ),
           Column(
             children: [
-              MatchAndFollow(appFonts: widget.appFonts),
+             //  MatchAndFollow(appFonts: widget.appFonts),
               Padding(
                 padding: const EdgeInsets.only(top: 20, left: 36),
-                child: Container(
-                  height: mediaqueryHight(.045, context),
-                  width: mediaqueryHight(.13, context),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5),
-                    color: whiteclr,
-                    boxShadow: [
-                      BoxShadow(
-                          color: blackshadow,
-                          blurRadius: 2,
-                          offset: Offset(2, 0),
-                          blurStyle: BlurStyle.normal)
-                    ],
-                  ),
-                  child: Center(
-                    child: Row(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(left: 8, right: 10),
-                          child: Icon(
-                            Icons.electric_bolt_outlined,
-                            size: 18,
-                          ),
-                        ),
-                        Text(
-                          "Boost",
-                          style: widget.appFonts.boostfont,
-                        )
-                      ],
-                    ),
-                  ),
-                ),
+                //child:
               )
             ],
           )

@@ -44,7 +44,10 @@ Authentic authentic=Authentic();
       },
       child: Scaffold(
           body: Container(
-        decoration: BoxDecoration(gradient: welcomebclr),
+        decoration: BoxDecoration(
+          //color:  Color.fromARGB(255, 149, 68, 92)
+          gradient: welcomebclr
+          ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
