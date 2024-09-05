@@ -87,7 +87,7 @@ Authentic authentic=Authentic();
             ),  SizedBox(height:mediaqueryHight(.05, context),),
             Center(
               // Navigate to Next page
-              child: GestureDetector(
+              child: InkWell(
                 onTap: () async{
                   context.read<UserDetailsBloc>().add(GoogleLoginEvent());
                

@@ -30,7 +30,8 @@ final blackclr=Colors.black;
 final whiteclr=Colors.white;
 final blackshadow=Color.fromARGB(255, 72, 71, 71);
 final exbuttonGreen= Color(0xFF00C797);
-final useraboutContainer=  Color.fromARGB(255, 185, 182, 174);
-
+final useraboutContainer=  Color.fromARGB(78, 136, 156, 155);
+final usercircle=  Color.fromARGB(255, 66, 69, 68);
+final listbckclr= Color.fromARGB(89, 137, 146, 150);  
 final bottomBcr=Color.fromARGB(119, 72, 67, 67);
 final profileAppclr= const Color.fromARGB(255, 52, 50, 50);

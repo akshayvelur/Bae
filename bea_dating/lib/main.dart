@@ -1,4 +1,5 @@
 import 'package:bea_dating/core/presentation/block/user_details_bloc.dart';
+import 'package:bea_dating/core/presentation/screen/chat_page/bloc/chat_bloc.dart';
 import 'package:bea_dating/core/presentation/screen/home_screen/bloc/homebloc_bloc.dart';
 import 'package:bea_dating/core/presentation/screen/splash_screen/splash_screen.dart';
 import 'package:flutter/material.dart';
@@ -24,7 +25,8 @@ class MyApp extends StatelessWidget {
         BlocProvider<UserDetailsBloc>(
           create: (context) => UserDetailsBloc(),
         ),
-        BlocProvider<HomeblocBloc>(create: (context) => HomeblocBloc(),)
+        BlocProvider<HomeblocBloc>(create: (context) => HomeblocBloc(),
+       ), BlocProvider<ChatBloc>(create: (context) =>ChatBloc())
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

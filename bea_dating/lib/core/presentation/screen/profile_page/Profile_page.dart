@@ -140,7 +140,7 @@ class ProfilePage extends StatelessWidget {
                               ),
                             ),
                           ),
-                        ),
+                        ), 
                       ],
                     ),
                   ],
@@ -153,7 +153,7 @@ class ProfilePage extends StatelessWidget {
                   width: mediaqueryWidth(100, context),
                   height: mediaqueryHight(.29, context),
                   decoration: BoxDecoration(
-                      color: Color.fromARGB(255, 185, 182, 174),
+                      color: Color.fromARGB(78, 136, 156, 155),
                       borderRadius: BorderRadius.circular(10)),
                   child: GridView.builder(
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -166,7 +166,7 @@ class ProfilePage extends StatelessWidget {
                           height: 5,
                           width: 5,
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
+                            borderRadius: BorderRadius.circular(10),boxShadow: [BoxShadow(blurRadius: 1)],
                             color: whiteclr,
                           ),
                           child: Center(
@@ -187,8 +187,8 @@ class ProfilePage extends StatelessWidget {
                   width: mediaqueryWidth(100, context),
                   height: mediaqueryHight(.33, context),
                   decoration: BoxDecoration(
-                      color: Color.fromARGB(255, 177, 164, 155),
-                      borderRadius: BorderRadius.circular(5)),
+                      color:useraboutContainer,
+                      borderRadius: BorderRadius.circular(5),),
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Column(
@@ -230,7 +230,7 @@ class ProfilePage extends StatelessWidget {
                   width: mediaqueryWidth(100, context),
                   height: mediaqueryHight(.28, context),
                   decoration: BoxDecoration(
-                      color:  Color.fromARGB(255, 137, 150, 144),
+                      color: useraboutContainer,
                       borderRadius: BorderRadius.circular(5)),
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),

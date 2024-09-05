@@ -23,6 +23,12 @@ class AppFonts {
   var commonheadfont = GoogleFonts.lexend(
     fontSize: 25,
   );
+    var appBarfont = GoogleFonts.lexend(
+    fontSize: 20,
+  );
+   var subHeadline = GoogleFonts.lexend(
+    fontSize: 17,
+  );
     var userNamefont = GoogleFonts.lexend(
     fontSize: 20,color: const Color.fromARGB(255, 0, 0, 0));
        var matchfont = GoogleFonts.lexend(
