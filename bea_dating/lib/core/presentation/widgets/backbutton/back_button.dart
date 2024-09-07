@@ -13,7 +13,7 @@ class Backbuttons extends StatelessWidget {
         width: mediaqueryWidth(.11, context),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(7),
-          color: Colors.white,boxShadow: [BoxShadow(color: Colors.grey,blurRadius:2,offset:  Offset(0, 1))]
+          color: Colors.white,
         ),child:Icon(Icons.arrow_back_ios_new) ,);
   }
 }

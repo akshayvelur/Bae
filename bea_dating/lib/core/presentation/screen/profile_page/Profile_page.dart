@@ -8,6 +8,7 @@ import 'package:bea_dating/core/presentation/utilit/text_widget.dart';
 import 'package:bea_dating/core/presentation/widgets/profile_widget/profile_widget.dart';
 import 'package:bea_dating/core/presentation/widgets/profile_widget/user_core_cl_Widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:zo_animated_border/zo_animated_border.dart';
 
 // ignore: must_be_immutable
 class ProfilePage extends StatelessWidget {
@@ -17,14 +18,12 @@ class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: const Color.fromARGB(255, 52, 50, 50),
-
       appBar: AppBar(
         automaticallyImplyLeading: false,
         backgroundColor: whiteclr,
         title: Text(
           "Bae",
-          style: subLogowhite,
+          style: subLogoblack,
         ),
         actions: [
           IconButton(
@@ -107,40 +106,51 @@ class ProfilePage extends StatelessWidget {
                         ),
                         Padding(
                           padding: const EdgeInsets.only(left: 32),
-                          child: Container(
+                          child: ZoAnimatedGradientBorder(shouldAnimate: false,
+                            gradientColor: [
+                             // Colors.red,
+                              Color(0xFF41BFB3),
+                              const Color.fromARGB(255, 253, 254, 255),
+                              Color(0xFF41BFB3),
+                            ],
                             height: mediaqueryHight(.045, context),
                             width: mediaqueryHight(.13, context),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(5),
-                              color: whiteclr,
-                              boxShadow: [
-                                BoxShadow(
-                                    color: blackshadow,
-                                    blurRadius: 2,
-                                    offset: Offset(2, 0),
-                                    blurStyle: BlurStyle.normal)
-                              ],
-                            ),
-                            child: Center(
-                              child: Row(
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                        left: 8, right: 10),
-                                    child: Icon(
-                                      Icons.electric_bolt_outlined,
-                                      size: 18,
-                                    ),
-                                  ),
-                                  Text(
-                                    "Boost",
-                                    style: appFonts.boostfont,
-                                  )
+                            duration: Duration(seconds: 5),
+                            child: Container(
+                              height: mediaqueryHight(.045, context),
+                              width: mediaqueryHight(.13, context),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(5),
+                                color: whiteclr,
+                                boxShadow: [
+                                  BoxShadow(
+                                      color: blackshadow,
+                                      blurRadius: 2,
+                                      offset: Offset(2, 0),
+                                      blurStyle: BlurStyle.normal)
                                 ],
+                              ),
+                              child: Center(
+                                child: Row(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                          left: 8, right: 10),
+                                      child: Icon(
+                                        Icons.electric_bolt_outlined,
+                                        size: 18,
+                                      ),
+                                    ),
+                                    Text(
+                                      "Boost",
+                                      style: appFonts.boostfont,
+                                    )
+                                  ],
+                                ),
                               ),
                             ),
                           ),
-                        ), 
+                        ),
                       ],
                     ),
                   ],
@@ -166,7 +176,8 @@ class ProfilePage extends StatelessWidget {
                           height: 5,
                           width: 5,
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),boxShadow: [BoxShadow(blurRadius: 1)],
+                            borderRadius: BorderRadius.circular(10),
+                            boxShadow: [BoxShadow(blurRadius: 1)],
                             color: whiteclr,
                           ),
                           child: Center(
@@ -187,8 +198,9 @@ class ProfilePage extends StatelessWidget {
                   width: mediaqueryWidth(100, context),
                   height: mediaqueryHight(.33, context),
                   decoration: BoxDecoration(
-                      color:useraboutContainer,
-                      borderRadius: BorderRadius.circular(5),),
+                    color: useraboutContainer,
+                    borderRadius: BorderRadius.circular(5),
+                  ),
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Column(

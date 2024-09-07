@@ -35,3 +35,4 @@ final usercircle=  Color.fromARGB(255, 66, 69, 68);
 final listbckclr= Color.fromARGB(89, 137, 146, 150);  
 final bottomBcr=Color.fromARGB(119, 72, 67, 67);
 final profileAppclr= const Color.fromARGB(255, 52, 50, 50);
+final shadowclr=Color.fromARGB(105, 55, 54, 53);

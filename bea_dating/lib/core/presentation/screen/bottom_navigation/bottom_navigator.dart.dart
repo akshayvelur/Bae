@@ -5,9 +5,8 @@ import 'package:bea_dating/core/presentation/screen/profile_page/Profile_page.da
 import 'package:bea_dating/core/presentation/screen/chat_page/chat_page.dart';
 import 'package:bea_dating/core/presentation/screen/home_screen/home_screen.dart';
 import 'package:bea_dating/core/presentation/screen/notification_page/notification_page.dart';
-import 'package:bea_dating/core/presentation/utilit/color.dart';
 import 'package:bea_dating/core/presentation/utilit/fonts.dart';
- import 'package:bea_dating/core/presentation/utilit/mediaquery.dart';
+import 'package:bea_dating/core/presentation/utilit/mediaquery.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -32,11 +31,11 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
   ];
   
   List<String> bticons = [
-    "assets/Indoor Camera.png",
-    "assets/Message Bot.png",
-    "assets/Diversity.png",
-    "assets/Notification.png",
-    "assets/Account.png"
+    "assets/icons8-indoor-camera-60.png",
+    "assets/icons8-message-bot-100.png",
+    "assets/icons8-diversity-100.png",
+    "assets/icons8-notification-128.png",
+    "assets/icons8-account-96.png"
   ];
 
   @override

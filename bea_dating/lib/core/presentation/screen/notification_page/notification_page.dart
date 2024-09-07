@@ -3,6 +3,7 @@ import 'package:bea_dating/core/presentation/utilit/fonts.dart';
 import 'package:bea_dating/core/presentation/utilit/mediaquery.dart';
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class NotificationPage extends StatelessWidget {
   NotificationPage({super.key});
   AppFonts appFonts = AppFonts();

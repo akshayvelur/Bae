@@ -9,7 +9,7 @@ import 'package:bea_dating/core/presentation/utilit/fonts.dart';
 import 'package:bea_dating/core/presentation/utilit/mediaquery.dart';
 import 'package:bea_dating/core/presentation/utilit/page_transcation/fade_transition.dart';
 import 'package:bea_dating/core/presentation/widgets/welcome_screen_widgets/welcome_collab_containers.dart';
-
+import 'package:animated_loading_border/animated_loading_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -92,40 +92,42 @@ Authentic authentic=Authentic();
                   context.read<UserDetailsBloc>().add(GoogleLoginEvent());
                
                 },
-                child: Container(
-                  height: mediaqueryHight(.05, context),
-                  width: mediaqueryWidth(.86, context),
-                  decoration: const BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(30)),
-                      color: Colors.white,
-                      boxShadow: [
-                        BoxShadow(
-                            blurRadius: 2,
-                            color: Color.fromARGB(255, 0, 0, 0),
-                            blurStyle: BlurStyle.outer,
-                            offset: Offset(0, 1))
-                      ]),
-                  child: Center(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        SizedBox(
-                          width: mediaqueryWidth(.03, context),
-                        ),
-                        Container(
-                            width: mediaqueryWidth(.08, context),
-                            height: mediaqueryHight(.05, context),
-                            child: Image(
-                                image: AssetImage("assets/pngwing.com.png"))),
-                        SizedBox(
-                          width: mediaqueryWidth(.15, context),
-                        ),
-                      
-                        Text(
-                          "Sign in with Google",
-                          style: appFonts.nextbuttongreen,
-                        ),
-                      ],
+                child: AnimatedLoadingBorder(borderWidth: 8,borderColor: whiteclr,cornerRadius: 30,
+                  child: Container(
+                    height: mediaqueryHight(.05, context),
+                    width: mediaqueryWidth(.86, context),
+                    decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(30)),
+                        color: Colors.white,
+                        boxShadow: [
+                          BoxShadow(
+                              blurRadius: 2,
+                              color: Color.fromARGB(255, 0, 0, 0),
+                              blurStyle: BlurStyle.outer,
+                              offset: Offset(0, 1))
+                        ]),
+                    child: Center(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          SizedBox(
+                            width: mediaqueryWidth(.03, context),
+                          ),
+                          Container(
+                              width: mediaqueryWidth(.08, context),
+                              height: mediaqueryHight(.05, context),
+                              child: Image(
+                                  image: AssetImage("assets/pngwing.com.png"))),
+                          SizedBox(
+                            width: mediaqueryWidth(.15, context),
+                          ),
+                        
+                          Text(
+                            "Sign in with Google",
+                            style: appFonts.nextbuttongreen,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),

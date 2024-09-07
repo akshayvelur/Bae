@@ -7,6 +7,7 @@ import 'package:bea_dating/core/presentation/utilit/page_transcation/fade_transi
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+// ignore: must_be_immutable
 class ChatPage extends StatelessWidget {
   ChatPage({super.key});
   AppFonts appFonts = AppFonts();
@@ -22,7 +23,7 @@ class ChatPage extends StatelessWidget {
       builder: (context, state) {
         return Scaffold(
           backgroundColor: whiteclr,
-          appBar: AppBar(
+          appBar: AppBar(backgroundColor: whiteclr,shadowColor: whiteclr,
             title: Text(
               "chat",
               style: appFonts.appBarfont,
