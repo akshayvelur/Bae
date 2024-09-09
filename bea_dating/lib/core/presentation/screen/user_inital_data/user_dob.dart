@@ -12,9 +12,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 // ignore: must_be_immutable
 class UserDob extends StatelessWidget {
   UserDob({super.key});
-
+  final _formkey = GlobalKey<FormState>();
   AppFonts appFonts = AppFonts();
-  String? dob;
+
+  TextEditingController dateController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -66,15 +67,47 @@ class UserDob extends StatelessWidget {
                     SizedBox(
                       height: mediaqueryHight(.02, context),
                     ),
-                    TextFormField(
-                      onChanged: (value) {
-                        dob = value;
-                      },
-                      decoration: InputDecoration(
-                          labelText: "DD/MM/YYYY",
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          )),
+                    Form(
+                      key: _formkey,
+                      child: TextFormField(
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        keyboardType: TextInputType.datetime,
+                        controller: dateController,
+                        maxLength: 10,
+                        decoration: InputDecoration(
+                            labelText: "DD/MM/YYYY",
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            counterText: ""),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return "Enter your Dob";
+                          }
+                          final dateRegExp = RegExp(
+                              r"^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/(19|20)\d{2}$");
+
+                          if (!dateRegExp.hasMatch(value)) {
+                            return 'Enter a valid date (DD/MM/YYYY)';
+                          }
+                          //further validation
+                          try {
+                            final parts = value.split('/');
+                            final day = int.parse(parts[0]);
+                            final month = int.parse(parts[1]);
+                            final year = int.parse(parts[2]);
+
+                            final date = DateTime(year, month, day);
+                            if (date.year != year ||
+                                date.month != month ||
+                                date.day != day) {
+                              return 'Invalid date';
+                            }
+                          } catch (e) {
+                            return 'Invalid date';
+                          }
+                        },
+                      ),
                     ),
                     SizedBox(
                       height: mediaqueryHight(.49, context),
@@ -83,8 +116,11 @@ class UserDob extends StatelessWidget {
                       // Navigate to Next page
                       child: GestureDetector(
                         onTap: () {
-                          context.read<UserDetailsBloc>().add(
-                              DobToEnableLocationEvent(dob: dob.toString()));
+                          if (_formkey.currentState!.validate()) {
+                                     context.read<UserDetailsBloc>().add(
+                              DobToEnableLocationEvent(dob:dateController.text));
+                          }
+                 
                         },
                         child: GreenNextbutton(
                           appFonts: appFonts,

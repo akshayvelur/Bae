@@ -49,6 +49,7 @@ dependencies:
   flutter_card_swiper: ^7.0.1
   zo_animated_border: ^0.0.1
   animated_loading_border: ^0.0.2
+  location: ^6.0.2
 
 dev_dependencies:
   flutter_test:

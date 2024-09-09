@@ -22,8 +22,7 @@ class DobToEnableLocationEvent extends UserDetailsEvent {
 }
 
 class EnableLocationToGenderselectEvent extends UserDetailsEvent {
-  final String location;
-  EnableLocationToGenderselectEvent({required this.location});
+
 }
 
 class GenderButtonSelctionEvent extends UserDetailsEvent {

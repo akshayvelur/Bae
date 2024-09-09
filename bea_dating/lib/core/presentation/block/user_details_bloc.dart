@@ -3,8 +3,10 @@
 import 'dart:async';
 import 'dart:developer';
 import 'package:bea_dating/core/domin/usecase/authentication.dart';
+import 'package:bea_dating/core/domin/usecase/location_Enable.dart';
 import 'package:bloc/bloc.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:location/location.dart';
 import 'package:meta/meta.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 part 'user_details_event.dart';
@@ -66,8 +68,9 @@ class UserDetailsBloc extends Bloc<UserDetailsEvent, UserDetailsState> {
   //Google Login
   FutureOr<void> googleLoginEvent(
       GoogleLoginEvent event, Emitter<UserDetailsState> emit) async {
-        await GoogleSignIn().signOut();
+
     Authentic _authentic = Authentic();
+     await GoogleSignIn().signOut();
     await _authentic.signInWithGoogle();
     emit(InitLodingSate(
         username: state.username,
@@ -144,11 +147,13 @@ class UserDetailsBloc extends Bloc<UserDetailsEvent, UserDetailsState> {
   }
 
   FutureOr<void> enableLocationToGenderselct(
-      EnableLocationToGenderselectEvent event, Emitter<UserDetailsState> emit) {
+      EnableLocationToGenderselectEvent event, Emitter<UserDetailsState> emit) async{
+    LocationData _locationData=await locationEnable();
+
     emit(NavigateToGenderSelectionState(
         username: state.username,
         dob: state.dob,
-        location: event.location,
+        location: _locationData.toString(),
         gender: state.gender,
         genderInterest: state.genderInterest,
         expectation: state.expectation));

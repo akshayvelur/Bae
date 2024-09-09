@@ -7,6 +7,7 @@ import 'package:bea_dating/core/presentation/utilit/page_transcation/fade_transi
 import 'package:bea_dating/core/presentation/widgets/backbutton/back_button.dart';
 import 'package:bea_dating/core/presentation/widgets/userintroduction/User_greenbutton.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 // ignore: must_be_immutable
@@ -14,7 +15,8 @@ class UserName extends StatelessWidget {
   UserName({super.key});
 
   AppFonts appFonts = AppFonts();
-  String? username;
+  final formKey = GlobalKey<FormState>();
+  TextEditingController usernamecontroller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -59,15 +61,23 @@ class UserName extends StatelessWidget {
                     SizedBox(
                       height: mediaqueryHight(.02, context),
                     ),
-                    TextFormField(
-                      onChanged: (value) {
-                        username = value;
-                      },
-                      decoration: InputDecoration(
-                          labelText: "Name",
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          )),
+                    Form(
+                      key: formKey,
+                      child: TextFormField(autovalidateMode: AutovalidateMode.onUserInteraction,
+                        controller: usernamecontroller,
+                        decoration: InputDecoration(
+                            labelText: "Name",
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            )),
+                        validator: (value) {
+                          if(value==null||value.isEmpty){
+                        return "Enter your name";
+                          }else{
+                            return null;
+                          }
+                        },
+                      ),
                     ),
                     SizedBox(
                       height: mediaqueryHight(.56, context),
@@ -76,9 +86,11 @@ class UserName extends StatelessWidget {
                       // Navigate to Next page
                       child: GestureDetector(
                         onTap: () {
-                          context
-                              .read<UserDetailsBloc>()
-                              .add(NameToDobEvent(userName: username));
+                          if(formKey.currentState!.validate()){
+                                 context.read<UserDetailsBloc>().add(NameToDobEvent(
+                              userName: usernamecontroller.text));
+                          }
+                      
                         },
                         child: GreenNextbutton(
                           appFonts: appFonts,

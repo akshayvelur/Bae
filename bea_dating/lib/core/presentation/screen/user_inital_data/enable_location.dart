@@ -8,6 +8,7 @@ import 'package:bea_dating/core/presentation/widgets/backbutton/back_button.dart
 import 'package:bea_dating/core/presentation/widgets/userintroduction/User_greenbutton.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:location/location.dart';
 
 // ignore: must_be_immutable
 class EnableLocation extends StatelessWidget {
@@ -89,10 +90,10 @@ class EnableLocation extends StatelessWidget {
                     Center(
                       // Navigate to Next page
                       child: GestureDetector(
-                        onTap: () {
+                        onTap: () { 
                           context.read<UserDetailsBloc>().add(
                               EnableLocationToGenderselectEvent(
-                                  location: location.toString()));
+                                  ));
                         },
                         child: GreenNextbutton(
                           appFonts: appFonts,
@@ -109,4 +110,5 @@ class EnableLocation extends StatelessWidget {
       ),
     );
   }
+
 }
