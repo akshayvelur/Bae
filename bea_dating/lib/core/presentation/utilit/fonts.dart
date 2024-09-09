@@ -46,4 +46,9 @@ class AppFonts {
           return GoogleFonts.ubuntu(
       color:color,fontSize: size);
         } 
+          flextext(final color,{double size=20,int Fweight=400}){
+          return GoogleFonts.ubuntu(
+      color:color,fontSize: size,fontWeight:FontWeight.values[(Fweight~/100)-1]);
+        } 
+
 }

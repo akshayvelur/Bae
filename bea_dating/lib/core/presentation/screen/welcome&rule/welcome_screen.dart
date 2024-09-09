@@ -92,7 +92,7 @@ Authentic authentic=Authentic();
                   context.read<UserDetailsBloc>().add(GoogleLoginEvent());
                
                 },
-                child: AnimatedLoadingBorder(borderWidth: 8,borderColor: whiteclr,cornerRadius: 30,
+                child: AnimatedLoadingBorder(borderWidth: 4,borderColor: whiteclr,cornerRadius: 30,duration: Duration(seconds: 4),
                   child: Container(
                     height: mediaqueryHight(.05, context),
                     width: mediaqueryWidth(.86, context),

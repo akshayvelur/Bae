@@ -1,3 +1,4 @@
+import 'package:animated_loading_border/animated_loading_border.dart';
 import 'package:bea_dating/core/domin/usecase/authentication.dart';
 import 'package:bea_dating/core/presentation/screen/welcome&rule/welcome_screen.dart';
 import 'package:bea_dating/core/presentation/utilit/color.dart';
@@ -106,22 +107,14 @@ class ProfilePage extends StatelessWidget {
                         ),
                         Padding(
                           padding: const EdgeInsets.only(left: 32),
-                          child: ZoAnimatedGradientBorder(shouldAnimate: false,
-                            gradientColor: [
-                             // Colors.red,
-                              Color(0xFF41BFB3),
-                              const Color.fromARGB(255, 253, 254, 255),
-                              Color(0xFF41BFB3),
-                            ],
-                            height: mediaqueryHight(.045, context),
-                            width: mediaqueryHight(.13, context),
-                            duration: Duration(seconds: 5),
+                          child: AnimatedLoadingBorder(borderColor: Color.fromARGB(255, 13, 208, 62),cornerRadius: 10,borderWidth: 6,duration: Duration(seconds: 3
+                          ),
                             child: Container(
                               height: mediaqueryHight(.045, context),
                               width: mediaqueryHight(.13, context),
                               decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(5),
-                                color: whiteclr,
+                                borderRadius: BorderRadius.circular(10),
+                                color: blackclr,
                                 boxShadow: [
                                   BoxShadow(
                                       color: blackshadow,
@@ -135,15 +128,12 @@ class ProfilePage extends StatelessWidget {
                                   children: [
                                     Padding(
                                       padding: const EdgeInsets.only(
-                                          left: 8, right: 10),
-                                      child: Icon(
-                                        Icons.electric_bolt_outlined,
-                                        size: 18,
-                                      ),
+                                          left: 15, right: 10),
+                                      child:Image.asset("assets/icons8-flash-48.png",scale: 3,)
                                     ),
                                     Text(
                                       "Boost",
-                                      style: appFonts.boostfont,
+                                      style: appFonts.flextext(whiteclr,size: 15),
                                     )
                                   ],
                                 ),
