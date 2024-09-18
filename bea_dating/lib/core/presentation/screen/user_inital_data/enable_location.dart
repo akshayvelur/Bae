@@ -1,4 +1,4 @@
-import 'package:bea_dating/core/presentation/block/user_details_bloc.dart';
+import 'package:bea_dating/core/presentation/screen/user_inital_data/block/user_details_bloc.dart';
 import 'package:bea_dating/core/presentation/screen/user_inital_data/gender_selection.dart';
 import 'package:bea_dating/core/presentation/utilit/color.dart';
 import 'package:bea_dating/core/presentation/utilit/fonts.dart';
@@ -8,7 +8,6 @@ import 'package:bea_dating/core/presentation/widgets/backbutton/back_button.dart
 import 'package:bea_dating/core/presentation/widgets/userintroduction/User_greenbutton.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:location/location.dart';
 
 // ignore: must_be_immutable
 class EnableLocation extends StatelessWidget {

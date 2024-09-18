@@ -1,8 +1,8 @@
 import 'package:bea_dating/core/presentation/utilit/mediaquery.dart';
 import 'package:flutter/material.dart';
 
-class WelcomeColaberg extends StatelessWidget {
-  const WelcomeColaberg({
+class WelcomeColabergWidget extends StatelessWidget {
+  const WelcomeColabergWidget({
     super.key,
   });
 

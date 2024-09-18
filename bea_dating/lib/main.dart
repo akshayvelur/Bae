@@ -1,8 +1,10 @@
-import 'package:bea_dating/core/presentation/block/user_details_bloc.dart';
+
 import 'package:bea_dating/core/presentation/screen/category/bloc/category_bloc.dart';
 import 'package:bea_dating/core/presentation/screen/chat_page/bloc/chat_bloc.dart';
 import 'package:bea_dating/core/presentation/screen/home_screen/bloc/homebloc_bloc.dart';
+import 'package:bea_dating/core/presentation/screen/profile_page/bloc/profile_bloc.dart';
 import 'package:bea_dating/core/presentation/screen/splash_screen/splash_screen.dart';
+import 'package:bea_dating/core/presentation/screen/user_inital_data/block/user_details_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -28,7 +30,8 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider<HomeblocBloc>(create: (context) => HomeblocBloc(),
        ), BlocProvider<ChatBloc>(create: (context) =>ChatBloc()),
-       BlocProvider<CategoryBloc>(create: (context) => CategoryBloc(),)
+       BlocProvider<CategoryBloc>(create: (context) => CategoryBloc(),
+       ),BlocProvider<ProfileBloc>(create: (context) => ProfileBloc(),)
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

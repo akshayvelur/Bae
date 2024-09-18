@@ -1,5 +1,7 @@
-import 'package:bea_dating/core/presentation/block/user_details_bloc.dart';
+import 'dart:io';
+
 import 'package:bea_dating/core/presentation/screen/bottom_navigation/bottom_navigator.dart.dart';
+import 'package:bea_dating/core/presentation/screen/user_inital_data/block/user_details_bloc.dart';
 import 'package:bea_dating/core/presentation/utilit/color.dart';
 import 'package:bea_dating/core/presentation/utilit/fonts.dart';
 import 'package:bea_dating/core/presentation/utilit/mediaquery.dart';
@@ -8,12 +10,20 @@ import 'package:bea_dating/core/presentation/widgets/backbutton/back_button.dart
 import 'package:bea_dating/core/presentation/widgets/userintroduction/User_greenbutton.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
 
 // ignore: must_be_immutable
-class PresentaionImagePage extends StatelessWidget {
+class PresentaionImagePage extends StatefulWidget {
   PresentaionImagePage({super.key});
 
+  @override
+  State<PresentaionImagePage> createState() => _PresentaionImagePageState();
+}
+
+class _PresentaionImagePageState extends State<PresentaionImagePage> {
   AppFonts appFonts = AppFonts();
+  final ImagePicker _picker = ImagePicker();
+  List<XFile> image = [];
 
   @override
   Widget build(BuildContext context) {
@@ -61,108 +71,52 @@ class PresentaionImagePage extends StatelessWidget {
                     ),
                     Center(
                       child: Container(
-                        // color: Colors.amber,
-                        height: mediaqueryHight(.36, context),
-                        width: mediaqueryWidth(.82, context),
-                        child: Row(
-                          children: [
-                            Column(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                    top: 20,
-                                    left: 20,
-                                  ),
-                                  child: Container(
-                                    height: mediaqueryHight(.14, context),
-                                    width: mediaqueryWidth(.32, context),
-                                    decoration: BoxDecoration(
-                                        color: whiteclr,
-                                        borderRadius: BorderRadius.circular(10),
-                                        boxShadow: [
-                                          BoxShadow(
-                                              color: blackclr, blurRadius: 2)
-                                        ]),
-                                    child: Icon(
-                                      Icons.add,
-                                      size: 40,
-                                    ),
-                                  ),
+                          //  color: Colors.amber,
+                          height: mediaqueryHight(.36, context),
+                          width: mediaqueryWidth(.82, context),
+                          child: GridView.builder(
+                            physics: NeverScrollableScrollPhysics(),
+                            padding: EdgeInsets.all(28),
+                            itemCount: 4,
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 2,
+                                    mainAxisSpacing: 12,
+                                    crossAxisSpacing: 12),
+                            itemBuilder: (context, index) {
+                              return InkWell(onLongPress: () {
+                                imageDeletion(index);
+                                print("long");
+                              },onTap: (){
+                                   pickImage();
+                              },
+                                child: Container(
+                                  height: mediaqueryHight(.10, context),
+                                  width: mediaqueryWidth(.28, context),
+                                  decoration: BoxDecoration(
+                                      color: whiteclr,
+                                      borderRadius: BorderRadius.circular(10),
+                                      boxShadow: [
+                                        BoxShadow(
+                                            color: blackclr, blurRadius: 2)
+                                      ]),
+                                  child: image.length<=index
+                                      ? Icon(
+                                          Icons.add,
+                                          size: 40,
+                                        )
+                                      : ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          child: Image.file(
+                                            File(image[index]!.path),
+                                            fit: BoxFit.cover,
+                                          )),
                                 ),
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                    top: 30,
-                                    left: 20,
-                                  ),
-                                  child: Container(
-                                    height: mediaqueryHight(.14, context),
-                                    width: mediaqueryWidth(.32, context),
-                                    decoration: BoxDecoration(
-                                        color: whiteclr,
-                                        borderRadius: BorderRadius.circular(10),
-                                        boxShadow: [
-                                          BoxShadow(
-                                              color: blackclr, blurRadius: 2)
-                                        ]),
-                                    child: Icon(
-                                      Icons.add,
-                                      size: 40,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Column(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                    top: 20,
-                                    left: 30,
-                                  ),
-                                  child: Container(
-                                    height: mediaqueryHight(.14, context),
-                                    width: mediaqueryWidth(.32, context),
-                                    decoration: BoxDecoration(
-                                        color: whiteclr,
-                                        borderRadius: BorderRadius.circular(10),
-                                        boxShadow: [
-                                          BoxShadow(
-                                              color: blackclr, blurRadius: 2)
-                                        ]),
-                                    child: Icon(
-                                      Icons.add,
-                                      size: 40,
-                                    ),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                    top: 30,
-                                    left: 30,
-                                  ),
-                                  child: Container(
-                                    height: mediaqueryHight(.14, context),
-                                    width: mediaqueryWidth(.32, context),
-                                    decoration: BoxDecoration(
-                                        color: whiteclr,
-                                        borderRadius: BorderRadius.circular(10),
-                                        boxShadow: [
-                                          BoxShadow(
-                                              color: blackclr, blurRadius: 2)
-                                        ]),
-                                    child: Icon(
-                                      Icons.add,
-                                      size: 40,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            )
-                          ],
-                        ),
-                      ),
+                              );
+                            },
+                          )),
                     ),
-
                     SizedBox(
                       height: mediaqueryHight(.2, context),
                     ),
@@ -170,9 +124,9 @@ class PresentaionImagePage extends StatelessWidget {
                       // Navigate to Next page
                       child: GestureDetector(
                         onTap: () {
-                          context
-                              .read<UserDetailsBloc>()
-                              .add(PresentationToHomeScreenEvent());
+                          // context
+                          //     .read<UserDetailsBloc>()
+                          //     .add(PresentationToHomeScreenEvent());
                         },
                         child: GreenNextbutton(
                           appFonts: appFonts,
@@ -189,4 +143,30 @@ class PresentaionImagePage extends StatelessWidget {
       ),
     );
   }
+
+  pickImage() async {
+    int maximageLimit=4;
+    print("pick image");
+    try {
+      final List<XFile>? img = await ImagePicker().pickMultiImage();
+      if (img!.isNotEmpty&&img.length+image.length<=maximageLimit) {
+        image.addAll(img);
+        print(image.length);
+        setState(() {
+          // image = File(img.)
+          // print("image picked");
+        });
+      } else {}
+    } catch (e) {}
+  }
+  imageDeletion(int index){
+
+showDialog(context: context, builder:(context) {
+  return 
+},)
+    
+    image.removeAt(index);
+    print(image.length);
+  }
 }
+

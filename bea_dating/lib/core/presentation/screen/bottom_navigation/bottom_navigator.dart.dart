@@ -1,7 +1,7 @@
 import 'package:bea_dating/core/domin/usecase/authentication.dart';
 import 'package:bea_dating/core/presentation/screen/category/category_page.dart';
 import 'package:bea_dating/core/presentation/screen/home_screen/bloc/homebloc_bloc.dart';
-import 'package:bea_dating/core/presentation/screen/profile_page/Profile_page.dart';
+import 'package:bea_dating/core/presentation/screen/profile_page/profile_page.dart';
 import 'package:bea_dating/core/presentation/screen/chat_page/chat_page.dart';
 import 'package:bea_dating/core/presentation/screen/home_screen/home_screen.dart';
 import 'package:bea_dating/core/presentation/screen/notification_page/notification_page.dart';

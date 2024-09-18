@@ -24,7 +24,7 @@ class AppFonts {
     fontSize: 25,
   );
     var appBarfont = GoogleFonts.lexend(
-    fontSize: 20,
+    fontSize: 20,fontWeight: FontWeight.w600
   );
    var subHeadline = GoogleFonts.lexend(
     fontSize: 17,

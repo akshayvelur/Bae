@@ -18,7 +18,7 @@ class ChatPage extends StatelessWidget {
         if(state is NavigateToIndividualState){
           Navigator.of(context).push(FadeTransitionPageRoute(child:IndividualChatPage()));
         }
-        // TODO: implement listener
+     
       },
       builder: (context, state) {
         return Scaffold(

@@ -2,6 +2,7 @@ import 'package:bea_dating/core/presentation/utilit/color.dart';
 import 'package:bea_dating/core/presentation/utilit/fonts.dart';
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class BoostPage extends StatelessWidget {
  BoostPage({super.key});
  AppFonts appFonts=AppFonts();

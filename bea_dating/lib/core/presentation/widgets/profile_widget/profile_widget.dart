@@ -78,8 +78,8 @@ class FollowWidget extends StatelessWidget {
 //   }
 // }
 
-class UserBasicdata extends StatefulWidget {
-  const UserBasicdata({
+class UserNameAgeBasic extends StatefulWidget {
+  const UserNameAgeBasic({
     super.key,
     required this.appFonts,
   });
@@ -87,13 +87,13 @@ class UserBasicdata extends StatefulWidget {
   final AppFonts appFonts;
 
   @override
-  State<UserBasicdata> createState() => _UserBasicdataState();
+  State<UserNameAgeBasic> createState() => _UserBasicdataState();
 }
 
-class _UserBasicdataState extends State<UserBasicdata> {
+class _UserBasicdataState extends State<UserNameAgeBasic> {
   @override
   void initState() {
-    // TODO: implement initState
+
     super.initState();
   }
 

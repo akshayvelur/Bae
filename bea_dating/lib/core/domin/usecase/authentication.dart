@@ -65,7 +65,6 @@ class Authentic {
       'expectation': expectation
     });
   }
-
 //
 //User checking
   Future<bool> UserExitOrNot() async {
