@@ -161,9 +161,7 @@ class _PresentaionImagePageState extends State<PresentaionImagePage> {
   }
   imageDeletion(int index){
 
-showDialog(context: context, builder:(context) {
-  return 
-},)
+
     
     image.removeAt(index);
     print(image.length);
