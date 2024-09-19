@@ -8,14 +8,14 @@ abstract class UserDetailsState {
   final String gender;
   final String genderInterest;
   final String expectation;
-
+  final List<XFile>image;
   UserDetailsState(
       {required this.username,
       required this.dob,
       required this.location,
       required this.gender,
       required this.genderInterest,
-      required this.expectation});
+      required this.expectation,required this.image});
 }
 
 class UserDetailsInitial extends UserDetailsState {
@@ -25,7 +25,7 @@ class UserDetailsInitial extends UserDetailsState {
       required super.location,
       required super.gender,
       required super.genderInterest,
-      required super.expectation});
+      required super.expectation,required super.image});
 }
 
 class InitLodingSate extends UserDetailsState {
@@ -35,7 +35,7 @@ class InitLodingSate extends UserDetailsState {
       required super.location,
       required super.gender,
       required super.genderInterest,
-      required super.expectation});
+      required super.expectation, required super.image});
 }
 
 class NavigationToWelcomscreenState extends UserDetailsState {
@@ -45,7 +45,7 @@ class NavigationToWelcomscreenState extends UserDetailsState {
       required super.location,
       required super.gender,
       required super.genderInterest,
-      required super.expectation});
+      required super.expectation, required super.image});
 }
 
 class AccountVarifiedState extends UserDetailsState {
@@ -55,7 +55,7 @@ class AccountVarifiedState extends UserDetailsState {
       required super.location,
       required super.gender,
       required super.genderInterest,
-      required super.expectation});
+      required super.expectation, required super.image});
 }
 
 class NavigationToRuleState extends UserDetailsState {
@@ -65,7 +65,7 @@ class NavigationToRuleState extends UserDetailsState {
       required super.location,
       required super.gender,
       required super.genderInterest,
-      required super.expectation});
+      required super.expectation, required super.image});
 }
 
 class NavigateToNameFormState extends UserDetailsState {
@@ -75,7 +75,7 @@ class NavigateToNameFormState extends UserDetailsState {
       required super.location,
       required super.gender,
       required super.genderInterest,
-      required super.expectation});
+      required super.expectation, required super.image});
 }
 
 class NavigateToDobState extends UserDetailsState {
@@ -85,7 +85,7 @@ class NavigateToDobState extends UserDetailsState {
       required super.location,
       required super.gender,
       required super.genderInterest,
-      required super.expectation});
+      required super.expectation, required super.image});
 }
 
 class NavigateToEnableLocationState extends UserDetailsState {
@@ -95,7 +95,7 @@ class NavigateToEnableLocationState extends UserDetailsState {
       required super.location,
       required super.gender,
       required super.genderInterest,
-      required super.expectation});
+      required super.expectation, required super.image});
 }
 
 class NavigateToGenderSelectionState extends UserDetailsState {
@@ -105,7 +105,7 @@ class NavigateToGenderSelectionState extends UserDetailsState {
       required super.location,
       required super.gender,
       required super.genderInterest,
-      required super.expectation});
+      required super.expectation, required super.image});
 }
 
 class GenderColorSelectedState extends UserDetailsState {
@@ -122,7 +122,7 @@ class GenderColorSelectedState extends UserDetailsState {
       required super.location,
       required super.genderInterest,
       required super.expectation,
-      required super.gender});
+      required super.gender, required super.image});
 }
 
 class InterestColorSelectedState extends UserDetailsState {
@@ -139,7 +139,7 @@ class InterestColorSelectedState extends UserDetailsState {
       required super.location,
       required super.genderInterest,
       required super.expectation,
-      required super.gender});
+      required super.gender, required super.image});
 }
 
 class NavigateToGenderInterestedState extends UserDetailsState {
@@ -149,7 +149,7 @@ class NavigateToGenderInterestedState extends UserDetailsState {
       required super.location,
       required super.gender,
       required super.genderInterest,
-      required super.expectation});
+      required super.expectation, required super.image});
 }
 
 class NavigateToExpectationState extends UserDetailsState {
@@ -159,7 +159,7 @@ class NavigateToExpectationState extends UserDetailsState {
       required super.location,
       required super.gender,
       required super.genderInterest,
-      required super.expectation});
+      required super.expectation, required super.image});
 }
 
 class ExpectationColorSelectedState extends UserDetailsState {
@@ -191,7 +191,7 @@ class ExpectationColorSelectedState extends UserDetailsState {
       required super.location,
       required super.gender,
       required super.genderInterest,
-      required super.expectation});
+      required super.expectation, required super.image});
 }
 
 class NavigateToPresentationState extends UserDetailsState {
@@ -201,9 +201,17 @@ class NavigateToPresentationState extends UserDetailsState {
       required super.location,
       required super.gender,
       required super.genderInterest,
-      required super.expectation});
+      required super.expectation, required super.image});
+}
+class ImageSelectedSatate extends UserDetailsState{
+
+  ImageSelectedSatate({required super.username, required super.dob, required super.location, required super.gender, required super.genderInterest, required super.expectation, required super.image});
 }
 
+class ImageDeletedSatate extends UserDetailsState{
+
+  ImageDeletedSatate({required super.username, required super.dob, required super.location, required super.gender, required super.genderInterest, required super.expectation, required super.image});
+}
 class NavigateToHomeScreenState extends UserDetailsState {
   NavigateToHomeScreenState(
       {required super.username,
@@ -211,5 +219,5 @@ class NavigateToHomeScreenState extends UserDetailsState {
       required super.location,
       required super.gender,
       required super.genderInterest,
-      required super.expectation});
+      required super.expectation, required super.image});
 }

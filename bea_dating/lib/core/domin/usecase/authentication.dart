@@ -29,7 +29,7 @@ class Authentic {
 
 //create user
   Future<void> createUser(String name, String dob, String location,
-      String gender, String interest, String expectation) async {
+      String gender, String interest, String expectation,String imgUrl) async {
     try {
     
       // ignore: unused_local_variable
@@ -43,7 +43,8 @@ class Authentic {
         'location': location,
         'gender': gender,
         'interest': interest,
-        'expectation': expectation
+        'expectation': expectation,
+        "image":imgUrl
       });
 
       log("database created");

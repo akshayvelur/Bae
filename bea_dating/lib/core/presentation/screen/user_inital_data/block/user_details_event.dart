@@ -89,5 +89,15 @@ class ExeptationToPresentationEvent extends UserDetailsEvent {
   final String expectation;
   ExeptationToPresentationEvent({required this.expectation});
 }
+class ImageAddingEvent extends UserDetailsEvent{
+final  List<XFile>image;
 
+  ImageAddingEvent({required this.image});
+}
+class ImageDeletionEvent extends UserDetailsEvent{
+  final List<XFile>image;
+  final index;
+
+  ImageDeletionEvent({required this.image,required this.index});
+}
 class PresentationToHomeScreenEvent extends UserDetailsEvent {}

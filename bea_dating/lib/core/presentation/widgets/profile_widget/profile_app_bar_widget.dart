@@ -19,12 +19,14 @@ AppBar profileAppbar(BuildContext context,Authentic authentic) {
         IconButton(
             onPressed: () {
               context.read<ProfileBloc>().add(NavigateToUserDataEvent());
-          //  showAlertDialog(context,authentic);
+       
             },
             icon: Icon(
               Icons.edit_document,
               color: blackclr,
-            ))
+            )),IconButton(onPressed: (){
+                   showAlertDialog(context,authentic);
+            }, icon: Icon(Icons.logout))
       ],
     );
   }

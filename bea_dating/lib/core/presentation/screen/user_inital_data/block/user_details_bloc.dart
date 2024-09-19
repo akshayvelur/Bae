@@ -1,11 +1,15 @@
 // ignore_for_file: unnecessary_null_comparison
-
+import 'package:bea_dating/core/domin/usecase/image_upload.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'dart:async';
 import 'dart:developer';
 import 'package:bea_dating/core/domin/usecase/authentication.dart';
 import 'package:bea_dating/core/domin/usecase/location_Enable.dart';
 import 'package:bloc/bloc.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:location/location.dart';
 import 'package:meta/meta.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -20,7 +24,8 @@ class UserDetailsBloc extends Bloc<UserDetailsEvent, UserDetailsState> {
             location: '',
             gender: '',
             genderInterest: '',
-            expectation: '')) {
+            expectation: '',
+            image: [])) {
     on<SplashToWelcomeEvent>(splashToWelcomeEvent);
     on<GoogleLoginEvent>(googleLoginEvent);
     on<AlreadyExistsuserEvent>(alreadyExistsuserEvent);
@@ -35,6 +40,8 @@ class UserDetailsBloc extends Bloc<UserDetailsEvent, UserDetailsState> {
     on<ExpectationtButtonSelectionEvent>(expectationtButtonSelectionEvent);
     on<ExeptationToPresentationEvent>(exeptationToPresentationEvent);
     on<PresentationToHomeScreenEvent>(presentationToHomeScreenEvent);
+    on<ImageAddingEvent>(imageAddingEvent);
+    on<ImageDeletionEvent>(imageDeletionEvent);
   }
 
   FutureOr<void> splashToWelcomeEvent(
@@ -51,7 +58,8 @@ class UserDetailsBloc extends Bloc<UserDetailsEvent, UserDetailsState> {
           location: state.location,
           gender: state.gender,
           genderInterest: state.genderInterest,
-          expectation: state.expectation));
+          expectation: state.expectation,
+          image: state.image));
     } else {
       //new user
       print("navigate to welcome");
@@ -61,16 +69,16 @@ class UserDetailsBloc extends Bloc<UserDetailsEvent, UserDetailsState> {
           location: state.location,
           gender: state.gender,
           genderInterest: state.genderInterest,
-          expectation: state.expectation));
+          expectation: state.expectation,
+          image: state.image));
     }
   }
 
   //Google Login
   FutureOr<void> googleLoginEvent(
       GoogleLoginEvent event, Emitter<UserDetailsState> emit) async {
-
     Authentic _authentic = Authentic();
-     await GoogleSignIn().signOut();
+    await GoogleSignIn().signOut();
     await _authentic.signInWithGoogle();
     emit(InitLodingSate(
         username: state.username,
@@ -78,17 +86,19 @@ class UserDetailsBloc extends Bloc<UserDetailsEvent, UserDetailsState> {
         location: state.location,
         gender: state.gender,
         genderInterest: state.genderInterest,
-        expectation: state.expectation));
+        expectation: state.expectation,
+        image: state.image));
     print("my out");
     bool out = await _authentic.UserExitOrNot();
     if (out == true) {
-        emit(NavigateToHomeScreenState(
+      emit(NavigateToHomeScreenState(
           username: state.username,
           dob: state.dob,
           location: state.location,
           gender: state.gender,
           genderInterest: state.genderInterest,
-          expectation: state.expectation));
+          expectation: state.expectation,
+          image: state.image));
     } else {
       emit(NavigationToRuleState(
           username: state.username,
@@ -96,7 +106,8 @@ class UserDetailsBloc extends Bloc<UserDetailsEvent, UserDetailsState> {
           location: state.location,
           gender: state.gender,
           genderInterest: state.genderInterest,
-          expectation: state.expectation));
+          expectation: state.expectation,
+          image: state.image));
     }
   }
 
@@ -109,7 +120,8 @@ class UserDetailsBloc extends Bloc<UserDetailsEvent, UserDetailsState> {
         location: state.location,
         gender: state.gender,
         genderInterest: state.genderInterest,
-        expectation: state.expectation));
+        expectation: state.expectation,
+        image: state.image));
   }
 
   FutureOr<void> ruleToNameformEvent(
@@ -120,7 +132,8 @@ class UserDetailsBloc extends Bloc<UserDetailsEvent, UserDetailsState> {
         location: state.location,
         gender: state.gender,
         genderInterest: state.genderInterest,
-        expectation: state.expectation));
+        expectation: state.expectation,
+        image: state.image));
   }
 
   FutureOr<void> nameToDobEvent(
@@ -131,7 +144,8 @@ class UserDetailsBloc extends Bloc<UserDetailsEvent, UserDetailsState> {
         location: state.location,
         gender: state.gender,
         genderInterest: state.genderInterest,
-        expectation: state.expectation));
+        expectation: state.expectation,
+        image: state.image));
     print('navigate to Dob');
   }
 
@@ -143,12 +157,14 @@ class UserDetailsBloc extends Bloc<UserDetailsEvent, UserDetailsState> {
         location: state.location,
         gender: state.gender,
         genderInterest: state.genderInterest,
-        expectation: state.expectation));
+        expectation: state.expectation,
+        image: state.image));
   }
 
   FutureOr<void> enableLocationToGenderselct(
-      EnableLocationToGenderselectEvent event, Emitter<UserDetailsState> emit) async{
-    LocationData _locationData=await locationEnable();
+      EnableLocationToGenderselectEvent event,
+      Emitter<UserDetailsState> emit) async {
+    LocationData _locationData = await locationEnable();
 
     emit(NavigateToGenderSelectionState(
         username: state.username,
@@ -156,7 +172,8 @@ class UserDetailsBloc extends Bloc<UserDetailsEvent, UserDetailsState> {
         location: _locationData.toString(),
         gender: state.gender,
         genderInterest: state.genderInterest,
-        expectation: state.expectation));
+        expectation: state.expectation,
+        image: state.image));
   }
 
   FutureOr<void> genderButtonSelctionEvent(
@@ -172,7 +189,8 @@ class UserDetailsBloc extends Bloc<UserDetailsEvent, UserDetailsState> {
         location: state.location,
         gender: event.gender,
         genderInterest: state.genderInterest,
-        expectation: state.expectation));
+        expectation: state.expectation,
+        image: state.image));
     //log("colorchaged");
   }
 
@@ -187,7 +205,8 @@ class UserDetailsBloc extends Bloc<UserDetailsEvent, UserDetailsState> {
         location: state.location,
         gender: state.gender,
         genderInterest: event.gender,
-        expectation: state.expectation));
+        expectation: state.expectation,
+        image: state.image));
   }
 
   FutureOr<void> genderSelectToGenderInterestEvent(
@@ -199,7 +218,8 @@ class UserDetailsBloc extends Bloc<UserDetailsEvent, UserDetailsState> {
         location: state.location,
         gender: event.gender,
         genderInterest: state.genderInterest,
-        expectation: state.expectation));
+        expectation: state.expectation,
+        image: state.image));
   }
 
   FutureOr<void> interestToExpectationEvent(
@@ -210,7 +230,8 @@ class UserDetailsBloc extends Bloc<UserDetailsEvent, UserDetailsState> {
         location: state.location,
         gender: state.gender,
         genderInterest: event.interest,
-        expectation: state.expectation));
+        expectation: state.expectation,
+        image: state.image));
   }
 
   FutureOr<void> expectationtButtonSelectionEvent(
@@ -231,7 +252,8 @@ class UserDetailsBloc extends Bloc<UserDetailsEvent, UserDetailsState> {
         location: state.location,
         gender: state.gender,
         genderInterest: state.genderInterest,
-        expectation: event.expectation));
+        expectation: event.expectation,
+        image: state.image));
   }
 
   FutureOr<void> exeptationToPresentationEvent(
@@ -242,15 +264,71 @@ class UserDetailsBloc extends Bloc<UserDetailsEvent, UserDetailsState> {
         location: state.location,
         gender: state.gender,
         genderInterest: state.genderInterest,
-        expectation: state.expectation));
+        expectation: state.expectation,
+        image: state.image));
+  }
+
+  //  image adding...
+  FutureOr<void> imageAddingEvent(
+      ImageAddingEvent event, Emitter<UserDetailsState> emit) async {
+    int maximageLimit = 4;
+    print("pick image");
+    try {
+      final List<XFile>? img = await ImagePicker().pickMultiImage();
+      if (img!.isNotEmpty && img.length + event.image.length <= maximageLimit) {
+        event.image.addAll(img);
+        emit(ImageSelectedSatate(
+            username: state.username,
+            dob: state.dob,
+            location: state.location,
+            gender: state.gender,
+            genderInterest: state.genderInterest,
+            expectation: state.expectation,
+            image: event.image));
+        // print(event.image.length);
+      } else {}
+    } catch (e) {}
+    print(event.image.length);
+    emit(ImageSelectedSatate(
+        username: state.username,
+        dob: state.dob,
+        location: state.location,
+        gender: state.gender,
+        genderInterest: state.genderInterest,
+        expectation: state.expectation,
+        image: event.image));
+  }
+  // image deletion
+   FutureOr<void> imageDeletionEvent(
+      ImageDeletionEvent event, Emitter<UserDetailsState> emit) {
+    event.image.removeAt(event.index);
+    emit(ImageDeletedSatate(
+        username: state.username,
+        dob: state.dob,
+        location: state.location,
+        gender: state.gender,
+        genderInterest: state.genderInterest,
+        expectation: state.expectation,
+        image: event.image));
+    print(event.image.length);
   }
 
   FutureOr<void> presentationToHomeScreenEvent(
       PresentationToHomeScreenEvent event,
       Emitter<UserDetailsState> emit) async {
+        if(state.image.length>=2){
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+   String ?imgUrl;
     Authentic _authentic = Authentic();
+     try{
+imgUrl= await uploadImage("profileimage",state.image);
+   //Reference firebaseStorageRef=FirebaseStorage.instance.ref().child(path)
+ }
+ catch(e){
+  log("image seen${e.toString()}");
+ }
     await _authentic.createUser(state.username, state.dob, state.location,
-        state.gender, state.genderInterest, state.expectation);
+        state.gender, state.genderInterest, state.expectation,imgUrl!);
     await _authentic.localStorage();
     log("datasubmitted");
 
@@ -260,6 +338,12 @@ class UserDetailsBloc extends Bloc<UserDetailsEvent, UserDetailsState> {
         location: state.location,
         gender: state.gender,
         genderInterest: state.genderInterest,
-        expectation: state.expectation));
+        expectation: state.expectation,
+        image: state.image));
+        }else{
+          //if you want to add validation add here
+        }
   }
+
+ 
 }
