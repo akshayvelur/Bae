@@ -1,13 +1,14 @@
 
+import 'package:bea_dating/core/data/model/usermodel.dart';
 import 'package:bea_dating/core/presentation/utilit/color.dart';
 import 'package:bea_dating/core/presentation/utilit/mediaquery.dart';
 import 'package:flutter/material.dart';
 
 class GridPhotoWidget extends StatelessWidget {
-  const GridPhotoWidget({
-    super.key,
+ GridPhotoWidget({
+    super.key,required this.user
   });
-
+UserModel user;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -19,7 +20,7 @@ class GridPhotoWidget extends StatelessWidget {
       child: GridView.builder(
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 3),
-        itemCount: 4,
+        itemCount: 3,
         itemBuilder: (context, index) {
           return Padding(
             padding: const EdgeInsets.all(5),
@@ -28,15 +29,15 @@ class GridPhotoWidget extends StatelessWidget {
               width: 5,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
-                boxShadow: [BoxShadow(blurRadius: 1)],
+                boxShadow: [BoxShadow(blurRadius: 1)],image: DecorationImage(image: NetworkImage(user.image[index+1])),
                 color: whiteclr,
               ),
-              child: Center(
-                child: Icon(
-                  Icons.add,
-                  size: 30,
-                ),
-              ),
+              // child: Center(
+              //   child: Icon(
+              //     Icons.add,
+              //     size: 30,
+              //   ),
+              // ),
             ),
           );
         },

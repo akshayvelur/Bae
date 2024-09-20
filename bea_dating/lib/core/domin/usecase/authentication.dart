@@ -7,6 +7,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class Authentic {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  static String? userid;
   // signin with google
   Future<dynamic> signInWithGoogle() async {
     try {
@@ -16,11 +17,10 @@ class Authentic {
       final credential = GoogleAuthProvider.credential(
           accessToken: googleAthu?.accessToken, idToken: googleAthu?.idToken);
       print("sign In");
-
       // ignore: unused_local_variable
       UserCredential userCredential =
           await FirebaseAuth.instance.signInWithCredential(credential);
-
+     userid=await _auth.currentUser!.uid;
       //   final myuser = userCredential;
     } catch (e) {
       print(e);
@@ -29,7 +29,7 @@ class Authentic {
 
 //create user
   Future<void> createUser(String name, String dob, String location,
-      String gender, String interest, String expectation,String imgUrl) async {
+      String gender, String interest, String expectation) async {
     try {
     
       // ignore: unused_local_variable
@@ -44,7 +44,7 @@ class Authentic {
         'gender': gender,
         'interest': interest,
         'expectation': expectation,
-        "image":imgUrl
+        
       });
 
       log("database created");
@@ -52,19 +52,18 @@ class Authentic {
       log(e.toString());
     }
   }
-
+ static String imageUid=FirebaseFirestore.instance.collection("users").doc(userid).collection("images").doc().id;
+   
   // Update Data
-  updateData(String name, String dob, String location, String gender,
-      String interest, String expectation) async {
+imageCollectionUpdate(List<String>images) async {
     log("updateing...");
-    await _firestore.collection('users').doc(_auth.currentUser!.uid).update({
-      'name': name,
-      'dob': dob,
-      'location': location,
-      'gender': gender,
-      'interest': interest,
-      'expectation': expectation
-    });
+    Map<String,String>image={};
+    try{
+   DocumentReference documentReference=await FirebaseFirestore.instance.collection("users").doc(userid);
+   await documentReference.update({"image":images});
+    }catch(e){
+
+    }
   }
 //
 //User checking
@@ -73,7 +72,7 @@ class Authentic {
         await _firestore.collection('users').doc(_auth.currentUser!.uid);
     final snapshot = await docRef.get();
     if (snapshot.exists) {
-   
+     localStorage();
       return true;
     } else {
       

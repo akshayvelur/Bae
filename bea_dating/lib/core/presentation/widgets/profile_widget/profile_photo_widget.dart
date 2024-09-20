@@ -1,13 +1,14 @@
 
+import 'package:bea_dating/core/data/model/usermodel.dart';
 import 'package:bea_dating/core/presentation/utilit/color.dart';
 import 'package:bea_dating/core/presentation/utilit/mediaquery.dart';
 import 'package:flutter/material.dart';
 
 class ProfilePhoto extends StatelessWidget {
-  const ProfilePhoto({
-    super.key,
+  ProfilePhoto({
+    super.key,required this .user
   });
-
+ UserModel user;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -17,7 +18,7 @@ class ProfilePhoto extends StatelessWidget {
           borderRadius: BorderRadius.circular(5),
           color: whiteclr,
           image: DecorationImage(
-              image: AssetImage('assets/alone-boy.JPEG.jpg'),
+              image: NetworkImage(user.image.elementAt(0)),
               fit: BoxFit.cover),
           boxShadow: [
             BoxShadow(

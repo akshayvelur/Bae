@@ -77,6 +77,7 @@ class UserDetailsBloc extends Bloc<UserDetailsEvent, UserDetailsState> {
   //Google Login
   FutureOr<void> googleLoginEvent(
       GoogleLoginEvent event, Emitter<UserDetailsState> emit) async {
+        print("glog");
     Authentic _authentic = Authentic();
     await GoogleSignIn().signOut();
     await _authentic.signInWithGoogle();
@@ -287,7 +288,7 @@ class UserDetailsBloc extends Bloc<UserDetailsEvent, UserDetailsState> {
             image: event.image));
         // print(event.image.length);
       } else {}
-    } catch (e) {}
+    } catch (e) {log("image adding${e}");}
     print(event.image.length);
     emit(ImageSelectedSatate(
         username: state.username,
@@ -298,8 +299,9 @@ class UserDetailsBloc extends Bloc<UserDetailsEvent, UserDetailsState> {
         expectation: state.expectation,
         image: event.image));
   }
+
   // image deletion
-   FutureOr<void> imageDeletionEvent(
+  FutureOr<void> imageDeletionEvent(
       ImageDeletionEvent event, Emitter<UserDetailsState> emit) {
     event.image.removeAt(event.index);
     emit(ImageDeletedSatate(
@@ -316,34 +318,39 @@ class UserDetailsBloc extends Bloc<UserDetailsEvent, UserDetailsState> {
   FutureOr<void> presentationToHomeScreenEvent(
       PresentationToHomeScreenEvent event,
       Emitter<UserDetailsState> emit) async {
-        if(state.image.length>=2){
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-   String ?imgUrl;
-    Authentic _authentic = Authentic();
-     try{
-imgUrl= await uploadImage("profileimage",state.image);
-   //Reference firebaseStorageRef=FirebaseStorage.instance.ref().child(path)
- }
- catch(e){
-  log("image seen${e.toString()}");
- }
-    await _authentic.createUser(state.username, state.dob, state.location,
-        state.gender, state.genderInterest, state.expectation,imgUrl!);
-    await _authentic.localStorage();
-    log("datasubmitted");
-
-    emit(NavigateToHomeScreenState(
-        username: state.username,
-        dob: state.dob,
-        location: state.location,
-        gender: state.gender,
-        genderInterest: state.genderInterest,
-        expectation: state.expectation,
-        image: state.image));
-        }else{
-          //if you want to add validation add here
+          final FirebaseAuth _auth = FirebaseAuth.instance;
+            List<String> _imgUrl = [];
+    if (state.image.length >= 2) {
+      //Authentification
+      Authentic _authentic = Authentic();
+  
+      try {
+        
+        for (int i = 0; i < state.image.length; i++) {
+          // image storing to fire base
+          _imgUrl.add(await uploadImage(
+              "profileimage", await state.image[i].readAsBytes()));
         }
-  }
+      } catch (e) {
+        log("image seen${e.toString()}");
+      }
+      // User data updating
+      await _authentic.createUser(state.username, state.dob, state.location,
+          state.gender, state.genderInterest, state.expectation,);
+      await _authentic.localStorage();
+      await _authentic.imageCollectionUpdate(_imgUrl);
+      log("datasubmitted");
 
- 
+      emit(NavigateToHomeScreenState(
+          username: state.username,
+          dob: state.dob,
+          location: state.location,
+          gender: state.gender,
+          genderInterest: state.genderInterest,
+          expectation: state.expectation,
+          image: state.image));
+    } else {
+      //if you want to add validation add here
+    }
+  }
 }

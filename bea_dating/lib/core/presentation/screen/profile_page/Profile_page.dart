@@ -1,3 +1,6 @@
+import 'package:bea_dating/core/data/data_source/userdata.dart';
+import 'package:bea_dating/core/data/model/usermodel.dart';
+
 import 'package:bea_dating/core/domin/usecase/authentication.dart';
 import 'package:bea_dating/core/presentation/screen/profile_page/bloc/profile_bloc.dart';
 import 'package:bea_dating/core/presentation/screen/profile_page/user_data_upload.dart';
@@ -17,22 +20,44 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 // ignore: must_be_immutable
-class ProfilePage extends StatelessWidget {
+class ProfilePage extends StatefulWidget {
   ProfilePage({super.key});
-   Authentic authentic = Authentic();
-   AppFonts appFonts = AppFonts();
+
+  @override
+  State<ProfilePage> createState() => _ProfilePageState();
+}
+
+class _ProfilePageState extends State<ProfilePage> {
+  Authentic authentic = Authentic();
+
+  AppFonts appFonts = AppFonts();
+  UserModel ? myuser;
+  
+
+  @override
+  void initState() {
+    context.read<ProfileBloc>().add(InitStateEvent());
+    //datafetch();
+    print("hii");
+
+    // TODO: implement initState
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<ProfileBloc,ProfileState>(listener: (context, state) {
-      if(state is NavigateToUserDataState){
-          Navigator.of(context).push(FadeTransitionPageRoute(child:UserdataUpload()));
+    return BlocConsumer<ProfileBloc, ProfileState>(listener: (context, state) {
+      if (state is NavigateToUserDataState) {
+        Navigator.of(context)
+            .push(FadeTransitionPageRoute(child: UserdataUpload()));
       }
+    }, builder: (context, state) {
+      if(state is IninitState){
       
-    },builder: (context, state) {
-      
-  
+        myuser=state.user;
+      }
       return Scaffold(
-        appBar: profileAppbar(context,authentic),
+        appBar: profileAppbar(context, authentic),
         body: SingleChildScrollView(
           child: Container(
             color: whiteclr,
@@ -43,7 +68,7 @@ class ProfilePage extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      ProfilePhoto(),
+                      ProfilePhoto(user: myuser!,),
                       Column(
                         children: [
                           MatchAndFollowWidget(appFonts: appFonts),
@@ -58,8 +83,10 @@ class ProfilePage extends StatelessWidget {
                   SizedBox(
                     height: mediaqueryHight(.02, context),
                   ),
-                  UserNameAgeBasic(appFonts: appFonts),
-                  GridPhotoWidget(),
+                  UserNameAgeBasic(
+                    appFonts: appFonts,user: myuser!,
+                  ),
+                  GridPhotoWidget(user: myuser!,),
                   SizedBox(
                     height: mediaqueryHight(.01, context),
                   ),
@@ -112,9 +139,7 @@ class ProfilePage extends StatelessWidget {
             ),
           ),
         ),
-      );}
-    );
+      );
+    });
   }
-
-
 }

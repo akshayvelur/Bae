@@ -1,3 +1,4 @@
+import 'package:bea_dating/core/data/model/usermodel.dart';
 import 'package:bea_dating/core/presentation/utilit/color.dart';
 import 'package:bea_dating/core/presentation/utilit/fonts.dart';
 import 'package:bea_dating/core/presentation/utilit/mediaquery.dart';
@@ -39,61 +40,28 @@ class FollowWidget extends StatelessWidget {
   }
 }
 
-// class MatchAndFollow extends StatelessWidget {
-//   const MatchAndFollow({
-//     super.key,
-//     required this.appFonts,
-//   });
-
-//   final AppFonts appFonts;
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(
-//       //color: whiteclr,
-//       height: mediaqueryHight(.08, context),
-//       width: mediaqueryWidth(0.47, context),
-//       child: Column(
-//         children: [
-//           Padding(
-//             padding: const EdgeInsets.only(
-//               left: 35,
-//               top: 5.9,
-//             ),
-//             child: Row(
-//               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//               children: [
-//                 FollowWidget(
-//                   appFonts: appFonts,
-//                   headline: 'match',
-//                   count: 10,
-//                 ),
-//                 FollowWidget(appFonts: appFonts, count: 80, headline: "Like")
-//               ],
-//             ),
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-// }
 
 class UserNameAgeBasic extends StatefulWidget {
-  const UserNameAgeBasic({
+   UserNameAgeBasic({
     super.key,
-    required this.appFonts,
+    required this.appFonts,required this.user
+   
   });
 
   final AppFonts appFonts;
-
+    UserModel user;
   @override
   State<UserNameAgeBasic> createState() => _UserBasicdataState();
 }
 
 class _UserBasicdataState extends State<UserNameAgeBasic> {
   @override
+  int currentyear =DateTime.now().year;
+  int age=0;
+  
   void initState() {
-
+     List<String>uyear =widget.user.dob.split("/");
+  age=currentyear-int.parse(uyear.last);
     super.initState();
   }
 
@@ -112,7 +80,7 @@ class _UserBasicdataState extends State<UserNameAgeBasic> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Niko ,24",
+                  "${widget.user.name} , ${age}",
                   style: widget.appFonts.userNamefont,
                 ),
                 SizedBox(
