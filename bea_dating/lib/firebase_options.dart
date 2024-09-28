@@ -41,51 +41,48 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyChT8R3rKzO0txW_x0gGtdGLM215k7KydI',
-    appId: '1:1066545027551:web:348d64bbeffb38d62b0c6a',
-    messagingSenderId: '1066545027551',
-    projectId: 'bae-dating-app-53c7a',
-    authDomain: 'bae-dating-app-53c7a.firebaseapp.com',
-    storageBucket: 'bae-dating-app-53c7a.appspot.com',
-    measurementId: 'G-BDLSW3TV0Y',
+    apiKey: 'AIzaSyAd5gAawOcwDWFmCNmD13ktd9HBDWNKyl8',
+    appId: '1:1052128563042:web:cf1b0848578c681bdf263b',
+    messagingSenderId: '1052128563042',
+    projectId: 'bae-dating-cc1f5',
+    authDomain: 'bae-dating-cc1f5.firebaseapp.com',
+    storageBucket: 'bae-dating-cc1f5.appspot.com',
+    measurementId: 'G-R8XH806XV6',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyBkdH-cIFBKcZqszhm2vxzOks6i9BBrdgg',
-    appId: '1:1066545027551:android:dfeee992b55769482b0c6a',
-    messagingSenderId: '1066545027551',
-    projectId: 'bae-dating-app-53c7a',
-    storageBucket: 'bae-dating-app-53c7a.appspot.com',
+    apiKey: 'AIzaSyABQHnUKkEyVx4hnrkrkniAhaOJOEtVnTk',
+    appId: '1:1052128563042:android:29f1c5ad3d1393c5df263b',
+    messagingSenderId: '1052128563042',
+    projectId: 'bae-dating-cc1f5',
+    storageBucket: 'bae-dating-cc1f5.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyDJje3tQUP1gm1XgbjBNWWGqnD8_Ryqa38',
-    appId: '1:1066545027551:ios:2ce044e6beaac0892b0c6a',
-    messagingSenderId: '1066545027551',
-    projectId: 'bae-dating-app-53c7a',
-    storageBucket: 'bae-dating-app-53c7a.appspot.com',
-    iosClientId: '1066545027551-60ciledbcq69565687kqbqer7p4fi3l8.apps.googleusercontent.com',
+    apiKey: 'AIzaSyCzvmAZreuEAxNTothWJmdr5-Yom-3quqM',
+    appId: '1:365522137904:ios:1e2f0334023ad7e2d80ef5',
+    messagingSenderId: '365522137904',
+    projectId: 'bae-datingapp-b64d2',
+    storageBucket: 'bae-datingapp-b64d2.appspot.com',
     iosBundleId: 'com.example.beaDating',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyDJje3tQUP1gm1XgbjBNWWGqnD8_Ryqa38',
-    appId: '1:1066545027551:ios:2ce044e6beaac0892b0c6a',
-    messagingSenderId: '1066545027551',
-    projectId: 'bae-dating-app-53c7a',
-    storageBucket: 'bae-dating-app-53c7a.appspot.com',
-    iosClientId: '1066545027551-60ciledbcq69565687kqbqer7p4fi3l8.apps.googleusercontent.com',
+    apiKey: 'AIzaSyCzvmAZreuEAxNTothWJmdr5-Yom-3quqM',
+    appId: '1:365522137904:ios:1e2f0334023ad7e2d80ef5',
+    messagingSenderId: '365522137904',
+    projectId: 'bae-datingapp-b64d2',
+    storageBucket: 'bae-datingapp-b64d2.appspot.com',
     iosBundleId: 'com.example.beaDating',
   );
 
   static const FirebaseOptions windows = FirebaseOptions(
-    apiKey: 'AIzaSyChT8R3rKzO0txW_x0gGtdGLM215k7KydI',
-    appId: '1:1066545027551:web:b66100ab7d3974bb2b0c6a',
-    messagingSenderId: '1066545027551',
-    projectId: 'bae-dating-app-53c7a',
-    authDomain: 'bae-dating-app-53c7a.firebaseapp.com',
-    storageBucket: 'bae-dating-app-53c7a.appspot.com',
-    measurementId: 'G-DEZ5FSY3C4',
+    apiKey: 'AIzaSyAP5MdCPEsNNOWxnbvRv_7x4sbDKpUcgVQ',
+    appId: '1:365522137904:web:41ca1f4fbda524d0d80ef5',
+    messagingSenderId: '365522137904',
+    projectId: 'bae-datingapp-b64d2',
+    authDomain: 'bae-datingapp-b64d2.firebaseapp.com',
+    storageBucket: 'bae-datingapp-b64d2.appspot.com',
+    measurementId: 'G-WDBJEXKQV3',
   );
-
 }

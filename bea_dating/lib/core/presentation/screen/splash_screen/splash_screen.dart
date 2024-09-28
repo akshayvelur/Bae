@@ -1,4 +1,5 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:bea_dating/core/domin/usecase/authentication.dart';
 import 'package:bea_dating/core/presentation/screen/user_inital_data/block/user_details_bloc.dart';
 import 'package:bea_dating/core/presentation/screen/bottom_navigation/bottom_navigator.dart.dart';
 import 'package:bea_dating/core/presentation/screen/welcome&rule/welcome_screen.dart';
@@ -9,8 +10,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SplashScreen extends StatefulWidget {
-  const SplashScreen({super.key});
-
+   SplashScreen({super.key});
+  Authentic authentic=Authentic();
   @override
   State<SplashScreen> createState() => _SplashScreenState();
 }
@@ -18,8 +19,10 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
-    context.read<UserDetailsBloc>().add(SplashToWelcomeEvent());
-    super.initState();
+       // widget.authentic.clearSharedpreference();
+//widget.authentic.signOutFromGoogle();
+     context.read<UserDetailsBloc>().add(SplashToWelcomeEvent());
+     super.initState();
   }
 
   @override

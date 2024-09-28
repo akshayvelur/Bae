@@ -221,3 +221,6 @@ class NavigateToHomeScreenState extends UserDetailsState {
       required super.genderInterest,
       required super.expectation, required super.image});
 }
+class PresentationPageLoading extends UserDetailsState{
+  PresentationPageLoading({required super.username, required super.dob, required super.location, required super.gender, required super.genderInterest, required super.expectation, required super.image});
+}

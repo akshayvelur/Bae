@@ -10,7 +10,7 @@ import 'package:bea_dating/core/presentation/widgets/category_Widget/cursh_time_
 import 'package:bea_dating/core/presentation/widgets/category_Widget/preference_card_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:zo_animated_border/zo_animated_border.dart';
+
 
 // ignore: must_be_immutable
 class CategoryPage extends StatelessWidget {

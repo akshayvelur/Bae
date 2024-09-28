@@ -9,6 +9,7 @@ class AlreadyExistsuserEvent extends UserDetailsEvent {}
 
 class GoogleLoginEvent extends UserDetailsEvent {}
 
+
 class RuleToNameformEvent extends UserDetailsEvent {}
 
 class NameToDobEvent extends UserDetailsEvent {
@@ -101,3 +102,4 @@ class ImageDeletionEvent extends UserDetailsEvent{
   ImageDeletionEvent({required this.image,required this.index});
 }
 class PresentationToHomeScreenEvent extends UserDetailsEvent {}
+

@@ -7,31 +7,86 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class Authentic {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  static String? userid;
+  static String? userId;
   // signin with google
+
   Future<dynamic> signInWithGoogle() async {
+    log("Starting Google sign-in");
     try {
+      // Trigger the Google authentication flow
       final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-      final GoogleSignInAuthentication? googleAthu =
-          await googleUser?.authentication;                                                           
-      final credential = GoogleAuthProvider.credential(
-          accessToken: googleAthu?.accessToken, idToken: googleAthu?.idToken);
-      print("sign In");
-      // ignore: unused_local_variable
-      UserCredential userCredential =
-          await FirebaseAuth.instance.signInWithCredential(credential);
-     userid=await _auth.currentUser!.uid;
-      //   final myuser = userCredential;
+
+      if (googleUser != null) {
+        log("Found Google user: ${googleUser.displayName}");
+
+        // Obtain the authentication details from the request
+        final GoogleSignInAuthentication? googleAuth =
+            await googleUser.authentication;
+
+        log("Authentication successful");
+
+        // Create a new credential using the obtained tokens
+        final OAuthCredential? credential = GoogleAuthProvider.credential(
+          accessToken: googleAuth?.accessToken,
+          idToken: googleAuth?.idToken,
+        );
+  
+        // Sign in to Firebase using the Google credentials
+        try{
+        UserCredential userCredential =
+            await FirebaseAuth.instance.signInWithCredential(credential!);
+       
+        // Get the user's unique ID
+         userId = userCredential.user?.uid ?? "Unknown UID";
+        print("User signed in successfully with UID: $userId");
+
+        return userCredential; // Return the signed-in user's credentials if needed
+     
+      }catch(e){
+          log("credential issue${e}");
+        } } else {
+        print("Google sign-in was canceled by the user");
+      }
     } catch (e) {
-      print(e);
+      log("Google sign-in error: $e");
+      
     }
   }
+
+  // Future<dynamic> signInWithGoogle() async {
+  //   print("sigin with google");
+  //   try {
+  //     final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+
+  //     if(googleUser!=null){
+  //       print("fined user");
+  //      print("${ await googleUser.authentication}");
+  //          final GoogleSignInAuthentication googleAuth =
+  //         await googleUser.authentication;
+
+  //           print("sigin Athu${googleAuth}");
+
+  //     final credential = GoogleAuthProvider.credential(
+  //         accessToken: googleAuth.accessToken, idToken: googleAuth.idToken);
+  //     print("sign In");
+  //     UserCredential userCredential =
+  //         await FirebaseAuth.instance.signInWithCredential(credential);
+  //         print("User CRedention${userCredential}");
+  //   userid=await _auth.currentUser!.uid;
+  //     //  final myuser = userCredential;
+  //     }else{
+  //       print("user not logged");
+  //     }
+
+  //   } catch (e) {
+  //   log("user Authentic error ;${e}");
+  //  }
+  // }
 
 //create user
   Future<void> createUser(String name, String dob, String location,
       String gender, String interest, String expectation) async {
     try {
-    
       // ignore: unused_local_variable
       final users =
           await _firestore.collection('users').doc(_auth.currentUser!.uid).set({
@@ -44,7 +99,6 @@ class Authentic {
         'gender': gender,
         'interest': interest,
         'expectation': expectation,
-        
       });
 
       log("database created");
@@ -52,34 +106,43 @@ class Authentic {
       log(e.toString());
     }
   }
- static String imageUid=FirebaseFirestore.instance.collection("users").doc(userid).collection("images").doc().id;
-   
-  // Update Data
-imageCollectionUpdate(List<String>images) async {
-    log("updateing...");
-    Map<String,String>image={};
-    try{
-   DocumentReference documentReference=await FirebaseFirestore.instance.collection("users").doc(userid);
-   await documentReference.update({"image":images});
-    }catch(e){
 
+  static String imageUid = FirebaseFirestore.instance
+      .collection("users")
+      .doc(userId)
+      .collection("images")
+      .doc()
+      .id;
+
+  // Update Data
+  imageCollectionUpdate(List<String> images) async {
+    log("updateing...");
+    // log("UID FORIMAGE${auth.currentUser!.uid}");
+    log("IMAGE FOR IMAGE UPLOADING${images}");
+    try {
+      DocumentReference documentReference =
+          await FirebaseFirestore.instance.collection("users").doc(_auth.currentUser!.uid);
+      await documentReference.update({"image": images});
+    } catch (e) {
+      log("IMAGE TO FIREBASE ERRROR${e}");
     }
   }
+
 //
-//User checking
+// User checking
   Future<bool> UserExitOrNot() async {
     final docRef =
         await _firestore.collection('users').doc(_auth.currentUser!.uid);
     final snapshot = await docRef.get();
     if (snapshot.exists) {
-     localStorage();
+       localStorage();
       return true;
     } else {
-      
       //signOutFromGoogle();
       return false;
     }
   }
+
 //Sign out
   Future<bool> signOutFromGoogle() async {
     try {
@@ -94,6 +157,7 @@ imageCollectionUpdate(List<String>images) async {
       return false;
     }
   }
+
 //Local storage
   Future<void> localStorage() async {
     try {

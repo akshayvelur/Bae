@@ -22,7 +22,7 @@ class GoogleLoginButtonWidget extends StatelessWidget {
       child: InkWell(
         onTap: () async{
           context.read<UserDetailsBloc>().add(GoogleLoginEvent());
-       
+     
         },
         child: AnimatedLoadingBorder(borderWidth: 4,borderColor: whiteclr,cornerRadius: 30,duration: Duration(seconds: 4),
           child: Container(

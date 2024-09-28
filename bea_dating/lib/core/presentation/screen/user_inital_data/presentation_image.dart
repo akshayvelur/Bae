@@ -7,10 +7,10 @@ import 'package:bea_dating/core/presentation/utilit/mediaquery.dart';
 import 'package:bea_dating/core/presentation/utilit/page_transcation/fade_transition.dart';
 import 'package:bea_dating/core/presentation/widgets/backbutton/back_button.dart';
 import 'package:bea_dating/core/presentation/widgets/userintroduction/User_greenbutton.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:lottie/lottie.dart';
 
 // ignore: must_be_immutable
 class PresentaionImagePage extends StatefulWidget {
@@ -29,7 +29,7 @@ class _PresentaionImagePageState extends State<PresentaionImagePage> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        FocusScope.of(context).unfocus();
+        FocusScope.of(context).unfocus();                                                   
       },
       child: BlocConsumer<UserDetailsBloc, UserDetailsState>(
         listener: (context, state) {
@@ -38,6 +38,9 @@ class _PresentaionImagePageState extends State<PresentaionImagePage> {
             Navigator.of(context)
                 .push(FadeTransitionPageRoute(child: BottomNavigationScreen()));
           }
+             if(state is PresentationPageLoading){
+         showDialog(context: context, builder:(context) => Center(child: Container(height: 130,width: 130, child: LottieBuilder.asset("assets/Animation - 1727367862351.json"))));
+          }
         },
         builder: (context, state) {
           if(state is ImageSelectedSatate){
@@ -45,6 +48,7 @@ class _PresentaionImagePageState extends State<PresentaionImagePage> {
           }else if( state is ImageDeletedSatate){
             image=state.image;
           }
+       
           return Scaffold(
             resizeToAvoidBottomInset: true,
             body: SingleChildScrollView(
@@ -125,7 +129,7 @@ class _PresentaionImagePageState extends State<PresentaionImagePage> {
                                                   ],
                                                   image: DecorationImage(
                                                       image: FileImage(File(
-                                                          image[index]!.path)),
+                                                          image[index].path)),
                                                       fit: BoxFit.cover)),
                                               child: Padding(
                                                   padding:

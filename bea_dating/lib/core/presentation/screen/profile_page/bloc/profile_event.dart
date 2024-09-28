@@ -6,4 +6,9 @@ class InitStateEvent extends ProfileEvent{
   // final UserModel user;
   // InitStateEvent({required this.user});
 }
+
 class NavigateToUserDataEvent extends ProfileEvent{}
+class NavigateBackToProfilEvent extends ProfileEvent{}
+class ProfileUserInterest extends ProfileEvent{
+  
+}

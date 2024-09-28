@@ -55,12 +55,11 @@ class UserNameAgeBasic extends StatefulWidget {
 }
 
 class _UserBasicdataState extends State<UserNameAgeBasic> {
-  @override
   int currentyear =DateTime.now().year;
   int age=0;
   
   void initState() {
-     List<String>uyear =widget.user.dob.split("/");
+    List<String>uyear =widget.user.dob.split("/");
   age=currentyear-int.parse(uyear.last);
     super.initState();
   }

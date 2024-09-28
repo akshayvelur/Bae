@@ -1,12 +1,10 @@
 // ignore_for_file: unnecessary_null_comparison
 import 'package:bea_dating/core/domin/usecase/image_upload.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'dart:async';
 import 'dart:developer';
 import 'package:bea_dating/core/domin/usecase/authentication.dart';
 import 'package:bea_dating/core/domin/usecase/location_Enable.dart';
 import 'package:bloc/bloc.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:image_picker/image_picker.dart';
@@ -77,11 +75,15 @@ class UserDetailsBloc extends Bloc<UserDetailsEvent, UserDetailsState> {
   //Google Login
   FutureOr<void> googleLoginEvent(
       GoogleLoginEvent event, Emitter<UserDetailsState> emit) async {
-        print("glog");
+
+        
     Authentic _authentic = Authentic();
-    await GoogleSignIn().signOut();
-    await _authentic.signInWithGoogle();
-    emit(InitLodingSate(
+
+     await GoogleSignIn().signOut();
+     
+    UserCredential usercredential= await _authentic.signInWithGoogle();
+    if(usercredential.user!=null){
+        emit(InitLodingSate(
         username: state.username,
         dob: state.dob,
         location: state.location,
@@ -89,8 +91,9 @@ class UserDetailsBloc extends Bloc<UserDetailsEvent, UserDetailsState> {
         genderInterest: state.genderInterest,
         expectation: state.expectation,
         image: state.image));
+    
     print("my out");
-    bool out = await _authentic.UserExitOrNot();
+   bool out =  await _authentic.UserExitOrNot();
     if (out == true) {
       emit(NavigateToHomeScreenState(
           username: state.username,
@@ -109,6 +112,7 @@ class UserDetailsBloc extends Bloc<UserDetailsEvent, UserDetailsState> {
           genderInterest: state.genderInterest,
           expectation: state.expectation,
           image: state.image));
+    }
     }
   }
 
@@ -165,8 +169,9 @@ class UserDetailsBloc extends Bloc<UserDetailsEvent, UserDetailsState> {
   FutureOr<void> enableLocationToGenderselct(
       EnableLocationToGenderselectEvent event,
       Emitter<UserDetailsState> emit) async {
-    LocationData _locationData = await locationEnable();
 
+    LocationData _locationData = await locationEnable();
+  
     emit(NavigateToGenderSelectionState(
         username: state.username,
         dob: state.dob,
@@ -286,7 +291,7 @@ class UserDetailsBloc extends Bloc<UserDetailsEvent, UserDetailsState> {
             genderInterest: state.genderInterest,
             expectation: state.expectation,
             image: event.image));
-        // print(event.image.length);
+        print(event.image.length);
       } else {}
     } catch (e) {log("image adding${e}");}
     print(event.image.length);
@@ -318,7 +323,14 @@ class UserDetailsBloc extends Bloc<UserDetailsEvent, UserDetailsState> {
   FutureOr<void> presentationToHomeScreenEvent(
       PresentationToHomeScreenEvent event,
       Emitter<UserDetailsState> emit) async {
-          final FirebaseAuth _auth = FirebaseAuth.instance;
+        emit(PresentationPageLoading(    username: state.username,
+        dob: state.dob,
+        location: state.location,
+        gender: state.gender,
+        genderInterest: state.genderInterest,
+        expectation: state.expectation,
+        image: state.image));
+        print("presentation to home..");
             List<String> _imgUrl = [];
     if (state.image.length >= 2) {
       //Authentification
@@ -331,8 +343,9 @@ class UserDetailsBloc extends Bloc<UserDetailsEvent, UserDetailsState> {
           _imgUrl.add(await uploadImage(
               "profileimage", await state.image[i].readAsBytes()));
         }
+        log(_imgUrl.toString());
       } catch (e) {
-        log("image seen${e.toString()}");
+        log("IMAGE UPLOAD ISSUE${e.toString()}");
       }
       // User data updating
       await _authentic.createUser(state.username, state.dob, state.location,

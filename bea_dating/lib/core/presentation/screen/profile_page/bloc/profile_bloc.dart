@@ -9,43 +9,44 @@ part 'profile_event.dart';
 part 'profile_state.dart';
 
 class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
-  ProfileBloc() : super(ProfileInitial()){
+  ProfileBloc() : super(ProfileInitial(user:null, interest: null)){
     on<NavigateToUserDataEvent>(navigateToUserDataState);
  on<InitStateEvent>(initStateEvent);
+on< NavigateBackToProfilEvent>( navigateBackToProfilEvent);
+on<ProfileUserInterest>(profileUserInterest);
   }
 
 
 
   FutureOr<void> navigateToUserDataState(NavigateToUserDataEvent event, Emitter<ProfileState> emit) {
-    emit(NavigateToUserDataState());
+    emit(NavigateToUserDataState(user: state.user, interest: state.interest));
   }
   FutureOr<void> initStateEvent(InitStateEvent event, Emitter<ProfileState> emit) async{
-        print("jjj");
+      
     try{
+     // emit(LoadingState(user: state.user));
     UserData userData = UserData();
     UserModel? user = await userData.getUserData();
     if (user != null) {
-      emit(IninitState(user: user));
+       print("profile data fetched");
+     
+   
+      emit(IninitState(user: user, interest: state.interest,));
+      emit(LoadingSuccessState(user:state.user,interest: state.interest));
 
-    } else {}
+    } else {
+       print("NO DATA");
+    }
   }catch(e){
     print("userinit error${e}");
   }
   }
 
+  FutureOr<void> navigateBackToProfilEvent(NavigateBackToProfilEvent event, Emitter<ProfileState> emit) {
+ emit(NavigateBacktoProfileState(user:state.user, interest:state.interest));
+  }
 
-
-
-
-
-
-
-
-
-
-  // FutureOr<void> initStateEvent(InitStateEvent event, Emitter<ProfileState> emit) async{
-
-  // }
-
-
+  FutureOr<void> profileUserInterest(ProfileUserInterest event, Emitter<ProfileState> emit) {
+    emit(ProfileInterestSelectedState(user: state.user, interest: state.interest));
+  }
 }

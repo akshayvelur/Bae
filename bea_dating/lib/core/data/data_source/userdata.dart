@@ -1,7 +1,5 @@
-import 'dart:math';
 
 import 'package:bea_dating/core/data/model/usermodel.dart';
-import 'package:bea_dating/core/domin/usecase/authentication.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -17,6 +15,7 @@ FirebaseFirestore _firestore=FirebaseFirestore.instance;
 DocumentSnapshot snapshot =await _firestore.collection("users").doc(uid).get();
 //print(snapshot.id);
 if(snapshot.exists){
+  print("Data fetched");
   return UserModel.fromMap(snapshot.data() as Map<String,dynamic>);
 }
 else{
@@ -25,5 +24,6 @@ else{
 catch(e){
   print("Get user error${e}");
 }
+  return null;
 }
 } 

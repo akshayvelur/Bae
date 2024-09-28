@@ -31,13 +31,11 @@ class WelcomeColabergWidget extends StatelessWidget {
                           offset: Offset(0, 1),
                           blurRadius: 2)
                     ],
-                    image: DecorationImage(
-                        image: AssetImage(
-                            "assets/mwc21-online-dating-apps-featured-1500x986.jpg"),
-                        fit: BoxFit.fitWidth)),
+                     ),
+                     child: ClipRRect(borderRadius: BorderRadius.circular(10),child: Image(image:AssetImage("assets/mwc21-online-dating-apps-featured-1500x986.jpg",),fit: BoxFit.cover,))
               ),
             ),
-            WelcomeCollab(context, "assets/pixel.MPEJ.jpg"),
+            WelcomeCollab(context, "assets/pixel.MPEJ.jpg"), 
           ],
         ),
         Column(
@@ -55,9 +53,6 @@ class WelcomeColabergWidget extends StatelessWidget {
                   borderRadius: BorderRadius.only(
                       bottomLeft: Radius.circular(10),
                       bottomRight: Radius.circular(10)),
-                  image: DecorationImage(
-                      image: AssetImage("assets/Drink.MPEG.jpg"),
-                      fit: BoxFit.fill),
                   boxShadow: [
                     BoxShadow(
                         color: Color.fromARGB(255, 56, 55, 55),
@@ -67,6 +62,7 @@ class WelcomeColabergWidget extends StatelessWidget {
                         blurRadius: 2)
                   ],
                 ),
+                child: ClipRRect(borderRadius: BorderRadius.circular(10),child: Image.asset("assets/Drink.MPEG.jpg",fit: BoxFit.fill,),),
               ),
             ),
             WelcomeCollab(context, "assets/Girl.MPEG.jpg"),
@@ -203,14 +199,15 @@ Padding WelcomeCollab(BuildContext context, String images) {
       decoration: BoxDecoration(
           color: Colors.amber,
           borderRadius: BorderRadius.all(Radius.circular(10)),
-          image: DecorationImage(image: AssetImage(images), fit: BoxFit.fill), boxShadow: [
+           boxShadow: [
                         BoxShadow(
                             color: Color.fromARGB(255, 56, 55, 55),
                             blurStyle: BlurStyle.outer,
                             spreadRadius: 2,
                             offset: Offset(0, 1),
                             blurRadius: 2)
-                      ]),
-    ),
+                      ]
+          ),
+   child:ClipRRect(borderRadius: BorderRadius.circular(10),child: Image(image: AssetImage(images),fit: BoxFit.fill,)), ),
   );
 }
