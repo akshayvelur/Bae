@@ -7,3 +7,15 @@ class BottoNavigatorEindexEvent extends HomeblocEvent{
 
   BottoNavigatorEindexEvent({required this.Eindex});
 }
+class CountEvent extends HomeblocEvent{
+final int count;
+
+  CountEvent({required this.count});
+}
+class NumberOfUserEvent extends HomeblocEvent{
+ final int numberOfUser;
+
+  NumberOfUserEvent({required this.numberOfUser});
+}
+
+

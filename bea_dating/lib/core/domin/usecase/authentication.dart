@@ -115,7 +115,7 @@ class Authentic {
       .id;
 
   // Update Data
-  imageCollectionUpdate(List<String> images) async {
+  Future<void> imageCollectionUpdate(List<String> images) async {
     log("updateing...");
     // log("UID FORIMAGE${auth.currentUser!.uid}");
     log("IMAGE FOR IMAGE UPLOADING${images}");
@@ -124,7 +124,7 @@ class Authentic {
           await FirebaseFirestore.instance.collection("users").doc(_auth.currentUser!.uid);
       await documentReference.update({"image": images});
     } catch (e) {
-      log("IMAGE TO FIREBASE ERRROR${e}");
+      log("IMAGE TO FIREBASE ERRROR${e}");  
     }
   }
 

@@ -47,17 +47,4 @@ on< NavigateBackToProfilEvent>( navigateBackToProfilEvent);
  emit(NavigateBacktoProfileState(user:state.user,));
   }
 
-  // FutureOr<void>userInterestAdding(UserInterestAddingEvent event, Emitter<ProfileState> emit) {
-  //   print(event.interest);
-  //   emit(UserInterestSelectedState(user: state.user, interest: event.interest, about: state.about));
-  //   emit(UserLoadingSuccessState(user:state. user, interest:state. interest, about: state.about));
-  // }
-
-  // FutureOr<void> userAboutAddingEvent(UserAboutAddingEvent event, Emitter<ProfileState> emit) {
-
-  // }
-
-  // FutureOr<void> userLoadingState(UserLoadingState event, Emitter<ProfileState> emit) {
-  //   emit(UserLoadingSuccessState(user: state.user, interest: state.interest, about:state. about));
-  // }
 }

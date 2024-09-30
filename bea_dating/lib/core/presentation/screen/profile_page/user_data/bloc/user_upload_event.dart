@@ -29,3 +29,20 @@ class DrinkSelectEvent extends UserUploadEvent{
 
   DrinkSelectEvent({required this.drink, required this.indext});
 }
+class GymSelectEvent extends UserUploadEvent{
+  final String gym;
+  final int gymindext;
+
+  GymSelectEvent({required this.gym, required this.gymindext});
+}
+class SmokeSelectEvent extends UserUploadEvent{
+  final String smoke;
+  final int smokeindext;
+
+  SmokeSelectEvent({required this.smoke, required this.smokeindext});
+}
+class UserBackDataUpload extends UserUploadEvent{
+  final String about;
+
+  UserBackDataUpload({required this.about}); 
+}

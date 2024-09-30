@@ -9,3 +9,12 @@ class BottomNavigatorEindexState extends HomeblocState{
 
   BottomNavigatorEindexState({required this.Eindex});
 }
+class CountUpdatestate extends HomeblocState{
+final int count;
+   CountUpdatestate({required this.count});
+}
+class NumberOfUserSelectedState extends HomeblocState{
+  final int numberOfUser;
+
+  NumberOfUserSelectedState({required this.numberOfUser});
+}

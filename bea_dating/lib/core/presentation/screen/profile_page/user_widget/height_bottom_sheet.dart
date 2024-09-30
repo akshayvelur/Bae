@@ -8,7 +8,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 heightBottomsheet(context) {
   AppFonts appfonts = AppFonts();
-  int? selected;
   TextEditingController textEditingController=TextEditingController();
   List<int> items = [];
   int limit = 200;
