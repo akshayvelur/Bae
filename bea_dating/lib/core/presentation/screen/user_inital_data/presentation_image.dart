@@ -39,7 +39,7 @@ class _PresentaionImagePageState extends State<PresentaionImagePage> {
                 .push(FadeTransitionPageRoute(child: BottomNavigationScreen()));
           }
              if(state is PresentationPageLoading){
-         showDialog(context: context, builder:(context) => Center(child: Container(height: 130,width: 130, child: LottieBuilder.asset("assets/Animation - 1727367862351.json"))));
+         showDialog(context: context, barrierDismissible: false,builder:(context) => Center(child: Container(height: 130,width: 130, child: LottieBuilder.asset("assets/Animation - 1727367862351.json"))));
           }
         },
         builder: (context, state) {

@@ -9,17 +9,18 @@ part 'profile_event.dart';
 part 'profile_state.dart';
 
 class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
-  ProfileBloc() : super(ProfileInitial(user:null, interest: null)){
+  ProfileBloc() : super(ProfileInitial(user:null)){
     on<NavigateToUserDataEvent>(navigateToUserDataState);
  on<InitStateEvent>(initStateEvent);
 on< NavigateBackToProfilEvent>( navigateBackToProfilEvent);
-on<ProfileUserInterest>(profileUserInterest);
+
+
   }
 
 
 
   FutureOr<void> navigateToUserDataState(NavigateToUserDataEvent event, Emitter<ProfileState> emit) {
-    emit(NavigateToUserDataState(user: state.user, interest: state.interest));
+    emit(NavigateToUserDataState(user: state.user));
   }
   FutureOr<void> initStateEvent(InitStateEvent event, Emitter<ProfileState> emit) async{
       
@@ -31,8 +32,8 @@ on<ProfileUserInterest>(profileUserInterest);
        print("profile data fetched");
      
    
-      emit(IninitState(user: user, interest: state.interest,));
-      emit(LoadingSuccessState(user:state.user,interest: state.interest));
+      emit(IninitState(user: user));
+      emit(LoadingSuccessState(user:state.user));
 
     } else {
        print("NO DATA");
@@ -43,10 +44,20 @@ on<ProfileUserInterest>(profileUserInterest);
   }
 
   FutureOr<void> navigateBackToProfilEvent(NavigateBackToProfilEvent event, Emitter<ProfileState> emit) {
- emit(NavigateBacktoProfileState(user:state.user, interest:state.interest));
+ emit(NavigateBacktoProfileState(user:state.user,));
   }
 
-  FutureOr<void> profileUserInterest(ProfileUserInterest event, Emitter<ProfileState> emit) {
-    emit(ProfileInterestSelectedState(user: state.user, interest: state.interest));
-  }
+  // FutureOr<void>userInterestAdding(UserInterestAddingEvent event, Emitter<ProfileState> emit) {
+  //   print(event.interest);
+  //   emit(UserInterestSelectedState(user: state.user, interest: event.interest, about: state.about));
+  //   emit(UserLoadingSuccessState(user:state. user, interest:state. interest, about: state.about));
+  // }
+
+  // FutureOr<void> userAboutAddingEvent(UserAboutAddingEvent event, Emitter<ProfileState> emit) {
+
+  // }
+
+  // FutureOr<void> userLoadingState(UserLoadingState event, Emitter<ProfileState> emit) {
+  //   emit(UserLoadingSuccessState(user: state.user, interest: state.interest, about:state. about));
+  // }
 }

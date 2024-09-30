@@ -2,7 +2,7 @@ import 'package:bea_dating/core/data/model/usermodel.dart';
 
 import 'package:bea_dating/core/domin/usecase/authentication.dart';
 import 'package:bea_dating/core/presentation/screen/profile_page/bloc/profile_bloc.dart';
-import 'package:bea_dating/core/presentation/screen/profile_page/user_data_upload.dart';
+import 'package:bea_dating/core/presentation/screen/profile_page/user_data/user_data_upload.dart';
 import 'package:bea_dating/core/presentation/utilit/color.dart';
 import 'package:bea_dating/core/presentation/utilit/fonts.dart';
 import 'package:bea_dating/core/presentation/utilit/mediaquery.dart';
@@ -69,7 +69,7 @@ class _ProfilePageState extends State<ProfilePage> {
             //     context.read<ProfileBloc>().add(InitStateEvent());
             //  }
           } else if (state is LoadingSuccessState) {
-            print("update ayo");
+    
             myuser = state.user;
             return Scaffold(
               backgroundColor: whiteclr,
