@@ -1,5 +1,6 @@
   import 'package:bea_dating/core/domin/usecase/authentication.dart';
-import 'package:bea_dating/core/presentation/screen/profile_page/bloc/profile_bloc.dart';
+// import 'package:bea_dating/core/presentation/screen/profile_page/Profile/bloc/profile_bloc.dart';
+import 'package:bea_dating/core/presentation/screen/profile_page/Profile/bloc/profile_bloc.dart';
 import 'package:bea_dating/core/presentation/screen/welcome&rule/welcome_screen.dart';
 import 'package:bea_dating/core/presentation/utilit/color.dart';
 import 'package:bea_dating/core/presentation/utilit/logo.dart';

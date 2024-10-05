@@ -85,8 +85,8 @@ class _UserBasicdataState extends State<UserNameAgeBasic> {
                 SizedBox(
                   height: mediaqueryHight(.01, context),
                 ),
-                Text(
-                  "i'm a very serious person ",
+              if(widget.user.profile['about']!=null)  Text(
+                  widget.user.profile['about'],
                   style: widget.appFonts.userStatus,
                 )
               ],

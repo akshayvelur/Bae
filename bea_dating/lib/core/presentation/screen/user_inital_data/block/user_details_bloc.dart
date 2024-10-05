@@ -19,7 +19,7 @@ class UserDetailsBloc extends Bloc<UserDetailsEvent, UserDetailsState> {
       : super(UserDetailsInitial(
             username: '',
             dob: '',
-            location: '',
+            location: null,
             gender: '',
             genderInterest: '',
             expectation: '',
@@ -155,8 +155,16 @@ class UserDetailsBloc extends Bloc<UserDetailsEvent, UserDetailsState> {
   }
 
   FutureOr<void> dobToEnableLocationEvent(
-      DobToEnableLocationEvent event, Emitter<UserDetailsState> emit) {
-    emit(NavigateToEnableLocationState(
+      DobToEnableLocationEvent event, Emitter<UserDetailsState> emit) async{
+ SharedPreferences pref=await SharedPreferences.getInstance();
+ Map<String,String>location={};
+  
+  String ?lati=await pref.getString('latitude');
+  String? longi=await pref.getString('longitude');
+
+  if(lati==null&&longi==null){
+    print("enable location");
+   emit(NavigateToEnableLocationState(
         username: state.username,
         dob: event.dob,
         location: state.location,
@@ -164,23 +172,43 @@ class UserDetailsBloc extends Bloc<UserDetailsEvent, UserDetailsState> {
         genderInterest: state.genderInterest,
         expectation: state.expectation,
         image: state.image));
+  }else{
+      location['longitude']=longi!;
+        location['latitude']=lati!;
+        log(' add to map${location}');
+  }
+if(location.containsKey("longitude")&&location.containsKey("latitude")){
+  print("to gender");
+      emit(NavigateToGenderSelectionState(
+        username: state.username,
+        dob: event.dob,
+        location: location,
+        gender: state.gender,
+        genderInterest: state.genderInterest,
+        expectation: state.expectation,
+        image: state.image));
+}
   }
 
   FutureOr<void> enableLocationToGenderselct(
       EnableLocationToGenderselectEvent event,
       Emitter<UserDetailsState> emit) async {
-
-    LocationData _locationData = await locationEnable();
-  
+  Map<String,String>location={};
+     location = await locationEnable();
+  if(location.isNotEmpty){
     emit(NavigateToGenderSelectionState(
         username: state.username,
         dob: state.dob,
-        location: _locationData.toString(),
+        location: location,
         gender: state.gender,
         genderInterest: state.genderInterest,
         expectation: state.expectation,
         image: state.image));
+        print(location);
+              await locationToSharedPref(longitude:location['longitude']! , latitude: location['latitude']!);
   }
+  }
+  
 
   FutureOr<void> genderButtonSelctionEvent(
       GenderButtonSelctionEvent event, Emitter<UserDetailsState> emit) {
@@ -348,7 +376,7 @@ class UserDetailsBloc extends Bloc<UserDetailsEvent, UserDetailsState> {
         log("IMAGE UPLOAD ISSUE${e.toString()}");
       }
       // User data updating
-      await _authentic.createUser(state.username, state.dob, state.location,
+      await _authentic.createUser(state.username, state.dob, state.location!,
           state.gender, state.genderInterest, state.expectation,);
       await _authentic.localStorage();
       await _authentic.imageCollectionUpdate(_imgUrl);

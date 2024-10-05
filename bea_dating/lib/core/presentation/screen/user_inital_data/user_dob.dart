@@ -1,6 +1,7 @@
 
 import 'package:bea_dating/core/presentation/screen/user_inital_data/block/user_details_bloc.dart';
 import 'package:bea_dating/core/presentation/screen/user_inital_data/enable_location.dart';
+import 'package:bea_dating/core/presentation/screen/user_inital_data/gender_selection.dart';
 import 'package:bea_dating/core/presentation/utilit/color.dart';
 import 'package:bea_dating/core/presentation/utilit/fonts.dart';
 import 'package:bea_dating/core/presentation/utilit/mediaquery.dart';
@@ -28,6 +29,10 @@ class UserDob extends StatelessWidget {
           if (state is NavigateToEnableLocationState) {
             Navigator.of(context)
                 .push(FadeTransitionPageRoute(child: EnableLocation()));
+          }
+              if (state is NavigateToGenderSelectionState) {
+            Navigator.of(context)
+                .push(FadeTransitionPageRoute(child: GenderSelctionPage()));
           }
         },
         child: Scaffold(

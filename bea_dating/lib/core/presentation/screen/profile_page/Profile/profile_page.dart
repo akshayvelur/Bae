@@ -1,12 +1,14 @@
 import 'package:bea_dating/core/data/model/usermodel.dart';
 
 import 'package:bea_dating/core/domin/usecase/authentication.dart';
-import 'package:bea_dating/core/presentation/screen/profile_page/bloc/profile_bloc.dart';
+import 'package:bea_dating/core/presentation/screen/profile_page/Profile/profile_wigdet/shimmer_widget.dart';
+import 'package:bea_dating/core/presentation/screen/profile_page/Profile/bloc/profile_bloc.dart';
 import 'package:bea_dating/core/presentation/screen/profile_page/user_data/user_data_upload.dart';
 import 'package:bea_dating/core/presentation/utilit/color.dart';
 import 'package:bea_dating/core/presentation/utilit/fonts.dart';
 import 'package:bea_dating/core/presentation/utilit/mediaquery.dart';
 import 'package:bea_dating/core/presentation/utilit/page_transcation/fade_transition.dart';
+import 'package:bea_dating/core/presentation/utilit/text_widget.dart';
 import 'package:bea_dating/core/presentation/widgets/profile_widget/match_and_follow.dart';
 import 'package:bea_dating/core/presentation/widgets/profile_widget/profile_app_bar_widget.dart';
 import 'package:bea_dating/core/presentation/widgets/profile_widget/profile_boost_widget.dart';
@@ -51,23 +53,20 @@ class _ProfilePageState extends State<ProfilePage> {
         listener: (context, state) {
           if (state is NavigateToUserDataState) {
             Navigator.of(context)
-                .push(FadeTransitionPageRoute(child: UserdataUpload()));
+                .push(FadeTransitionPageRoute(child: UserdataUpload(userModel: myuser!,)));
           }
-          // if (state is LoadingState) {
-          //   // showDialog(context: context, builder:(context) => Center(child: Container(height: 130,width: 130, child: LottieBuilder.asset("assets/Animation - 1727367862351.json"))));
-          //   //return Scaffold( body:  Center(child: CircularProgressIndicator(),));
-          // }
+       
           if (state is LoadingSuccessState) {
             //  Navigator.pop(context);
           }
         },
         builder: (context, state) {
-          if (state is LoadingState) {}
+          if (state is LoadingState) {
+            myuser=state.user;
+          }
           if (state is IninitState) {
             myuser = state.user;
-            //   if(myuser==null){
-            //     context.read<ProfileBloc>().add(InitStateEvent());
-            //  }
+      
           } else if (state is LoadingSuccessState) {
     
             myuser = state.user;
@@ -115,13 +114,13 @@ class _ProfilePageState extends State<ProfilePage> {
                         SizedBox(
                           height: mediaqueryHight(.01, context),
                         ),
-                        LifeStyleWidget(appFonts: appFonts),
+                     if(myuser!=null)   LifeStyleWidget(appFonts: appFonts,myuser: myuser!,),
                         SizedBox(
                           height: mediaqueryHight(.01, context),
                         ),
                         Container(
                           width: mediaqueryWidth(100, context),
-                          height: mediaqueryHight(.28, context),
+                        //  height: mediaqueryHight(.34, context),
                           decoration: BoxDecoration(
                               color: useraboutContainer,
                               borderRadius: BorderRadius.circular(5)),
@@ -130,36 +129,40 @@ class _ProfilePageState extends State<ProfilePage> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                // CommonTextWidget(
-                                //   text: "Lifestyle habit",
-                                //   textfont: appFonts.flexhead(whiteclr, size: 20),
-                                // ),
-                                // SizedBox(
-                                //   height: mediaqueryHight(.02, context),
-                                // ),
-                                UserCoreCollection(
-                                  headline: "About",
-                                  userOut: "Adventurous, tech-savvy",
+                                CommonTextWidget(
+                                  text: "About User",
+                                  textfont: appFonts.flexhead(blackclr, size: 20),
                                 ),
+                                SizedBox(
+                                  height: mediaqueryHight(.02, context),
+                                ),
+                            // if(myuser!=null)UserCoreCollection(
+                            //       headline: "Height",
+                            //       userOut: myuser!.profile['height'].toString(),
+                            //     ),
                                 SizedBox(
                                   height: mediaqueryHight(.01, context),
                                 ),
-                                UserCoreCollection(
+                               if(myuser!.expectation!=null) UserCoreCollection(
                                   headline: "Expectation ?",
-                                  userOut: "Casual dating",
+                                  userOut: myuser!.expectation,
                                 ),
                                 SizedBox(
                                   height: mediaqueryHight(.01, context),
                                 ),
-                                UserCoreCollection(
+                               if(myuser!.interest !=null)   UserCoreCollection(
+                                  headline: "Gender preference?",
+                                  userOut: myuser!.interest,
+                                ),
+                                 if(myuser!.profile['interest type']!=null)   UserCoreCollection(
                                   headline: "interest?",
-                                  userOut: " tech innovation",
+                                  userOut: myuser!.profile['interest type'].toString(),
                                 ),
                               ],
                             ),
                           ),
                         ),
-                      ],
+                     SizedBox(height:mediaqueryHight(.1, context),) ],
                     ),
                   ),
                 ),
@@ -167,96 +170,79 @@ class _ProfilePageState extends State<ProfilePage> {
             );
           }
           return Scaffold(
-            appBar: profileAppbar(context, authentic),
-            backgroundColor: whiteclr,
-            body: Padding(
-              padding: const EdgeInsets.only(left: 15, right: 15, top: 15),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      ShimmingContainer(
-                        height: mediaqueryHight(.2, context),
-                        width: mediaqueryWidth(.28, context),
-                      ),
-                      Column(
-                        children: [
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(left: 65),
-                                child: ShimmingContainer(
-                                  height: mediaqueryHight(.07, context),
-                                  width: mediaqueryWidth(.12, context),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(left: 50),
-                                child: ShimmingContainer(
-                                  height: mediaqueryHight(.07, context),
-                                  width: mediaqueryWidth(.12, context),
-                                ),
-                              ),
-                            ],
+      appBar: profileAppbar(context, authentic),
+      backgroundColor: whiteclr,
+      body: Padding(
+        padding: const EdgeInsets.only(left: 15, right: 15, top: 15),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                ShimmingContainer(
+                  height: mediaqueryHight(.2, context),
+                  width: mediaqueryWidth(.28, context),
+                ),
+                Column(
+                  children: [
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 65),
+                          child: ShimmingContainer(
+                            height: mediaqueryHight(.07, context),
+                            width: mediaqueryWidth(.12, context),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 65, top: 20),
-                            child: ShimmingContainer(
-                                width: mediaqueryWidth(.3, context),
-                                height: mediaqueryHight(.045, context)),
-                          )
-                        ],
-                      ),
-                    ],
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 27),
-                    child: ShimmingContainer(
-                        width: mediaqueryWidth(.38, context),
-                        height: mediaqueryHight(.03, context)),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 18),
-                    child: ShimmingContainer(
-                        width: mediaqueryWidth(.58, context),
-                        height: mediaqueryHight(.02, context)),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 38),
-                    child: ShimmingContainer(
-                        width: mediaqueryWidth(100, context),
-                        height: mediaqueryHight(.14, context)),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 12),
-                    child: ShimmingContainer(
-                        width: mediaqueryWidth(100, context),
-                        height: mediaqueryHight(.27, context)),
-                  )
-                ],
-              ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 50),
+                          child: ShimmingContainer(
+                            height: mediaqueryHight(.07, context),
+                            width: mediaqueryWidth(.12, context),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 65, top: 20),
+                      child: ShimmingContainer(
+                          width: mediaqueryWidth(.3, context),
+                          height: mediaqueryHight(.045, context)),
+                    )
+                  ],
+                ),
+              ],
             ),
-          );
+            Padding(
+              padding: const EdgeInsets.only(top: 27),
+              child: ShimmingContainer(
+                  width: mediaqueryWidth(.38, context),
+                  height: mediaqueryHight(.03, context)),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 18),
+              child: ShimmingContainer(
+                  width: mediaqueryWidth(.58, context),
+                  height: mediaqueryHight(.02, context)),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 38),
+              child: ShimmingContainer(
+                  width: mediaqueryWidth(100, context),
+                  height: mediaqueryHight(.14, context)),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 12),
+              child: ShimmingContainer(
+                  width: mediaqueryWidth(100, context),
+                  height: mediaqueryHight(.27, context)),
+            )
+          ],
+        ),
+      ),
+    );
         });
   }
-}
-
-class ShimmingContainer extends StatelessWidget {
-  ShimmingContainer({super.key, required this.width, required this.height});
-  var height;
-  var width;
-  @override
-  Widget build(BuildContext context) {
-    return Shimmer.fromColors(
-        baseColor: Colors.grey.shade300,
-        highlightColor: Colors.grey[100]!,
-        child: Container(
-          height: height,
-          width: width,
-          decoration: BoxDecoration(
-              color: blackclr, borderRadius: BorderRadius.circular(10)),
-        ));
-  }
+  
 }

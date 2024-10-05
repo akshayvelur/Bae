@@ -1,4 +1,4 @@
-import 'package:bea_dating/core/presentation/screen/profile_page/bloc/profile_bloc.dart';
+//import 'package:bea_dating/core/presentation/screen/profile_page/Profile/bloc/profile_bloc.dart';
 import 'package:bea_dating/core/presentation/screen/profile_page/user_data/bloc/user_upload_bloc.dart';
 import 'package:bea_dating/core/presentation/utilit/color.dart';
 import 'package:bea_dating/core/presentation/utilit/fonts.dart';

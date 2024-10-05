@@ -44,7 +44,10 @@ on< NavigateBackToProfilEvent>( navigateBackToProfilEvent);
   }
 
   FutureOr<void> navigateBackToProfilEvent(NavigateBackToProfilEvent event, Emitter<ProfileState> emit) {
+     emit(LoadingSuccessState(user:state.user));
+     print(state.user!.interest);
  emit(NavigateBacktoProfileState(user:state.user,));
+
   }
 
 }

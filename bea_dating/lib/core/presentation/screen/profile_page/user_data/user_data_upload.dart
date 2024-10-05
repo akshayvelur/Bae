@@ -1,5 +1,7 @@
-import 'package:bea_dating/core/presentation/screen/profile_page/bloc/profile_bloc.dart';
-import 'package:bea_dating/core/presentation/screen/profile_page/profile_page.dart';
+import 'package:bea_dating/core/data/data_source/userdata.dart';
+import 'package:bea_dating/core/data/model/usermodel.dart';
+import 'package:bea_dating/core/presentation/screen/profile_page/Profile/bloc/profile_bloc.dart';
+import 'package:bea_dating/core/presentation/screen/profile_page/Profile/profile_page.dart';
 import 'package:bea_dating/core/presentation/screen/profile_page/user_data/bloc/user_upload_bloc.dart';
 import 'package:bea_dating/core/presentation/screen/profile_page/user_widget/drink_bottom_sheet.dart';
 import 'package:bea_dating/core/presentation/screen/profile_page/user_widget/gym_bottom_sheet.dart';
@@ -17,15 +19,15 @@ import 'package:google_fonts/google_fonts.dart';
 
 // ignore: must_be_immutable
 class UserdataUpload extends StatefulWidget {
-  UserdataUpload({super.key});
-
+  UserdataUpload({super.key, required this.userModel});
+  final UserModel userModel;
   @override
   State<UserdataUpload> createState() => _UserdataUploadState();
 }
 
 class _UserdataUploadState extends State<UserdataUpload> {
   AppFonts appFonts = AppFonts();
-  BaseData baseData=BaseData();
+  BaseData baseData = BaseData();
   List<String> dropitem = [
     "Coffee Dating",
     "Looking for Love",
@@ -38,9 +40,9 @@ class _UserdataUploadState extends State<UserdataUpload> {
   ];
   String dropdownValue = "Coffee Dating";
   String? about;
-  String ?drink;
-  String ?gym;
-  String ?smoke;
+  String? drink;
+  String? gym;
+  String? smoke;
 
   TextEditingController aboutController = TextEditingController();
   String? relationship;
@@ -48,6 +50,22 @@ class _UserdataUploadState extends State<UserdataUpload> {
   @override
   void initState() {
     context.read<UserUploadBloc>().add(UserLoadingEvent());
+    if (widget.userModel!.profile['height'] != null &&
+        widget.userModel.profile['drink'] != null &&
+        widget.userModel.profile['drink'] != null &&
+        widget.userModel.profile['gym'] != null &&
+        widget.userModel.profile['smoke'] != null &&
+        widget.userModel.profile['relationship'] != null &&
+        widget.userModel.profile['interest type'] != null &&
+        widget.userModel.profile['about'] != null) {
+      heights = widget.userModel.profile["height"];
+      drink = widget.userModel.profile['drink'];
+      gym = widget.userModel.profile['gym'];
+      smoke = widget.userModel.profile['smoke'];
+      relationship = widget.userModel.profile['relationship'];
+      dropdownValue = widget.userModel.profile['interest type'];
+      about = widget.userModel.profile['about'];
+    }
     // TODO: implement initState
     super.initState();
   }
@@ -60,10 +78,11 @@ class _UserdataUploadState extends State<UserdataUpload> {
         appBar: AppBar(
           leading: IconButton(
               onPressed: () {
-              //  context.read<ProfileBloc>().add(NavigateBackToProfilEvent());
-          //  print(aboutController.text);
-            context.read<UserUploadBloc>().add(UserBackDataUpload(about:aboutController.text));
-   
+                //  context.read<ProfileBloc>().add(NavigateBackToProfilEvent());
+                //  print(aboutController.text);
+                context
+                    .read<UserUploadBloc>()
+                    .add(UserBackDataUpload(about: aboutController.text));
               },
               icon: Icon(Icons.arrow_back_ios)),
           title: Text(
@@ -74,6 +93,7 @@ class _UserdataUploadState extends State<UserdataUpload> {
         body: BlocListener<ProfileBloc, ProfileState>(
           listener: (context, state) {
             if (state is NavigateBacktoProfileState) {
+              context.read<ProfileBloc>().add(InitStateEvent());
               Navigator.pop(context);
             }
             // TODO: implement listener
@@ -89,15 +109,14 @@ class _UserdataUploadState extends State<UserdataUpload> {
                   relationship = state.relationship;
                 case HeightSelectedState:
                   heights = state.heights;
-                  case DrinkSelectedState:
-                  drink=state.drink;
-                  case GymSelectedState:
-                   gym=state.gym;
-                   case SmokeSelectedState:
-                    smoke=state.smoke;
-                    case UserBackDataSubmitted:
-                    context.read<ProfileBloc>().add(NavigateBackToProfilEvent());
-        
+                case DrinkSelectedState:
+                  drink = state.drink;
+                case GymSelectedState:
+                  gym = state.gym;
+                case SmokeSelectedState:
+                  smoke = state.smoke;
+                case UserBackDataSubmitted:
+                  context.read<ProfileBloc>().add(NavigateBackToProfilEvent());
               }
               // TODO: implement listener
             },
@@ -304,13 +323,19 @@ class _UserdataUploadState extends State<UserdataUpload> {
                                 color: useraboutContainer,
                                 borderRadius: BorderRadius.circular(10)),
                             child: Column(
-                              children: [ SizedBox(height: mediaqueryHight(.01, context),),
+                              children: [
+                                SizedBox(
+                                  height: mediaqueryHight(.01, context),
+                                ),
                                 //drink list tile
                                 Padding(
-                                  padding: const EdgeInsets.only(left: 15,right: 25),
-                                  child: InkWell(onTap: (){
-                                DrinkBottomsheet(context, baseData.Drinks,"How often do you drink?");
-                                  },
+                                  padding: const EdgeInsets.only(
+                                      left: 15, right: 25),
+                                  child: InkWell(
+                                    onTap: () {
+                                      DrinkBottomsheet(context, baseData.Drinks,
+                                          "How often do you drink?");
+                                    },
                                     child: ListTile(
                                       contentPadding: EdgeInsets.all(0),
                                       leading: Image.asset(
@@ -326,22 +351,32 @@ class _UserdataUploadState extends State<UserdataUpload> {
                                         mainAxisSize: MainAxisSize
                                             .min, // To ensure the row takes minimal space
                                         children: [
-                                          Text(drink!=null? drink.toString():"Empty",style: appFonts.flextext(blackclr,Fweight: 400,size: 14),),
+                                          Text(
+                                            drink != null
+                                                ? drink.toString()
+                                                : "Empty",
+                                            style: appFonts.flextext(blackclr,
+                                                Fweight: 400, size: 14),
+                                          ),
                                           SizedBox(
                                               width:
                                                   8), // For spacing between icons
-                                          Icon(Icons.keyboard_arrow_down, color: Colors.black),
+                                          Icon(Icons.keyboard_arrow_down,
+                                              color: Colors.black),
                                         ],
                                       ),
                                     ),
                                   ),
                                 ),
                                 //GYM
-                                  Padding(
-                                  padding: const EdgeInsets.only(left: 15,right: 25),
-                                  child: InkWell(onTap: (){
-                                gymBottomsheet(context, baseData.gym,"Do you workout?");
-                                  },
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 15, right: 25),
+                                  child: InkWell(
+                                    onTap: () {
+                                      gymBottomsheet(context, baseData.gym,
+                                          "Do you workout?");
+                                    },
                                     child: ListTile(
                                       contentPadding: EdgeInsets.all(0),
                                       leading: Image.asset(
@@ -349,7 +384,7 @@ class _UserdataUploadState extends State<UserdataUpload> {
                                         scale: 4,
                                       ),
                                       title: Text(
-                                         "Gym",
+                                        "Gym",
                                         style: appFonts.flextext(blackclr,
                                             Fweight: 500, size: 14),
                                       ),
@@ -357,22 +392,32 @@ class _UserdataUploadState extends State<UserdataUpload> {
                                         mainAxisSize: MainAxisSize
                                             .min, // To ensure the row takes minimal space
                                         children: [
-                                          Text(gym!=null? gym.toString():"Empty",style: appFonts.flextext(blackclr,Fweight: 400,size: 14),),
+                                          Text(
+                                            gym != null
+                                                ? gym.toString()
+                                                : "Empty",
+                                            style: appFonts.flextext(blackclr,
+                                                Fweight: 400, size: 14),
+                                          ),
                                           SizedBox(
                                               width:
                                                   8), // For spacing between icons
-                                          Icon(Icons.keyboard_arrow_down, color: Colors.black),
+                                          Icon(Icons.keyboard_arrow_down,
+                                              color: Colors.black),
                                         ],
                                       ),
                                     ),
                                   ),
-                                ), 
+                                ),
                                 //smoke
-                                 Padding(
-                                  padding: const EdgeInsets.only(left: 15,right: 25),
-                                  child: InkWell(onTap: (){
-                                smokeBottomsheet(context, baseData.smoke,"How often do you smoke?");
-                                  },
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 15, right: 25),
+                                  child: InkWell(
+                                    onTap: () {
+                                      smokeBottomsheet(context, baseData.smoke,
+                                          "How often do you smoke?");
+                                    },
                                     child: ListTile(
                                       contentPadding: EdgeInsets.all(0),
                                       leading: Image.asset(
@@ -380,7 +425,7 @@ class _UserdataUploadState extends State<UserdataUpload> {
                                         scale: 4,
                                       ),
                                       title: Text(
-                                       "Smoke",
+                                        "Smoke",
                                         style: appFonts.flextext(blackclr,
                                             Fweight: 500, size: 14),
                                       ),
@@ -388,11 +433,18 @@ class _UserdataUploadState extends State<UserdataUpload> {
                                         mainAxisSize: MainAxisSize
                                             .min, // To ensure the row takes minimal space
                                         children: [
-                                          Text(smoke!=null? smoke.toString():"Empty",style: appFonts.flextext(blackclr,Fweight: 400,size: 14),),
+                                          Text(
+                                            smoke != null
+                                                ? smoke.toString()
+                                                : "Empty",
+                                            style: appFonts.flextext(blackclr,
+                                                Fweight: 400, size: 14),
+                                          ),
                                           SizedBox(
                                               width:
                                                   8), // For spacing between icons
-                                          Icon(Icons.keyboard_arrow_down, color: Colors.black),
+                                          Icon(Icons.keyboard_arrow_down,
+                                              color: Colors.black),
                                         ],
                                       ),
                                     ),

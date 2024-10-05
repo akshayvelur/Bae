@@ -7,7 +7,8 @@ class UserModel {
   final List<String> image;
   final String expectation;
   final String interest;
-  final String location;
+  final Map<String,dynamic> location;
+  final Map<String,dynamic>profile;
 
   UserModel(
       {required this.name,
@@ -18,7 +19,7 @@ class UserModel {
       required this.image,
       required this.expectation,
       required this.interest,
-      required this.location});
+      required this.location,required this.profile});
   factory UserModel.fromMap(Map<String, dynamic> map) {
     return UserModel(
         name: map['name']??'',
@@ -26,22 +27,25 @@ class UserModel {
         dob: map['dob']??'',
         email: map['email']??'',
         gender: map['gender']??'',
-        image: List<String>.from(map['image']),
+        image: List<String>.from(map['image']??''),
         expectation: map['expectation']??'',
         interest: map['interest']??'',
-        location: map['location']??'');
+        location: map['Profile'] is Map<String, dynamic> ? map['Profile'] : {},
+          profile:map['Profile'] is Map<String, dynamic> ? map['Profile'] : {});
+      
   }
-Map<String,dynamic> toMap() {
-    return {
-      'name': name,
-      'uid': uid,
-      'dob': dob,
-      'email': email,
-      'gender': gender,
-      'image': image,
-      'expectation': expectation,
-      'interest': interest,
-      'location': location,
-    };
-  }
+// Map<String,dynamic> toMap() {
+//     return {
+//       'name': name,
+//       'uid': uid,
+//       'dob': dob,
+//       'email': email,
+//       'gender': gender,
+//       'image': image,
+//       'expectation': expectation,
+//       'interest': interest,
+//       'location': location,
+//       'Profile':profile
+//     };
+//   }
 }

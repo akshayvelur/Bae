@@ -84,7 +84,7 @@ class Authentic {
   // }
 
 //create user
-  Future<void> createUser(String name, String dob, String location,
+  Future<void> createUser(String name, String dob, Map<String,String> location,
       String gender, String interest, String expectation) async {
     try {
       // ignore: unused_local_variable

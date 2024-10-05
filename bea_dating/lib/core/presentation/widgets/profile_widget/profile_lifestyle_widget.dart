@@ -1,4 +1,5 @@
 
+import 'package:bea_dating/core/data/model/usermodel.dart';
 import 'package:bea_dating/core/presentation/utilit/color.dart';
 import 'package:bea_dating/core/presentation/utilit/fonts.dart';
 import 'package:bea_dating/core/presentation/utilit/mediaquery.dart';
@@ -9,16 +10,16 @@ import 'package:flutter/material.dart';
 class LifeStyleWidget extends StatelessWidget {
   const LifeStyleWidget({
     super.key,
-    required this.appFonts,
+    required this.appFonts,required this.myuser
   });
-
+  final UserModel myuser;
   final AppFonts appFonts;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: mediaqueryWidth(100, context),
-      height: mediaqueryHight(.33, context),
+      //height: mediaqueryHight(.33, context),
       decoration: BoxDecoration(
         color: useraboutContainer,
         borderRadius: BorderRadius.circular(5),
@@ -35,23 +36,23 @@ class LifeStyleWidget extends StatelessWidget {
             SizedBox(
               height: mediaqueryHight(.02, context),
             ),
-            UserCoreCollection(
+          if(myuser.profile['drink']!=null)  UserCoreCollection(
               headline: "How often do you drink?",
-              userOut: "Socially on  weekends",
+              userOut: myuser.profile['drink'],
             ),
             SizedBox(
               height: mediaqueryHight(.01, context),
             ),
-            UserCoreCollection(
+            if(myuser.profile['smoke']!=null)   UserCoreCollection(
               headline: "How often do you smoke?",
-              userOut: "No-smoker",
+              userOut: myuser.profile['smoke'],
             ),
             SizedBox(
               height: mediaqueryHight(.01, context),
             ),
-            UserCoreCollection(
+          if(myuser.profile['gym']!=null)  UserCoreCollection(
               headline: "Do you workout?",
-              userOut: "Everyday",
+              userOut: myuser.profile['gym'],
             ),
           ],
         ),

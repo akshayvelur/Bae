@@ -4,7 +4,7 @@ part of 'user_details_bloc.dart';
 abstract class UserDetailsState {
   final String username;
   final String dob;
-  final String location;
+  final Map<String,String>? location;
   final String gender;
   final String genderInterest;
   final String expectation;

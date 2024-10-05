@@ -13,8 +13,8 @@ Future<UserModel?> getUserData()async{
       print("uid${uid}");
 FirebaseFirestore _firestore=FirebaseFirestore.instance;
 DocumentSnapshot snapshot =await _firestore.collection("users").doc(uid).get();
-//print(snapshot.id);
-if(snapshot.exists){
+print(snapshot.data());
+if(snapshot.exists&&snapshot.data()!=null){
   print("Data fetched");
   return UserModel.fromMap(snapshot.data() as Map<String,dynamic>);
 }
