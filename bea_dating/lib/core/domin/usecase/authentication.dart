@@ -85,7 +85,7 @@ class Authentic {
 
 //create user
   Future<void> createUser(String name, String dob, Map<String,String> location,
-      String gender, String interest, String expectation) async {
+      String gender, String interest, String expectation,) async {
     try {
       // ignore: unused_local_variable
       final users =
@@ -99,6 +99,9 @@ class Authentic {
         'gender': gender,
         'interest': interest,
         'expectation': expectation,
+        'like':[],
+        'request':{},
+        'match':[]
       });
 
       log("database created");
@@ -192,7 +195,19 @@ class Authentic {
     }
     return null;
   }
+  //UID fetching
 
+ userUidFromSharedpref()async{
+try{
+   SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? uid = prefs.getString('uid');
+   
+    return uid as String;
+}catch(e){
+ log("uid from shared pref error:${e}");
+}
+return "";
+  }
   Future<void> clearSharedpreference() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.remove("uid");

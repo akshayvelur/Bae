@@ -9,6 +9,9 @@ class UserModel {
   final String interest;
   final Map<String,dynamic> location;
   final Map<String,dynamic>profile;
+ final List<String>like;
+ final List<String>match;
+ final Map<String,dynamic>request;
 
   UserModel(
       {required this.name,
@@ -19,7 +22,9 @@ class UserModel {
       required this.image,
       required this.expectation,
       required this.interest,
-      required this.location,required this.profile});
+      required this.location,required this.profile,
+     required this.like,required this.match,required this.request
+      });
   factory UserModel.fromMap(Map<String, dynamic> map) {
     return UserModel(
         name: map['name']??'',
@@ -30,8 +35,13 @@ class UserModel {
         image: List<String>.from(map['image']??''),
         expectation: map['expectation']??'',
         interest: map['interest']??'',
-        location: map['Profile'] is Map<String, dynamic> ? map['Profile'] : {},
-          profile:map['Profile'] is Map<String, dynamic> ? map['Profile'] : {});
+        location: map['location'] is Map<String, dynamic> ? map['location'] : {},
+          profile:map['Profile'] is Map<String, dynamic> ? map['Profile'] : {},
+         like:List<String>.from(map['like']??''),
+         request :map['request'] is Map<String, dynamic> ? map['request'] : {},
+         match:List<String>.from(map['match']??'')
+         
+          );
       
   }
 // Map<String,dynamic> toMap() {

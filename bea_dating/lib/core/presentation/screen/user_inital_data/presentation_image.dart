@@ -35,8 +35,11 @@ class _PresentaionImagePageState extends State<PresentaionImagePage> {
         listener: (context, state) {
           // TODO: implement listener
                if (state is NavigateToHomeScreenState) {
-            Navigator.of(context)
-                .pushReplacement(FadeTransitionPageRoute(child: BottomNavigationScreen()));
+          Navigator.of(context).pushAndRemoveUntil(
+  FadeTransitionPageRoute(child: BottomNavigationScreen()),
+  (Route<dynamic> route) => false, // This removes all previous routes
+);
+
           }
              if(state is PresentationPageLoading){
          showDialog(context: context, barrierDismissible: false,builder:(context) => Center(child: Container(height: 130,width: 130, child: LottieBuilder.asset("assets/Animation - 1727367862351.json"))));

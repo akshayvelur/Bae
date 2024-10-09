@@ -18,3 +18,10 @@ class NumberOfUserSelectedState extends HomeblocState{
 
   NumberOfUserSelectedState({required this.numberOfUser});
 }
+class InitState extends HomeblocState{
+  final String uid;
+  InitState({required this.uid});
+}
+class UserLikeAddedState extends HomeblocState{
+  
+}

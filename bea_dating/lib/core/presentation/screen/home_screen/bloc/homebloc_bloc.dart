@@ -1,8 +1,11 @@
 // ignore_for_file: unused_local_variable
 
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:bea_dating/core/data/data_source/userdata.dart';
+import 'package:bea_dating/core/domin/usecase/authentication.dart';
+import 'package:bea_dating/core/domin/usecase/like_user.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
@@ -15,6 +18,8 @@ class HomeblocBloc extends Bloc<HomeblocEvent, HomeblocState> {
  on<BottoNavigatorEindexEvent>(bottoNavigatorEindexEvent);
  on<CountEvent>(countEvent);
  on<NumberOfUserEvent>(numberOfUserEvent);
+ on<InitEvent>(initEvent);
+ on<UserLikeEvent>(userLikeEvent);
   }
 
 
@@ -31,5 +36,21 @@ class HomeblocBloc extends Bloc<HomeblocEvent, HomeblocState> {
 
   FutureOr<void> numberOfUserEvent(NumberOfUserEvent event, Emitter<HomeblocState> emit) {
     emit(NumberOfUserSelectedState(numberOfUser: event.numberOfUser));
+  }
+
+  FutureOr<void> initEvent(InitEvent event, Emitter<HomeblocState> emit)async {
+    Authentic authentic=Authentic();
+  final vp=  await authentic.userUidFromSharedpref();
+//   String g=vp.toString();
+// log("quuuuu${vp.runtimeType}");
+    emit(InitState(uid:vp ));
+  }
+
+  FutureOr<void> userLikeEvent(UserLikeEvent event, Emitter<HomeblocState> emit) async{
+   
+  
+
+    print("State current user id ${event.likeduser}");
+   liketoUser(event.likeduser!);
   }
 }

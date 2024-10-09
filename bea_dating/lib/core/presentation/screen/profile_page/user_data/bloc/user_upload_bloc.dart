@@ -60,9 +60,9 @@ emit(UserLoadingSuccessState(interest: state.interest, about: state.about, relat
 
   FutureOr<void> userBackDataUpload(UserBackDataUpload event, Emitter<UserUploadState> emit)async {
     print(state.drink);
-    Map<String,dynamic>data={};
-  if(event.about.isNotEmpty) {emit(UserAboutSelectedState(interest: state.interest, about: event.about, relationship: state.relationship, reindex: state.reindex, heights:state.heights, drink:state.drink, gym:state.gym, smoke:state.smoke));
-    data["about"]=state.about;}
+    Map<String,dynamic>?data={};
+  // if(event.about.isNotEmpty) {emit(UserAboutSelectedState(interest: state.interest, about: event.about, relationship: state.relationship, reindex: state.reindex, heights:state.heights, drink:state.drink, gym:state.gym, smoke:state.smoke));
+  //   data["about"]=state.about;}
    if(state.interest!.isNotEmpty) {  data["interest type"]=state.interest;}
    if(state.relationship!.isNotEmpty) {data["relationship"]=state.relationship;}
     if(state.heights!.isNotEmpty){data["height"]=state.heights;}
@@ -74,7 +74,8 @@ emit(UserLoadingSuccessState(interest: state.interest, about: state.about, relat
     ProfileData profileData=ProfileData();
     await profileData.dataUpload(data);
     emit(UserBackDataSubmitted(interest: state.interest, about: state.about, relationship: state.relationship, reindex: state.reindex, heights:state.heights, drink:state.drink, gym:state.gym, smoke:state.smoke));
-    }else if(data.isEmpty){
+    }
+    else if(data.isEmpty){
         emit(UserBackDataSubmitted(interest: state.interest, about: state.about, relationship: state.relationship, reindex: state.reindex, heights:state.heights, drink:state.drink, gym:state.gym, smoke:state.smoke));
     }     
   }

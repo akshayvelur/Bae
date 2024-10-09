@@ -15,13 +15,14 @@ String title;
   Widget build(BuildContext context) {
     return Container(
       // height: mediaqueryHight(.035, context),
-      // width: mediaqueryWidth(.4, context),
+       width: mediaqueryWidth(.4, context),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         color:const Color.fromARGB(177, 195, 194, 193),
       ),child: Center(child: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Text(title!=null? title:" ",style: appFonts.flextext(blackclr,Fweight:700,size: 14),),
+        child: Text(title!=null? title:" ",style: appFonts.flextext(blackclr,Fweight:700,size: 14),
+       softWrap: true,),
       )),
     );
   }

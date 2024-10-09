@@ -12,7 +12,7 @@ class TabControllers extends StatelessWidget {
     required this.profile,
     required this.mainindex,
     required this.numberOfUser,
-    required this.controller,
+    required this.controller,required this.dob,required this.currentuserUid,required this.user
   });
 
   final dynamic image;
@@ -21,7 +21,9 @@ class TabControllers extends StatelessWidget {
   final int mainindex;
   final int numberOfUser;
   final CardSwiperController controller;
-
+  final currentuserUid;
+final String dob;
+final Map user;
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -46,15 +48,15 @@ class TabControllers extends StatelessWidget {
                           mainindex: mainindex,
                           numberOfUser:
                               numberOfUser,
-                          controller: controller),
+                          controller: controller,dob: dob,currentuserUid: currentuserUid,user: user,),
                       // tab2
                       CardImageTwo(
                           image: image,
                           profile: profile,
                           mainindex: mainindex,
                           numberOfUser:
-                              numberOfUser,
-                          controller: controller),
+                              numberOfUser,currentuserUid:currentuserUid,
+                          controller: controller,user: user,),
                     ]),
               ),
               SizedBox(

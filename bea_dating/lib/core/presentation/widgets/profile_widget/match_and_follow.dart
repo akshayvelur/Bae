@@ -1,17 +1,18 @@
 
+import 'package:bea_dating/core/data/model/usermodel.dart';
 import 'package:bea_dating/core/presentation/utilit/fonts.dart';
 import 'package:bea_dating/core/presentation/utilit/mediaquery.dart';
 import 'package:bea_dating/core/presentation/widgets/profile_widget/profile_widget.dart';
 import 'package:flutter/material.dart';
 
 class MatchAndFollowWidget extends StatelessWidget {
-  const MatchAndFollowWidget({
+   MatchAndFollowWidget({
     super.key,
-    required this.appFonts,
+    required this.appFonts,required this.user
   });
 
   final AppFonts appFonts;
-
+   UserModel  user;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -30,7 +31,7 @@ class MatchAndFollowWidget extends StatelessWidget {
                 child: FollowWidget(
                   appFonts: appFonts,
                   headline: 'match',
-                  count: 10,
+                  count: 0,
                 ),
               ),
               SizedBox(
@@ -40,7 +41,7 @@ class MatchAndFollowWidget extends StatelessWidget {
                   onTap: () {},
                   child: FollowWidget(
                       appFonts: appFonts,
-                      count: 80,
+                      count: user.like.length,
                       headline: "Like"))
             ],
           ),

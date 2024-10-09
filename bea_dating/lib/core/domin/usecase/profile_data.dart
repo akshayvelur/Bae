@@ -18,9 +18,4 @@ print("userprofile");
       log("data uploading${e}");  
     }
   }
-
-
-  Future<dynamic>dataGetting()async{
-
-  }
 }

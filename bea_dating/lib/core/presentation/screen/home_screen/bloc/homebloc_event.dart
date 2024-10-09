@@ -16,6 +16,14 @@ class NumberOfUserEvent extends HomeblocEvent{
  final int numberOfUser;
 
   NumberOfUserEvent({required this.numberOfUser});
-}
+}class InitEvent extends HomeblocEvent{
+
+  }
+  class UserLikeEvent extends HomeblocEvent{
+    final String? likeduser;
+    
+
+  UserLikeEvent({required this.likeduser});
+  }
 
 

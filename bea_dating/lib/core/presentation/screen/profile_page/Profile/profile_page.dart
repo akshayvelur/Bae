@@ -90,7 +90,9 @@ class _ProfilePageState extends State<ProfilePage> {
                               ),
                             Column(
                               children: [
-                                MatchAndFollowWidget(appFonts: appFonts),
+                            if(myuser!=null
+                            &&myuser!.like!=null
+                            )    MatchAndFollowWidget(appFonts: appFonts,user: myuser!,),
                                 SizedBox(
                                   height: mediaqueryHight(.02, context),
                                 ),
@@ -114,7 +116,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         SizedBox(
                           height: mediaqueryHight(.01, context),
                         ),
-                     if(myuser!=null)   LifeStyleWidget(appFonts: appFonts,myuser: myuser!,),
+                     if(myuser!.profile.isNotEmpty) LifeStyleWidget(appFonts: appFonts,myuser: myuser!,),
                         SizedBox(
                           height: mediaqueryHight(.01, context),
                         ),
@@ -140,7 +142,16 @@ class _ProfilePageState extends State<ProfilePage> {
                             //       headline: "Height",
                             //       userOut: myuser!.profile['height'].toString(),
                             //     ),
+                              if(myuser!.gender!=null)   UserCoreCollection(
+                                  headline: "Gender?",
+                                  userOut: myuser!.gender,
+                                ),
                                 SizedBox(
+                                  height: mediaqueryHight(.01, context),
+                                ),if(myuser!.profile.containsKey('height'))   UserCoreCollection(
+                                  headline: "Height?",
+                                  userOut: myuser!.profile['height'],
+                                ),  SizedBox(
                                   height: mediaqueryHight(.01, context),
                                 ),
                                if(myuser!.expectation!=null) UserCoreCollection(
@@ -153,10 +164,23 @@ class _ProfilePageState extends State<ProfilePage> {
                                if(myuser!.interest !=null)   UserCoreCollection(
                                   headline: "Gender preference?",
                                   userOut: myuser!.interest,
+                                ), SizedBox(
+                                  height: mediaqueryHight(.01, context),
                                 ),
                                  if(myuser!.profile['interest type']!=null)   UserCoreCollection(
                                   headline: "interest?",
                                   userOut: myuser!.profile['interest type'].toString(),
+                                ),
+                                  SizedBox(
+                                  height: mediaqueryHight(.01, context),
+                                ),  if(myuser!.profile.containsKey('relationship'))   UserCoreCollection(
+                                  headline: "Relationship?",
+                                  userOut: myuser!.profile['relationship'],
+                                ), SizedBox(
+                                  height: mediaqueryHight(.01, context),
+                                ),  if(myuser!.profile.containsKey('interest type'))   UserCoreCollection(
+                                  headline: "Interest type?",
+                                  userOut: myuser!.profile['interest type'],
                                 ),
                               ],
                             ),

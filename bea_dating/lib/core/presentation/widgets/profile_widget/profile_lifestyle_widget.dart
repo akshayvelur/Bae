@@ -17,7 +17,7 @@ class LifeStyleWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return  Container(
       width: mediaqueryWidth(100, context),
       //height: mediaqueryHight(.33, context),
       decoration: BoxDecoration(

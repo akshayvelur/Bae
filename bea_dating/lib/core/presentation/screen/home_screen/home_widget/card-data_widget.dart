@@ -12,14 +12,14 @@ class CardUserData extends StatelessWidget {
     required this.profile,
     required this.mainindex,
     required this.numberOfUser,
-    required this.controller,
+    required this.controller,required this.user
   });
 
   final dynamic profile;
   final int mainindex;
   final int numberOfUser;
   final CardSwiperController controller;
-
+final Map user;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -33,7 +33,7 @@ class CardUserData extends StatelessWidget {
           child: Row(
             children: [
            if(profile!=null&&profile.containsKey("relationship")) myContainer(title:"Relationship : ${profile['relationship']}",),
-           ],
+         SizedBox(width: mediaqueryWidth(.04, context),),  if(profile['drink']!=null&&profile.containsKey("drink")) myContainer(title:"Drink : ${profile['drink']}",) ],
           ),
     
         ),
@@ -68,8 +68,11 @@ class CardUserData extends StatelessWidget {
                   if(mainindex<numberOfUser){
                     print(numberOfUser);
                   context.read<HomeblocBloc>().add(CountEvent(count:mainindex+1));}
+               
                     controller.swipe(CardSwiperDirection.left);
-               }, child: Image.asset(
+               },
+                 
+                child: Image.asset(
                   'assets/icons8-cancel-100.png',
                   scale: 2.5,
                   fit: BoxFit.cover,
@@ -90,6 +93,9 @@ class CardUserData extends StatelessWidget {
               FloatingActionButton(
                 backgroundColor: shadowclr,
                 onPressed: () {
+                     if(mainindex<=numberOfUser){
+                   context.read<HomeblocBloc>().add(UserLikeEvent(likeduser: user['uid']));
+                 }
                   if(mainindex<numberOfUser){
                   context.read<HomeblocBloc>().add(CountEvent(count:mainindex+1));}
                     controller.swipe(CardSwiperDirection.right);},

@@ -4,15 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
 
 class CardImageOne extends StatelessWidget {
-  const CardImageOne({
-    super.key,
-    required this.image,
-    required this.name,
-    required this.profile,
-    required this.mainindex,
-    required this.numberOfUser,
-    required this.controller,
-  });
+  const CardImageOne(
+      {super.key,
+      required this.image,
+      required this.name,
+      required this.profile,
+      required this.mainindex,
+      required this.numberOfUser,
+      required this.controller,
+      required this.dob,required this.currentuserUid,required this. user});
 
   final dynamic image;
   final String name;
@@ -20,7 +20,9 @@ class CardImageOne extends StatelessWidget {
   final int mainindex;
   final int numberOfUser;
   final CardSwiperController controller;
-
+  final String dob;
+  final String currentuserUid;
+  final Map user;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -28,14 +30,41 @@ class CardImageOne extends StatelessWidget {
       width: double.infinity,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
-          image: DecorationImage(
-              image: NetworkImage(image[0]), fit: BoxFit.cover)),
-      child: CardStatus(
+          // image: DecorationImage(
+          //   image: NetworkImage(
+          //     image[0],
+          //   ),
+          //   fit: BoxFit.cover,
+          // )
+          ),
+      child: Stack(children: [     ClipRRect(borderRadius: BorderRadius.circular(10),
+        child: Image.network(
+              image[0],fit: BoxFit.cover,width: double.infinity,height: double.infinity,
+              loadingBuilder: (context, child, loadingProgress) {
+                if (loadingProgress == null) {
+                  return child;
+                } else {
+                  return Center(
+                    child: CircularProgressIndicator(
+                      value: loadingProgress.expectedTotalBytes != null
+                          ? loadingProgress.cumulativeBytesLoaded /
+                              loadingProgress.expectedTotalBytes!
+                          : null,
+                    ),
+                  );
+                }
+              },
+            ),
+      ),CardStatus(
           name: name,
           profile: profile,
           mainindex: mainindex,
           numberOfUser: numberOfUser,
-          controller: controller),
+          controller: controller,
+          dob: dob,currentuserUid: currentuserUid,user: user,
+        ),],
+      )
+      
       // add profile details using child
     );
   }
@@ -48,7 +77,7 @@ class CardImageTwo extends StatelessWidget {
     required this.profile,
     required this.mainindex,
     required this.numberOfUser,
-    required this.controller,
+    required this.controller,required this.currentuserUid,required this.user
   });
 
   final dynamic image;
@@ -56,6 +85,8 @@ class CardImageTwo extends StatelessWidget {
   final int mainindex;
   final int numberOfUser;
   final CardSwiperController controller;
+  final String currentuserUid;
+  final Map user;
 
   @override
   Widget build(BuildContext context) {
@@ -64,13 +95,40 @@ class CardImageTwo extends StatelessWidget {
       width: double.infinity,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
-          image: DecorationImage(
-              image: NetworkImage(image[1]), fit: BoxFit.cover)),
-      child: CardUserData(
-          profile: profile,
-          mainindex: mainindex,
-          numberOfUser: numberOfUser,
-          controller: controller),
+          // image: DecorationImage(
+          //     image: NetworkImage(image[1]), fit: BoxFit.cover)
+          ),
+      child: Stack(
+        children: [
+          ClipRRect(borderRadius: BorderRadius.circular(10),
+            child: Image.network(
+              image[1],
+                fit: BoxFit.cover, // Ensures the image covers the entire container
+          width: double.infinity,
+          height: double.infinity,
+              loadingBuilder: (context, child, loadingProgress) {
+                if (loadingProgress == null) {
+                  return child;
+                } else {
+                  return Center(
+                    child: CircularProgressIndicator(
+                      value: loadingProgress.expectedTotalBytes != null
+                          ? loadingProgress.cumulativeBytesLoaded /
+                              loadingProgress.expectedTotalBytes!
+                          : null,
+                    ),
+                  );
+                }
+              },
+            ),
+          ),
+          CardUserData(
+              profile: profile,
+              mainindex: mainindex,
+              numberOfUser: numberOfUser,
+              controller: controller,user: user,),
+        ],
+      ),
       // add profile details using child
     );
   }

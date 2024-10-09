@@ -351,6 +351,7 @@ if(location.containsKey("longitude")&&location.containsKey("latitude")){
   FutureOr<void> presentationToHomeScreenEvent(
       PresentationToHomeScreenEvent event,
       Emitter<UserDetailsState> emit) async {
+        
         emit(PresentationPageLoading(    username: state.username,
         dob: state.dob,
         location: state.location,

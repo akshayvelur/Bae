@@ -1,4 +1,7 @@
+import 'dart:developer';
+
 import 'package:bea_dating/core/data/data_source/userdata.dart';
+import 'package:bea_dating/core/domin/usecase/authentication.dart';
 import 'package:bea_dating/core/presentation/screen/bottom_navigation/bottom_navigator.dart.dart';
 import 'package:bea_dating/core/presentation/screen/home_screen/bloc/homebloc_bloc.dart';
 import 'package:bea_dating/core/presentation/screen/home_screen/home_widget/Tab_controllers.dart';
@@ -14,6 +17,7 @@ import 'package:bea_dating/core/presentation/widgets/container/container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
+import 'package:lottie/lottie.dart';
 
 // ignore: must_be_immutable
 class HomeScreenPage extends StatefulWidget {
@@ -29,10 +33,11 @@ class _HomeScreenPageState extends State<HomeScreenPage> {
   AppFonts appFonts = AppFonts();
 
   UserData userData = UserData();
-
+Authentic _authentic=Authentic();
   Map<String, Map<String, dynamic>> temp = {};
 
   int mainindex = 0;
+  String? uid;
 
   final cards = [
     'assets/Ride.MPEG.jpg',
@@ -43,6 +48,7 @@ class _HomeScreenPageState extends State<HomeScreenPage> {
   @override
   void initState() {
     mainindex = 0;
+   context.read<HomeblocBloc>().add(InitEvent());
     // TODO: implement initState
     super.initState();
   }
@@ -51,6 +57,10 @@ class _HomeScreenPageState extends State<HomeScreenPage> {
   Widget build(BuildContext context) {
     return BlocConsumer<HomeblocBloc, HomeblocState>(
       listener: (context, state) {
+        if( state is InitState){
+          print(state.uid);
+          uid=state.uid;
+        }
         if (state is CountUpdatestate) {
           mainindex = state.count;
         }
@@ -90,21 +100,41 @@ class _HomeScreenPageState extends State<HomeScreenPage> {
                           return Center(child: Text('No data found'));
                         }
 
-                        final List<Map<String, dynamic>> dataList =
+                        List<Map<String, dynamic>> dataList =
                             snapshot.data!;
-               
-                        var user = dataList[mainindex];
-                      
-                        //print(numberofuser);
-                        String name = user['name'];
-                        var image = user['image'];
-                        var profile = user["Profile"];
-                        if(profile==null)
-                        mainindex++;
-                          int numberOfUser = dataList.length-1.abs();
-                    //   print("gym null error check>>>>>>>>>>${profile['gym']}");
+                           if (uid != null) {
+                             dataList.removeWhere((user) =>user['uid']==uid ,);
+                               }
 
-                        return profile!=null? CardSwiper(
+                                var image ;
+                                 var profile ;
+                                  var dob="";
+                                   var name;
+                                   Map user={};
+                             int numberOfUser =0;
+
+                               if(dataList.isNotEmpty){
+                                log("is empty"); 
+                               
+                         user=dataList[mainindex];
+                              // Debug log to check the list after removal
+                      //  log("List after removal: ${dataList[mainindex]}");
+                        //Data collecting area
+                        log("datalist length${dataList.length}");
+                         name = user['name'];
+                        image = user['image'];
+                        profile = user["Profile"];
+                         dob=user['dob'];
+                        if(profile==null&&mainindex < dataList.length - 1)
+                        mainindex++;
+                          
+                        
+                       numberOfUser= dataList.length-1.abs();
+                        
+                               }
+                     print("gym null error check>>>>>>>>>>${user['profile']}");
+
+                        return profile!=null&&dataList.isNotEmpty? CardSwiper(
                             controller: controller,
                             cardsCount: dataList.length,
                             onSwipe: _onSwipe,
@@ -119,9 +149,10 @@ class _HomeScreenPageState extends State<HomeScreenPage> {
                               horizontalThresholdPercentage,
                               verticalThresholdPercentage,
                             ) =>
-                                TabControllers(image: image, name: name, profile: profile, mainindex: mainindex, numberOfUser: numberOfUser, controller: controller))
+                                 TabControllers(image: image, name: name, profile: profile, mainindex: mainindex, numberOfUser: numberOfUser, controller: controller,dob: dob,currentuserUid: uid,user: user,)
+                                )
                                 :
-                       SizedBox();
+                     Center(child: LottieBuilder.asset("assets/Animation - 1728468830285.json"));
                       }),
                 ),
               ],

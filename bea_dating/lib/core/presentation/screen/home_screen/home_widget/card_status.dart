@@ -7,14 +7,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
 
-class CardStatus extends StatelessWidget {
+class CardStatus extends StatefulWidget {
   const CardStatus({
     super.key,
     required this.name,
     required this.profile,
     required this.mainindex,
     required this.numberOfUser,
-    required this.controller,
+    required this.controller,required this.dob,required this.currentuserUid,required this.user
   });
 
   final String name;
@@ -22,7 +22,23 @@ class CardStatus extends StatelessWidget {
   final int mainindex;
   final int numberOfUser;
   final CardSwiperController controller;
+ final String dob;
+ final String currentuserUid;
+ final Map user;
+  @override
+  State<CardStatus> createState() => _CardStatusState();
+}
 
+class _CardStatusState extends State<CardStatus> {
+  @override
+    int currentyear =DateTime.now().year;
+    int age=0;
+  void initState() {
+       List<String>uyear =widget.dob.split("/");
+  age=currentyear-int.parse(uyear.last);
+    // TODO: implement initState
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -32,16 +48,16 @@ class CardStatus extends StatelessWidget {
           padding: const EdgeInsets.all(10),
           child: Row(
             children: [
-             myContainer(title: name,),SizedBox(width: mediaqueryWidth(.06, context),),
-           if(profile['height']!=null&&profile.containsKey("height"))  myContainer(title:"Height : ${profile['height']}",)],
+             myContainer(title: widget.name,),SizedBox(width: mediaqueryWidth(.06, context),),
+           if(widget.profile['height']!=null&&widget.profile.containsKey("height"))  myContainer(title:"Height : ${widget.profile['height']}",)],
           ),
     
         ), Padding(
           padding: const EdgeInsets.all(8.0),
           child: Row(
-              children: [
-            if(profile!=null&&profile.containsKey("gym")) myContainer(title:"Gym : ${profile['gym']}"),SizedBox(width: mediaqueryWidth(.06, context),),
-              if(profile['drink']!=null&&profile.containsKey("drink")) myContainer(title:"Drink : ${profile['drink']}",)],
+              children: [  if(age!=null) myContainer(title:"Age : ${age}",),SizedBox(width: mediaqueryWidth(.06, context),),
+            if(widget.profile!=null&&widget.profile.containsKey("gym")) myContainer(title:"Gym : ${widget.profile['gym']}"),
+            ],
             ),
         ),
         SizedBox(height: mediaqueryHight(.01, context),),
@@ -54,10 +70,10 @@ class CardStatus extends StatelessWidget {
               FloatingActionButton(
                 backgroundColor: shadowclr,
                 onPressed: () {
-                  if(mainindex<numberOfUser){
-                    print(numberOfUser);
-                  context.read<HomeblocBloc>().add(CountEvent(count:mainindex+1));}
-                    controller.swipe(CardSwiperDirection.left);
+                  if(widget.mainindex<widget.numberOfUser){
+                    print(widget.numberOfUser);
+                  context.read<HomeblocBloc>().add(CountEvent(count:widget.mainindex+1));}
+                    widget.controller.swipe(CardSwiperDirection.left);
                }, child: Image.asset(
                   'assets/icons8-cancel-100.png',
                   scale: 2.5,
@@ -79,9 +95,13 @@ class CardStatus extends StatelessWidget {
               FloatingActionButton(
                 backgroundColor: shadowclr,
                 onPressed: () {
-                  if(mainindex<numberOfUser!){
-                  context.read<HomeblocBloc>().add(CountEvent(count:mainindex+1));}
-                    controller.swipe(CardSwiperDirection.right);},
+                     if(widget.mainindex<=widget.numberOfUser!){
+                     context.read<HomeblocBloc>().add(UserLikeEvent(likeduser: widget.user['uid']));
+                  }
+                  if(widget.mainindex<widget.numberOfUser!){
+                  context.read<HomeblocBloc>().add(CountEvent(count:widget.mainindex+1));}
+               
+                    widget.controller.swipe(CardSwiperDirection.right);},
                 child: Image.asset('assets/icons8-love-96.png',
                     scale: 2.5, fit: BoxFit.cover),
               ),

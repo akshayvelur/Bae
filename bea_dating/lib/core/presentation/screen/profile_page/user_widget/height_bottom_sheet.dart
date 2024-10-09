@@ -6,9 +6,10 @@ import 'package:bea_dating/core/presentation/utilit/mediaquery.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-heightBottomsheet(context) {
+heightBottomsheet(context,String ?height) {
   AppFonts appfonts = AppFonts();
   TextEditingController textEditingController=TextEditingController();
+  if(height!=null){textEditingController.text=height;}
   List<int> items = [];
   int limit = 200;
   int sum = 0;

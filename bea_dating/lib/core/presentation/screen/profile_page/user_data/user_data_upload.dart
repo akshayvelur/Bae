@@ -50,22 +50,28 @@ class _UserdataUploadState extends State<UserdataUpload> {
   @override
   void initState() {
     context.read<UserUploadBloc>().add(UserLoadingEvent());
-    if (widget.userModel!.profile['height'] != null &&
-        widget.userModel.profile['drink'] != null &&
-        widget.userModel.profile['drink'] != null &&
-        widget.userModel.profile['gym'] != null &&
-        widget.userModel.profile['smoke'] != null &&
-        widget.userModel.profile['relationship'] != null &&
-        widget.userModel.profile['interest type'] != null &&
-        widget.userModel.profile['about'] != null) {
-      heights = widget.userModel.profile["height"];
-      drink = widget.userModel.profile['drink'];
-      gym = widget.userModel.profile['gym'];
-      smoke = widget.userModel.profile['smoke'];
+    if (widget.userModel.profile['relationship'] != null) {
       relationship = widget.userModel.profile['relationship'];
-      dropdownValue = widget.userModel.profile['interest type'];
-      about = widget.userModel.profile['about'];
     }
+    if (widget.userModel.profile['height'] != null) {
+      heights = widget.userModel.profile["height"];
+    }
+    if (widget.userModel.profile['drink'] != null) {
+      drink = widget.userModel.profile['drink'];
+    }
+    if (widget.userModel.profile['gym'] != null) {
+      gym = widget.userModel.profile['gym'];
+    }
+    if (widget.userModel.profile['smoke'] != null) {
+      smoke = widget.userModel.profile['smoke'];
+    }
+    if (widget.userModel.profile['interest type'] != null) {
+      dropdownValue = widget.userModel.profile['interest type'];
+    }
+    // if (widget.userModel.profile['about']!) {
+    //   about = widget.userModel.profile['about'];
+    // }
+    
     // TODO: implement initState
     super.initState();
   }
@@ -275,7 +281,7 @@ class _UserdataUploadState extends State<UserdataUpload> {
                           ),
                           InkWell(
                             onTap: () {
-                              heightBottomsheet(context);
+                              heightBottomsheet(context, heights);
                             },
                             child: Container(
                               height: mediaqueryHight(.06, context),
