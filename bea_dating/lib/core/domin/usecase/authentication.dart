@@ -100,7 +100,7 @@ class Authentic {
         'interest': interest,
         'expectation': expectation,
         'like':[],
-        'request':{},
+        'request':[],
         'match':[]
       });
 

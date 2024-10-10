@@ -11,7 +11,7 @@ class UserModel {
   final Map<String,dynamic>profile;
  final List<String>like;
  final List<String>match;
- final Map<String,dynamic>request;
+ final List<String>request;
 
   UserModel(
       {required this.name,
@@ -38,7 +38,7 @@ class UserModel {
         location: map['location'] is Map<String, dynamic> ? map['location'] : {},
           profile:map['Profile'] is Map<String, dynamic> ? map['Profile'] : {},
          like:List<String>.from(map['like']??''),
-         request :map['request'] is Map<String, dynamic> ? map['request'] : {},
+         request:List<String>.from(map['request']??''),
          match:List<String>.from(map['match']??'')
          
           );

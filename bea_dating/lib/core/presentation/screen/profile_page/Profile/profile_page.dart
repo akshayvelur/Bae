@@ -91,7 +91,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             Column(
                               children: [
                             if(myuser!=null
-                            &&myuser!.like!=null
+                            &&myuser!.like!=null&&myuser!.match!=null
                             )    MatchAndFollowWidget(appFonts: appFonts,user: myuser!,),
                                 SizedBox(
                                   height: mediaqueryHight(.02, context),

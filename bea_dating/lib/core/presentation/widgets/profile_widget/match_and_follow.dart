@@ -31,7 +31,7 @@ class MatchAndFollowWidget extends StatelessWidget {
                 child: FollowWidget(
                   appFonts: appFonts,
                   headline: 'match',
-                  count: 0,
+                  count: user.match.length,
                 ),
               ),
               SizedBox(

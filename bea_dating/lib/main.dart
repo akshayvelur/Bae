@@ -2,6 +2,7 @@
 import 'package:bea_dating/core/presentation/screen/category/bloc/category_bloc.dart';
 import 'package:bea_dating/core/presentation/screen/chat_page/bloc/chat_bloc.dart';
 import 'package:bea_dating/core/presentation/screen/home_screen/bloc/homebloc_bloc.dart';
+import 'package:bea_dating/core/presentation/screen/notification_page/bloc/notification_bloc.dart';
 import 'package:bea_dating/core/presentation/screen/profile_page/Profile/bloc/profile_bloc.dart';
 import 'package:bea_dating/core/presentation/screen/profile_page/user_data/bloc/user_upload_bloc.dart';
 import 'package:bea_dating/core/presentation/screen/splash_screen/splash_screen.dart';
@@ -34,7 +35,9 @@ class MyApp extends StatelessWidget {
        ), BlocProvider<ChatBloc>(create: (context) =>ChatBloc()),
        BlocProvider<CategoryBloc>(create: (context) => CategoryBloc(),
        ),BlocProvider<ProfileBloc>(create: (context) => ProfileBloc(),
-       ),BlocProvider<UserUploadBloc>(create: (context) => UserUploadBloc(),)
+       ),BlocProvider<UserUploadBloc>(create: (context) => UserUploadBloc(),
+       ),BlocProvider<NotificationBloc>(create:(context) => NotificationBloc(),)
+       
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
