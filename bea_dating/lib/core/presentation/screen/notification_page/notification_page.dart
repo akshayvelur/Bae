@@ -40,7 +40,7 @@ class _NotificationPageState extends State<NotificationPage> {
         automaticallyImplyLeading: false,
         centerTitle: true,
       ),
-      body: BlocConsumer<NotificationBloc, NotificationState>(
+      body: BlocConsumer<NotificationBloc, NotificationState>(buildWhen: (previous, current) =>current is NotificationState,
         listener: (context, state) {
           // TODO: implement listener
         },
@@ -69,19 +69,19 @@ class _NotificationPageState extends State<NotificationPage> {
                   var user = dataList.firstWhere(
                       (element) => element['uid'] == uid,
                       orElse: () => {});
-                  List<dynamic> requester = user['request'];
-                  dataList.firstWhere(
-                      (element) => requester.contains(element['uid']),
-                      orElse: () => {});
+                  List<dynamic> requesterIds = user['request'] ?? [];
+             List<Map<String, dynamic>> requesters = dataList.where((element) => 
+                element['uid'] != null && requesterIds.contains(element['uid'].toString())
+               ).toList();
                   return ListView.separated(
                     separatorBuilder: (context, index) {
                       return SizedBox(
                         height: mediaqueryHight(.007, context),
                       );
                     },
-                    itemCount: requester.length,
+                    itemCount: requesters.length,
                     itemBuilder: (context, index) {
-                      final requser = dataList[index];
+                      final requser = requesters[index];
                       final image = requser['image'];
                       final username = requser['name'];
                       final requesterid = requser['uid'];

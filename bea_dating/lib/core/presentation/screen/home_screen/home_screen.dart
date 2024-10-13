@@ -8,12 +8,15 @@ import 'package:bea_dating/core/presentation/screen/home_screen/home_widget/Tab_
 import 'package:bea_dating/core/presentation/screen/home_screen/home_widget/card-data_widget.dart';
 import 'package:bea_dating/core/presentation/screen/home_screen/home_widget/card_images.dart';
 import 'package:bea_dating/core/presentation/screen/home_screen/home_widget/card_status.dart';
+import 'package:bea_dating/core/presentation/screen/home_screen/view_account/view_account.dart';
 import 'package:bea_dating/core/presentation/screen/user_inital_data/block/user_details_bloc.dart';
 import 'package:bea_dating/core/presentation/utilit/color.dart';
 import 'package:bea_dating/core/presentation/utilit/fonts.dart';
 import 'package:bea_dating/core/presentation/utilit/logo.dart';
 import 'package:bea_dating/core/presentation/utilit/mediaquery.dart';
+import 'package:bea_dating/core/presentation/utilit/page_transcation/fade_transition.dart';
 import 'package:bea_dating/core/presentation/widgets/container/container.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
@@ -33,7 +36,7 @@ class _HomeScreenPageState extends State<HomeScreenPage> {
   AppFonts appFonts = AppFonts();
 
   UserData userData = UserData();
-Authentic _authentic=Authentic();
+  Authentic _authentic = Authentic();
   Map<String, Map<String, dynamic>> temp = {};
 
   int mainindex = 0;
@@ -48,18 +51,20 @@ Authentic _authentic=Authentic();
   @override
   void initState() {
     mainindex = 0;
-   context.read<HomeblocBloc>().add(InitEvent());
+    context.read<HomeblocBloc>().add(InitEvent());
     // TODO: implement initState
     super.initState();
   }
 
+  Stream<QuerySnapshot<Map<String, dynamic>>> usersStream =
+      FirebaseFirestore.instance.collection('users').snapshots();
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<HomeblocBloc, HomeblocState>(
       listener: (context, state) {
-        if( state is InitState){
+        if (state is InitState) {
           print(state.uid);
-          uid=state.uid;
+          uid = state.uid;
         }
         if (state is CountUpdatestate) {
           mainindex = state.count;
@@ -82,30 +87,28 @@ Authentic _authentic=Authentic();
             child: Column(
               children: [
                 Flexible(
-                  flex: 2,
-                  child: FutureBuilder<List<Map<String, dynamic>>>(
-                      future: userData.getData(),
-                      builder: (context, snapshot) {
+                    flex: 2,
+                    child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+                      stream: usersStream,
+                      builder: (BuildContext context,
+                          AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
+                              snapshot) {
+                        if (snapshot.hasError) {
+                          return Text('Error: ${snapshot.error}');
+                        }
+
                         if (snapshot.connectionState ==
                             ConnectionState.waiting) {
-                          return Center(child: CircularProgressIndicator());
-                        }
-                        if (snapshot.hasError) {
-                          return Center(
-                              child: Text('Error: ${snapshot.error}'));
-                        }
-                        if (!snapshot.hasData ||
-                            snapshot.data!.isEmpty ||
-                            snapshot.data!.isEmpty) {
-                          return Center(child: Text('No data found'));
+                          return CircularProgressIndicator();
                         }
 
-                        List<Map<String, dynamic>> dataList =
-                            snapshot.data!;
-                           if (uid != null) {
+                List<Map<String, dynamic>> dataList = snapshot.data!.docs
+                     .map((doc) => doc.data() as Map<String, dynamic>)
+                       .toList();
+                      log(dataList.toString());
+                       if (uid != null) {
                              dataList.removeWhere((user) =>user['uid']==uid ,);
                                }
-
                                 var image ;
                                  var profile ;
                                   var dob="";
@@ -134,27 +137,29 @@ Authentic _authentic=Authentic();
                                }
                      print("gym null error check>>>>>>>>>>${user['profile']}");
 
-                        return profile!=null&&dataList.isNotEmpty? CardSwiper(
-                            controller: controller,
-                            cardsCount: dataList.length,
-                            onSwipe: _onSwipe,
-                            onUndo: _onUndo,
-                            numberOfCardsDisplayed: 1,
-                            backCardOffset: const Offset(40, 40),
-                            padding: const EdgeInsets.only(
-                                left: 10, right: 10, bottom: 10),
-                            cardBuilder: (
-                              context,
-                              index,
-                              horizontalThresholdPercentage,
-                              verticalThresholdPercentage,
-                            ) =>
-                                 TabControllers(image: image, name: name, profile: profile, mainindex: mainindex, numberOfUser: numberOfUser, controller: controller,dob: dob,currentuserUid: uid,user: user,)
-                                )
-                                :
-                     Center(child: LottieBuilder.asset("assets/Animation - 1728468830285.json"));
-                      }),
-                ),
+                   return profile!=null&&dataList.isNotEmpty? 
+                      CardSwiper(
+                                controller: controller,
+                                cardsCount: dataList.length,
+                                onSwipe: _onSwipe,
+                                onUndo: _onUndo,
+                                numberOfCardsDisplayed: 1,
+                                backCardOffset: const Offset(40, 40),
+                                padding: const EdgeInsets.only(
+                                    left: 10, right: 10, bottom: 10),
+                                cardBuilder: (
+                                  context,
+                                  index,
+                                  horizontalThresholdPercentage,
+                                  verticalThresholdPercentage,
+                                ) =>
+                                     InkWell(onLongPress: () {
+                                       Navigator.of(context).push(FadeTransitionPageRoute(child: ViewAccount()));
+                                     },child: TabControllers(image: image, name: name, profile: profile, mainindex: mainindex, numberOfUser: numberOfUser, controller: controller,dob: dob,currentuserUid: uid,user: user,))
+                                    
+                   ): Center(child: LottieBuilder.asset("assets/Animation - 1728468830285.json"));
+                      },
+                    )),
               ],
             ),
           ),
@@ -185,3 +190,83 @@ Authentic _authentic=Authentic();
     return true;
   }
 }
+
+
+                // Flexible(
+                //   flex: 2,
+                //   child: FutureBuilder<List<Map<String, dynamic>>>(
+                //       future: userData.getData(),
+                //       builder: (context, snapshot) {
+                //         if (snapshot.connectionState ==
+                //             ConnectionState.waiting) {
+                //           return Center(child: CircularProgressIndicator());
+                //         }
+                //         if (snapshot.hasError) {
+                //           return Center(
+                //               child: Text('Error: ${snapshot.error}'));
+                //         }
+                //         if (!snapshot.hasData ||
+                //             snapshot.data!.isEmpty ||
+                //             snapshot.data!.isEmpty) {
+                //           return Center(child: Text('No data found'));
+                //         }
+
+                //         List<Map<String, dynamic>> dataList =
+                //             snapshot.data!;
+                //            if (uid != null) {
+                //              dataList.removeWhere((user) =>user['uid']==uid ,);
+                //                }
+
+                //                 var image ;
+                //                  var profile ;
+                //                   var dob="";
+                //                    var name;
+                //                    Map user={};
+                //              int numberOfUser =0;
+
+                //                if(dataList.isNotEmpty){
+                //                 log("is empty"); 
+                               
+                //          user=dataList[mainindex];
+                //               // Debug log to check the list after removal
+                //       //  log("List after removal: ${dataList[mainindex]}");
+                //         //Data collecting area
+                //         log("datalist length${dataList.length}");
+                //          name = user['name'];
+                //         image = user['image'];
+                //         profile = user["Profile"];
+                //          dob=user['dob'];
+                //         if(profile==null&&mainindex < dataList.length - 1)
+                //         mainindex++;
+                          
+                        
+                //        numberOfUser= dataList.length-1.abs();
+                        
+                //                }
+                //      print("gym null error check>>>>>>>>>>${user['profile']}");
+
+                //         return profile!=null&&dataList.isNotEmpty? InkWell(onTap: () {
+                          
+                //         },
+                //           child: CardSwiper(
+                //               controller: controller,
+                //               cardsCount: dataList.length,
+                //               onSwipe: _onSwipe,
+                //               onUndo: _onUndo,
+                //               numberOfCardsDisplayed: 1,
+                //               backCardOffset: const Offset(40, 40),
+                //               padding: const EdgeInsets.only(
+                //                   left: 10, right: 10, bottom: 10),
+                //               cardBuilder: (
+                //                 context,
+                //                 index,
+                //                 horizontalThresholdPercentage,
+                //                 verticalThresholdPercentage,
+                //               ) =>
+                //                    TabControllers(image: image, name: name, profile: profile, mainindex: mainindex, numberOfUser: numberOfUser, controller: controller,dob: dob,currentuserUid: uid,user: user,)
+                //                   ),
+                //         )
+                //                 :
+                //      Center(child: LottieBuilder.asset("assets/Animation - 1728468830285.json"));
+                //       }),
+                // ),

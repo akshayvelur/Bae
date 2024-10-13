@@ -14,6 +14,7 @@ class NotificationBloc extends Bloc<NotificationEvent, NotificationState> {
 
 
   FutureOr<void> requestAcceptEvent(RequestAcceptEvent event, Emitter<NotificationState> emit) {
+    print(event.Requester);
     requestAccepting(event.Requester);
     emit(RequestAcceptedState());
       }
