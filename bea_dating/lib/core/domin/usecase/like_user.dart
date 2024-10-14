@@ -10,7 +10,12 @@ liketoUser(String like )async{
 //Request 
 try{
 DocumentReference documentReference= await FirebaseFirestore.instance.collection('users').doc(like);
-await documentReference.update({"request":FieldValue.arrayUnion([_auth.currentUser!.uid])});
+DocumentSnapshot snapshot = await documentReference.get();
+Map<String, dynamic> currentRequestMap = snapshot.get("request") ?? {};
+// add to map
+
+currentRequestMap[_auth.currentUser!.uid]="request";
+await documentReference.update({"request":currentRequestMap});
 }catch(e){
   log("Request user error ${e}");
 }
@@ -33,7 +38,10 @@ await documentReference.update({"match":FieldValue.arrayUnion([accepted])});
   try{
   
 DocumentReference deleteReference =await _firestore.collection("users").doc(_auth.currentUser!.uid);
-await deleteReference.update({"request":FieldValue.arrayRemove([accepted])});
+DocumentSnapshot snapshot = await deleteReference.get();
+Map<String, dynamic> deleteRequestMap = snapshot.get("request") ?? {};
+deleteRequestMap.remove(accepted);
+await deleteReference.update({"request":deleteRequestMap});
   }catch(e){
     log("request deleted from notification error${e}");
   }

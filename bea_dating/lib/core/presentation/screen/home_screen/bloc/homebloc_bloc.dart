@@ -7,6 +7,7 @@ import 'package:bea_dating/core/data/data_source/userdata.dart';
 import 'package:bea_dating/core/data/model/usermodel.dart';
 import 'package:bea_dating/core/domin/usecase/authentication.dart';
 import 'package:bea_dating/core/domin/usecase/like_user.dart';
+import 'package:bea_dating/core/domin/usecase/viewed_account.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
@@ -62,6 +63,7 @@ class HomeblocBloc extends Bloc<HomeblocEvent, HomeblocState> {
   }
 
   FutureOr<void> profileViewInitEvent(ProfileViewInitEvent event, Emitter<HomeblocState> emit)async {
+    viewedUser(event.uid);
         try{
      // emit(LoadingState(user: state.user));
     UserData userData = UserData();
