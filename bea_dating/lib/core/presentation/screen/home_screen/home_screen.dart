@@ -69,7 +69,12 @@ class _HomeScreenPageState extends State<HomeScreenPage> {
         if (state is CountUpdatestate) {
           mainindex = state.count;
         }
-        if (state is NumberOfUserSelectedState) {}
+        // if (state is NumberOfUserSelectedState) {
+
+        // }
+         if (state is ViewAccountState) {
+          Navigator.of(context).push(FadeTransitionPageRoute(child: ViewAccount(uid: state.uid,)));
+        }
         // TODO: implement listener
       },
       builder: (context, state) {
@@ -153,8 +158,8 @@ class _HomeScreenPageState extends State<HomeScreenPage> {
                                   horizontalThresholdPercentage,
                                   verticalThresholdPercentage,
                                 ) =>
-                                     InkWell(onLongPress: () {
-                                       Navigator.of(context).push(FadeTransitionPageRoute(child: ViewAccount()));
+                                     InkWell(onTap: () {
+                                       context.read<HomeblocBloc>().add(ViewAccountEvent(uid: user['uid']));
                                      },child: TabControllers(image: image, name: name, profile: profile, mainindex: mainindex, numberOfUser: numberOfUser, controller: controller,dob: dob,currentuserUid: uid,user: user,))
                                     
                    ): Center(child: LottieBuilder.asset("assets/Animation - 1728468830285.json"));

@@ -4,6 +4,7 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:bea_dating/core/data/data_source/userdata.dart';
+import 'package:bea_dating/core/data/model/usermodel.dart';
 import 'package:bea_dating/core/domin/usecase/authentication.dart';
 import 'package:bea_dating/core/domin/usecase/like_user.dart';
 import 'package:bloc/bloc.dart';
@@ -20,6 +21,8 @@ class HomeblocBloc extends Bloc<HomeblocEvent, HomeblocState> {
  on<NumberOfUserEvent>(numberOfUserEvent);
  on<InitEvent>(initEvent);
  on<UserLikeEvent>(userLikeEvent);
+ on<ViewAccountEvent>(viewAccountEvent);
+ on<ProfileViewInitEvent>(profileViewInitEvent);
   }
 
 
@@ -52,5 +55,29 @@ class HomeblocBloc extends Bloc<HomeblocEvent, HomeblocState> {
 
     print("State current user id ${event.likeduser}");
    liketoUser(event.likeduser!);
+  }
+
+  FutureOr<void> viewAccountEvent(ViewAccountEvent event, Emitter<HomeblocState> emit) {
+    emit(ViewAccountState(uid: event.uid));
+  }
+
+  FutureOr<void> profileViewInitEvent(ProfileViewInitEvent event, Emitter<HomeblocState> emit)async {
+        try{
+     // emit(LoadingState(user: state.user));
+    UserData userData = UserData();
+    UserModel? user = await userData.viewProfile(event.uid);
+    if (user != null) {
+       print("profile data fetched");
+     
+   
+      emit(ProfileViewInitState(user: user));
+     emit(ProfileLoadingSuccessState(user:user));
+
+    } else {
+       print("NO DATA");
+    }
+  }catch(e){
+    print("userinit error${e}");
+  }
   }
 }

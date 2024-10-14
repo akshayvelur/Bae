@@ -25,5 +25,17 @@ class NumberOfUserEvent extends HomeblocEvent{
 
   UserLikeEvent({required this.likeduser});
   }
+  class ViewAccountEvent extends HomeblocEvent{
+    final String uid;
+
+  ViewAccountEvent({required this.uid});
+    
+  }
+  class ProfileViewInitEvent extends HomeblocEvent{
+    final String uid;
+
+  ProfileViewInitEvent({required this.uid});
+  }
+
 
 

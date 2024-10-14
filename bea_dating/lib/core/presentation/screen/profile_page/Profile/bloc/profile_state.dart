@@ -31,4 +31,6 @@ class NavigateToUserDataState extends ProfileState{
 class NavigateBacktoProfileState extends ProfileState{
   NavigateBacktoProfileState({required super.user});
 }
-class UserLoadingState extends ProfileEvent{}
+class UserLoadingState extends ProfileState{
+  UserLoadingState({required super.user});
+}

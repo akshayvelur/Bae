@@ -3,7 +3,9 @@ part of 'homebloc_bloc.dart';
 @immutable
 abstract class HomeblocState {}
 
-class HomeblocInitial extends HomeblocState {}
+abstract class HomeActionState extends HomeblocState{}
+
+ class HomeblocInitial extends HomeblocState {}
 class BottomNavigatorEindexState extends HomeblocState{
   final int Eindex;
 
@@ -24,4 +26,19 @@ class InitState extends HomeblocState{
 }
 class UserLikeAddedState extends HomeblocState{
   
+}
+class ViewAccountState extends HomeblocState{
+  final String uid;
+
+  ViewAccountState({required this.uid});
+}
+class ProfileViewInitState extends HomeblocState{
+      final UserModel ?user;
+
+  ProfileViewInitState({required this.user});
+}
+class ProfileLoadingSuccessState extends HomeActionState{
+   final UserModel ?user;
+
+  ProfileLoadingSuccessState({required this.user});
 }

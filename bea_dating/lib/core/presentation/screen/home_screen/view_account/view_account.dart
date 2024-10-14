@@ -1,6 +1,14 @@
 import 'package:bea_dating/core/data/model/usermodel.dart';
 
 import 'package:bea_dating/core/domin/usecase/authentication.dart';
+import 'package:bea_dating/core/presentation/screen/home_screen/bloc/homebloc_bloc.dart';
+import 'package:bea_dating/core/presentation/screen/home_screen/view_account/view_account_widgets/app_bar.dart';
+import 'package:bea_dating/core/presentation/screen/home_screen/view_account/view_account_widgets/profile_lifestyle.dart';
+import 'package:bea_dating/core/presentation/screen/home_screen/view_account/view_account_widgets/view_grid_photo.dart';
+import 'package:bea_dating/core/presentation/screen/home_screen/view_account/view_account_widgets/view_match-follow.dart';
+import 'package:bea_dating/core/presentation/screen/home_screen/view_account/view_account_widgets/view_pr_like_match_name.dart';
+import 'package:bea_dating/core/presentation/screen/home_screen/view_account/view_account_widgets/view_profile_photo.dart';
+import 'package:bea_dating/core/presentation/screen/home_screen/view_account/view_account_widgets/view_user_core_collection.dart';
 import 'package:bea_dating/core/presentation/screen/profile_page/Profile/profile_wigdet/shimmer_widget.dart';
 import 'package:bea_dating/core/presentation/screen/profile_page/Profile/bloc/profile_bloc.dart';
 import 'package:bea_dating/core/presentation/screen/profile_page/user_data/user_data_upload.dart';
@@ -23,8 +31,8 @@ import 'package:shimmer/shimmer.dart';
 
 // ignore: must_be_immutable
 class ViewAccount extends StatefulWidget {
-  ViewAccount({super.key});
-
+  ViewAccount({super.key,required this.uid});
+final String uid;
   @override
   State<ViewAccount> createState() => _ViewAccountState();
 }
@@ -38,7 +46,7 @@ class _ViewAccountState extends State<ViewAccount> {
 
   @override
   void initState() {
-    context.read<ProfileBloc>().add(InitStateEvent());
+    context.read<HomeblocBloc>().add(ProfileViewInitEvent(uid:widget.uid));
     //datafetch();
     print("hii");
 
@@ -48,31 +56,22 @@ class _ViewAccountState extends State<ViewAccount> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<ProfileBloc, ProfileState>(
-        buildWhen: (previous, current) => current is ProfileActionState,
+    return BlocConsumer<HomeblocBloc, HomeblocState>(
+        buildWhen: (previous, current) => current is HomeActionState,
         listener: (context, state) {
-          // if (state is NavigateToUserDataState) {
-          //   Navigator.of(context)
-          //       .push(FadeTransitionPageRoute(child: UserdataUpload(userModel: myuser!,)));
-          // }
-       
-          // if (state is LoadingSuccessState) {
-          //   //  Navigator.pop(context);
-          // }
         },
         builder: (context, state) {
-          if (state is LoadingState) {
-            myuser=state.user;
-          }
-          if (state is IninitState) {
+      
+          if (state is ProfileViewInitState) {
             myuser = state.user;
       
-          } else if (state is LoadingSuccessState) {
+          } 
+          else if (state is ProfileLoadingSuccessState) {
     
             myuser = state.user;
             return Scaffold(
               backgroundColor: whiteclr,
-              appBar: profileAppbar(context, authentic),
+              appBar: viewprofileAppbar(context,myuser!.name),
               body: SingleChildScrollView(
                 child: Container(
                   color: whiteclr,
@@ -85,18 +84,18 @@ class _ViewAccountState extends State<ViewAccount> {
                         Row(
                           children: [
                             if (myuser != null)
-                              ProfilePhoto(
+                              ViewProfilePhoto(
                                 user: myuser!,
                               ),
                             Column(
                               children: [
                             if(myuser!=null
                             &&myuser!.like!=null&&myuser!.match!=null
-                            )    MatchAndFollowWidget(appFonts: appFonts,user: myuser!,),
+                            )    ViewMatchAndFollowWidget(appFonts: appFonts,user: myuser!,),
                                 SizedBox(
                                   height: mediaqueryHight(.02, context),
                                 ),
-                                ProfileBoostWidget(appFonts: appFonts),
+                             
                               ],
                             ),
                           ],
@@ -105,18 +104,18 @@ class _ViewAccountState extends State<ViewAccount> {
                           height: mediaqueryHight(.02, context),
                         ),
                         if (myuser != null)
-                          UserNameAgeBasic(
+                          ViewUserNameAgeBasic(
                             appFonts: appFonts,
                             user: myuser!,
                           ),
                         if (myuser != null)
-                          GridPhotoWidget(
+                          ViewGridPhotoWidget(
                             user: myuser!,
                           ),
                         SizedBox(
                           height: mediaqueryHight(.01, context),
                         ),
-                     if(myuser!.profile.isNotEmpty) LifeStyleWidget(appFonts: appFonts,myuser: myuser!,),
+                     if(myuser!.profile.isNotEmpty) ViewLifeStyleWidget(appFonts: appFonts,myuser: myuser!,),
                         SizedBox(
                           height: mediaqueryHight(.01, context),
                         ),
@@ -142,43 +141,43 @@ class _ViewAccountState extends State<ViewAccount> {
                             //       headline: "Height",
                             //       userOut: myuser!.profile['height'].toString(),
                             //     ),
-                              if(myuser!.gender!=null)   UserCoreCollection(
+                              if(myuser!.gender!=null)   ViewUserCoreCollection(
                                   headline: "Gender?",
                                   userOut: myuser!.gender,
                                 ),
                                 SizedBox(
                                   height: mediaqueryHight(.01, context),
-                                ),if(myuser!.profile.containsKey('height'))   UserCoreCollection(
+                                ),if(myuser!.profile.containsKey('height'))   ViewUserCoreCollection(
                                   headline: "Height?",
                                   userOut: myuser!.profile['height'],
                                 ),  SizedBox(
                                   height: mediaqueryHight(.01, context),
                                 ),
-                               if(myuser!.expectation!=null) UserCoreCollection(
+                               if(myuser!.expectation!=null) ViewUserCoreCollection(
                                   headline: "Expectation ?",
                                   userOut: myuser!.expectation,
                                 ),
                                 SizedBox(
                                   height: mediaqueryHight(.01, context),
                                 ),
-                               if(myuser!.interest !=null)   UserCoreCollection(
+                               if(myuser!.interest !=null)   ViewUserCoreCollection(
                                   headline: "Gender preference?",
                                   userOut: myuser!.interest,
                                 ), SizedBox(
                                   height: mediaqueryHight(.01, context),
                                 ),
-                                 if(myuser!.profile['interest type']!=null)   UserCoreCollection(
+                                 if(myuser!.profile['interest type']!=null)   ViewUserCoreCollection(
                                   headline: "interest?",
                                   userOut: myuser!.profile['interest type'].toString(),
                                 ),
                                   SizedBox(
                                   height: mediaqueryHight(.01, context),
-                                ),  if(myuser!.profile.containsKey('relationship'))   UserCoreCollection(
+                                ),  if(myuser!.profile.containsKey('relationship'))   ViewUserCoreCollection(
                                   headline: "Relationship?",
                                   userOut: myuser!.profile['relationship'],
                                 ), SizedBox(
                                   height: mediaqueryHight(.01, context),
-                                ),  if(myuser!.profile.containsKey('interest type'))   UserCoreCollection(
+                                ),  if(myuser!.profile.containsKey('interest type'))   ViewUserCoreCollection(
                                   headline: "Interest type?",
                                   userOut: myuser!.profile['interest type'],
                                 ),
@@ -194,7 +193,7 @@ class _ViewAccountState extends State<ViewAccount> {
             );
           }
           return Scaffold(
-      appBar: profileAppbar(context, authentic),
+      appBar: viewprofileAppbar(context, ""),
       backgroundColor: whiteclr,
       body: Padding(
         padding: const EdgeInsets.only(left: 15, right: 15, top: 15),
