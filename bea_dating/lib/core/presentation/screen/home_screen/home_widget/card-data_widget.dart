@@ -50,7 +50,7 @@ final Map user;
           child: Row(
               children: [
                if(profile!=null&&profile.containsKey("smoke"))  myContainer(title:"smoke : ${profile['smoke']}",),SizedBox(width: mediaqueryWidth(.06, context),),
-            
+             if(profile!=null&&profile.containsKey("interest type"))  myContainer(title:"interest type : ${profile['interest type']}",)
              // myContainer(title: "yttt",)
               ],
             ),

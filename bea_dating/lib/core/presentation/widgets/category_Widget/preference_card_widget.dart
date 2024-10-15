@@ -1,7 +1,9 @@
 
+import 'package:bea_dating/core/presentation/screen/category/category_cardview.dart';
 import 'package:bea_dating/core/presentation/utilit/color.dart';
 import 'package:bea_dating/core/presentation/utilit/fonts.dart';
 import 'package:bea_dating/core/presentation/utilit/mediaquery.dart';
+import 'package:bea_dating/core/presentation/utilit/page_transcation/fade_transition.dart';
 import 'package:flutter/material.dart';
 
 class PreferenceCardWidget extends StatelessWidget {
@@ -26,28 +28,32 @@ class PreferenceCardWidget extends StatelessWidget {
             crossAxisSpacing: 10,
             mainAxisSpacing: 10),
         itemBuilder: (context, index) {
-          return Container(
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                boxShadow: [
-                  BoxShadow(blurRadius: 2, color: blackclr)
-                ],
-                image: DecorationImage(
-                    image: AssetImage(
-                      exploreimg.values.elementAt(index),
-                    ),
-                    fit: BoxFit.cover)),
-            child: Center(
-                child: Padding(
-              padding: const EdgeInsets.only(top: 130),
-              child: Container(
-                  width: mediaqueryWidth(.36, context),
-                  child: Text(
-                    exploreimg.keys.elementAt(index),
-                    style:
-                        appFonts.flextext(whiteclr, size: 20),
-                  )),
-            )),
+          return InkWell(onTap: () {Navigator.of(context).push(FadeTransitionPageRoute(child: CategoryViewScreen(catId: exploreimg.keys.elementAt(index) )));
+            
+          },
+            child: Container(
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  boxShadow: [
+                    BoxShadow(blurRadius: 2, color: blackclr)
+                  ],
+                  image: DecorationImage(
+                      image: AssetImage(
+                        exploreimg.values.elementAt(index),
+                      ),
+                      fit: BoxFit.cover)),
+              child: Center(
+                  child: Padding(
+                padding: const EdgeInsets.only(top: 130),
+                child: Container(
+                    width: mediaqueryWidth(.36, context),
+                    child: Text(
+                      exploreimg.keys.elementAt(index),
+                      style:
+                          appFonts.flextext(whiteclr, size: 20),
+                    )),
+              )),
+            ),
           );
         },
         physics: NeverScrollableScrollPhysics(),
