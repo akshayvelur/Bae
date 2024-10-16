@@ -14,9 +14,11 @@ DocumentReference documentReference= await FirebaseFirestore.instance.collection
 DocumentSnapshot snapshot = await documentReference.get();
 Map<String, dynamic> currentRequestMap = snapshot.get("request") ?? {};
 // add to map
-if(!currentRequestMap.keys.contains(view)){
+if(!currentRequestMap.keys.contains(_auth.currentUser!.uid)){
+  log("again");                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
 currentRequestMap[_auth.currentUser!.uid]="Viewed your profile";
-await documentReference.update({"request":currentRequestMap});}
+await documentReference.update({"request":currentRequestMap});
+}
 }catch(e){
   log("Request user error ${e}");
 }

@@ -104,7 +104,7 @@ class _HomeScreenPageState extends State<HomeScreenPage> {
 
                         if (snapshot.connectionState ==
                             ConnectionState.waiting) {
-                          return CircularProgressIndicator();
+                          return Center(child: CircularProgressIndicator());
                         }
 
                 List<Map<String, dynamic>> dataList = snapshot.data!.docs
