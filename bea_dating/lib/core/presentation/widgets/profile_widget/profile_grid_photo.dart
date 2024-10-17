@@ -1,6 +1,7 @@
 import 'package:bea_dating/core/data/model/usermodel.dart';
 import 'package:bea_dating/core/presentation/utilit/color.dart';
 import 'package:bea_dating/core/presentation/utilit/mediaquery.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
@@ -34,28 +35,22 @@ class GridPhotoWidget extends StatelessWidget {
                 color: whiteclr,
               ),
               child: ClipRRect(
-                  borderRadius: BorderRadius.circular(5),
-                  child: Image.network(
-                    index + 2 <= user.image.length
-                        ? user.image[index + 1]
-                        : "https://static.thenounproject.com/png/877484-200.png",
-                    fit: BoxFit.cover,
-                    loadingBuilder: (context, child, loadingProgress) {
-                      if (loadingProgress == null) {
-                        return child;
-                      } else {
-                        return Center(
-                            child: CircularProgressIndicator(
-                          value: loadingProgress.expectedTotalBytes != null
-                              ? loadingProgress.cumulativeBytesLoaded /
-                                  loadingProgress.expectedTotalBytes!
-                              : null,
-                        ));
-                      }
-                    },
-                  )));
+                borderRadius: BorderRadius.circular(5),
+                child: CachedNetworkImage(
+                  imageUrl: index + 2 <= user.image.length
+                      ? user.image[index + 1]
+                      : "https://static.thenounproject.com/png/877484-200.png",
+                  fit: BoxFit.cover,
+                  width: double.infinity,
+                  height: double.infinity,
+                  placeholder: (context, url) =>
+                      Center(child: CircularProgressIndicator()),
+                  errorWidget: (context, url, error) => Icon(Icons.error),
+                ),
+              ));
         },
       ),
     );
   }
 }
+

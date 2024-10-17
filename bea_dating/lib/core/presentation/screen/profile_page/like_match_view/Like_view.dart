@@ -6,6 +6,7 @@ import 'package:bea_dating/core/presentation/utilit/color.dart';
 import 'package:bea_dating/core/presentation/utilit/fonts.dart';
 import 'package:bea_dating/core/presentation/utilit/mediaquery.dart';
 import 'package:bea_dating/core/presentation/utilit/page_transcation/fade_transition.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -29,7 +30,7 @@ class LikeListView extends StatelessWidget {
             icon: Icon(Icons.arrow_back_ios)),
         title: Text(
           user.name,
-          style: appFonts.flextext(blackclr, Fweight: 400,size: 20),
+          style: appFonts.flextext(blackclr, Fweight: 400, size: 20),
         ),
       ),
       body: Padding(
@@ -89,19 +90,34 @@ class LikeListView extends StatelessWidget {
                       Map<String, dynamic> preuser = likedUsers[index];
                       String name = preuser['name'];
                       var image = preuser['image'];
-                      String uids=preuser['uid'];
+                      String uids = preuser['uid'];
 
                       return Container(
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
                               color: listTileclr),
-                          child: InkWell(onTap: () {
-                               Navigator.of(context).push(FadeTransitionPageRoute(child: ViewAccount(uid:uids)));
-                          },
+                          child: InkWell(
+                            onTap: () {
+                              Navigator.of(context).push(
+                                  FadeTransitionPageRoute(
+                                      child: ViewAccount(uid: uids)));
+                            },
                             child: ListTile(
                               leading: CircleAvatar(
-                                maxRadius: 40,
-                                foregroundImage: NetworkImage(image[0]),
+                                maxRadius: 26,
+                                child: ClipRRect(borderRadius: BorderRadius.circular(50),
+                                  child: CachedNetworkImage(
+                                    imageUrl: image[0],
+                                    fit: BoxFit.cover,
+                                    width: double.infinity,
+                                    height: double.infinity,
+                                    placeholder: (context, url) => Center(
+                                        child: CircularProgressIndicator()),
+                                    errorWidget: (context, url, error) =>
+                                        Icon(Icons.error),
+                                  ),
+                                ),
+                                //  foregroundImage: NetworkImage(image[0]),
                               ),
                               title: Text(name),
                             ),

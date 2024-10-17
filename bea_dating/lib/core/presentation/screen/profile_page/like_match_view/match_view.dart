@@ -1,9 +1,12 @@
 import 'dart:developer';
 
 import 'package:bea_dating/core/data/model/usermodel.dart';
+import 'package:bea_dating/core/presentation/screen/home_screen/view_account/view_account.dart';
 import 'package:bea_dating/core/presentation/utilit/color.dart';
 import 'package:bea_dating/core/presentation/utilit/fonts.dart';
 import 'package:bea_dating/core/presentation/utilit/mediaquery.dart';
+import 'package:bea_dating/core/presentation/utilit/page_transcation/fade_transition.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -32,7 +35,8 @@ class MatchListView extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.only(left: 10, right: 10),
-        child: Column(crossAxisAlignment: CrossAxisAlignment.start,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
                 decoration: BoxDecoration(
@@ -53,46 +57,78 @@ class MatchListView extends StatelessWidget {
             StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
               stream: fetchuser,
               builder: (context,
-                  AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
-                      snapshot) {
-                          if (snapshot.hasError) {
-                          return Text('Error: ${snapshot.error}');
-                        }
+                  AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
+                if (snapshot.hasError) {
+                  return Text('Error: ${snapshot.error}');
+                }
 
-                        if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          return Center(child: CircularProgressIndicator());
-                        }
-                        List<Map<String,dynamic>>userdata=snapshot.data!.docs.map((user) =>user.data()as Map<String,dynamic> ,).toList();
-                          List<Map<String, dynamic>> matchedUsers = userdata
-                      .where((userData) => user.match.contains(userData['uid']))
-                      .toList();
-                           if (matchedUsers.isEmpty) {
-                    return Center(child: Text('No matches found'));
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(child: CircularProgressIndicator());
+                }
+                List<Map<String, dynamic>> userdata = snapshot.data!.docs
+                    .map(
+                      (user) => user.data() as Map<String, dynamic>,
+                    )
+                    .toList();
+                List<Map<String, dynamic>> matchedUsers = userdata
+                    .where((userData) => user.match.contains(userData['uid']))
+                    .toList();
+                if (matchedUsers.isEmpty) {
+                  return Center(child: Text('No matches found'));
+                }
+                return Container(
+                  height: mediaqueryHight(.82, context),
+                  child: ListView.separated(
+                    itemCount: matchedUsers.length,
+                    separatorBuilder: (context, index) {
+                      return SizedBox(
+                        height: mediaqueryHight(.001, context),
+                      );
+                    },
+                    itemBuilder: (context, index) {
+                      Map<String, dynamic> preuser = matchedUsers[index];
+                      String name = preuser['name'];
+                      var image = preuser['image'];
+                       String uids = preuser['uid'];
 
-                  }    return Container(height:mediaqueryHight(.82, context),
-                  child: ListView.separated( itemCount: matchedUsers.length,separatorBuilder: (context, index) {
-                    return SizedBox(height: mediaqueryHight(.001, context),);
-                  },itemBuilder: (context, index) {
-                      Map<String,dynamic> preuser=matchedUsers[index];
-                      String name=preuser['name'];
-                    var image=preuser['image'];
-
-                  return  Container(decoration: BoxDecoration(borderRadius: BorderRadius.circular(10),color: listTileclr),child: ListTile(
-                    leading: CircleAvatar(maxRadius: 40,foregroundImage: NetworkImage(image[0]) ,),title: Text(name),
-                  ));
-                  }, ),
+                      return Container(
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: listTileclr),
+                          child: InkWell(onTap: () {
+                             Navigator.of(context).push(
+                                  FadeTransitionPageRoute(
+                                      child: ViewAccount(uid: uids)));
+                          },
+                            child: ListTile(
+                              leading: CircleAvatar(
+                                maxRadius: 26,
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(50),
+                                  child: CachedNetworkImage(
+                                    imageUrl: image[0],
+                                    fit: BoxFit.cover,
+                                    width: double.infinity,
+                                    height: double.infinity,
+                                    placeholder: (context, url) => Center(
+                                        child: CircularProgressIndicator()),
+                                    errorWidget: (context, url, error) =>
+                                        Icon(Icons.error),
+                                  ),
+                                ),
+                                // foregroundImage: NetworkImage(image[0])
+                              ),
+                              title: Text(name),
+                            ),
+                          ));
+                    },
+                  ),
                 );
-                      },
-                       
+              },
             )
-           
           ],
         ),
       ),
     );
   }
 }
-
-
-

@@ -1,6 +1,7 @@
 import 'package:bea_dating/core/data/model/usermodel.dart';
 import 'package:bea_dating/core/presentation/utilit/color.dart';
 import 'package:bea_dating/core/presentation/utilit/mediaquery.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class ViewProfilePhoto extends StatelessWidget {
@@ -24,23 +25,11 @@ class ViewProfilePhoto extends StatelessWidget {
             )
           ]),
       child: ClipRRect(borderRadius: BorderRadius.circular(5),
-        child: Image.network(
-          user.image.elementAt(0),
-          loadingBuilder: (context, child, loadingProgress) {
-            if (loadingProgress == null) {
-              return child;
-            } else {
-              return Center(
-                child: CircularProgressIndicator(
-                  value: loadingProgress.expectedTotalBytes != null
-                      ? loadingProgress.cumulativeBytesLoaded /
-                          loadingProgress.expectedTotalBytes!
-                      : null,
-                ),
-              );
-            }
-          },fit: BoxFit.cover,
-        ),
+        child: CachedNetworkImage(
+        imageUrl:user.image.elementAt(0) ,fit:BoxFit.cover,width: double.infinity,height: double.infinity,
+        placeholder: (context, url) => Center(child: CircularProgressIndicator()),
+        errorWidget: (context, url, error) => Icon(Icons.error),
+     ),
       ),
     );
   }

@@ -1,5 +1,6 @@
 import 'package:bea_dating/core/presentation/screen/home_screen/home_widget/card-data_widget.dart';
 import 'package:bea_dating/core/presentation/screen/home_screen/home_widget/card_status.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
 
@@ -38,23 +39,11 @@ class CardImageOne extends StatelessWidget {
           // )
           ),
       child: Stack(children: [     ClipRRect(borderRadius: BorderRadius.circular(10),
-        child: Image.network(
-              image[0],fit: BoxFit.cover,width: double.infinity,height: double.infinity,
-              loadingBuilder: (context, child, loadingProgress) {
-                if (loadingProgress == null) {
-                  return child;
-                } else {
-                  return Center(
-                    child: CircularProgressIndicator(
-                      value: loadingProgress.expectedTotalBytes != null
-                          ? loadingProgress.cumulativeBytesLoaded /
-                              loadingProgress.expectedTotalBytes!
-                          : null,
-                    ),
-                  );
-                }
-              },
-            ),
+        child:CachedNetworkImage(
+        imageUrl: image[0],fit:BoxFit.cover,width: double.infinity,height: double.infinity,
+        placeholder: (context, url) => Center(child: CircularProgressIndicator()),
+        errorWidget: (context, url, error) => Icon(Icons.error),
+     ),
       ),CardStatus(
           name: name,
           profile: profile,
@@ -101,26 +90,11 @@ class CardImageTwo extends StatelessWidget {
       child: Stack(
         children: [
           ClipRRect(borderRadius: BorderRadius.circular(10),
-            child: Image.network(
-              image[1],
-                fit: BoxFit.cover, // Ensures the image covers the entire container
-          width: double.infinity,
-          height: double.infinity,
-              loadingBuilder: (context, child, loadingProgress) {
-                if (loadingProgress == null) {
-                  return child;
-                } else {
-                  return Center(
-                    child: CircularProgressIndicator(
-                      value: loadingProgress.expectedTotalBytes != null
-                          ? loadingProgress.cumulativeBytesLoaded /
-                              loadingProgress.expectedTotalBytes!
-                          : null,
-                    ),
-                  );
-                }
-              },
-            ),
+            child: CachedNetworkImage(
+        imageUrl: image[1],fit:BoxFit.cover,width: double.infinity,height: double.infinity,
+        placeholder: (context, url) => Center(child: CircularProgressIndicator()),
+        errorWidget: (context, url, error) => Icon(Icons.error),
+     ),
           ),
           CardUserData(
               profile: profile,
@@ -133,3 +107,22 @@ class CardImageTwo extends StatelessWidget {
     );
   }
 }
+
+
+//  Image.network(
+//               image[0],fit: BoxFit.cover,width: double.infinity,height: double.infinity,
+//               loadingBuilder: (context, child, loadingProgress) {
+//                 if (loadingProgress == null) {
+//                   return child;
+//                 } else {
+//                   return Center(
+//                     child: CircularProgressIndicator(
+//                       value: loadingProgress.expectedTotalBytes != null
+//                           ? loadingProgress.cumulativeBytesLoaded /
+//                               loadingProgress.expectedTotalBytes!
+//                           : null,
+//                     ),
+//                   );
+//                 }
+//               },
+//             ),
