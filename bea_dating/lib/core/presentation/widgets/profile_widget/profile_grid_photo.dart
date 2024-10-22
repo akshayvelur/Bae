@@ -14,7 +14,7 @@ class GridPhotoWidget extends StatelessWidget {
       width: mediaqueryWidth(100, context),
       height: mediaqueryHight(.175, context),
       decoration: BoxDecoration(
-          color: Color.fromARGB(78, 136, 156, 155),
+          color:blackclr,
           borderRadius: BorderRadius.circular(10)),
       child: GridView.builder(
         physics: BouncingScrollPhysics(),
@@ -32,7 +32,7 @@ class GridPhotoWidget extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10),
                 boxShadow: [BoxShadow(blurRadius: 1)],
                 //image: DecorationImage( image: NetworkImage(index+2<=user.image.length?user.image[index+1]:"https://static.thenounproject.com/png/877484-200.png"),fit:BoxFit.cover),
-                color: whiteclr,
+                color: blackshadow,
               ),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(5),

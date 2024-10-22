@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:bea_dating/core/domin/usecase/like_user.dart';
+import 'package:bea_dating/core/data/data_source/like_user.dart';
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 

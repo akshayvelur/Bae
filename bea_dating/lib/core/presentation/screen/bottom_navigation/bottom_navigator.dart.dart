@@ -59,7 +59,7 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
                   child: Container(
                     height: mediaqueryHight(.08, context),
                     decoration: BoxDecoration(
-                      color: Color.fromARGB(227, 52, 50, 50),
+                      color: Color.fromARGB(204, 38, 37, 37),
                       borderRadius: BorderRadius.circular(15),
                     ),
                     child: Row(

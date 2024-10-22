@@ -30,7 +30,7 @@ class CardImageOne extends StatelessWidget {
       height: 606,
       width: double.infinity,
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(20),
           // image: DecorationImage(
           //   image: NetworkImage(
           //     image[0],
@@ -38,7 +38,7 @@ class CardImageOne extends StatelessWidget {
           //   fit: BoxFit.cover,
           // )
           ),
-      child: Stack(children: [     ClipRRect(borderRadius: BorderRadius.circular(10),
+      child: Stack(children: [     ClipRRect(borderRadius: BorderRadius.circular(20),
         child:CachedNetworkImage(
         imageUrl: image[0],fit:BoxFit.cover,width: double.infinity,height: double.infinity,
         placeholder: (context, url) => Center(child: CircularProgressIndicator()),
@@ -83,13 +83,13 @@ class CardImageTwo extends StatelessWidget {
       height: 606,
       width: double.infinity,
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(20),
           // image: DecorationImage(
           //     image: NetworkImage(image[1]), fit: BoxFit.cover)
           ),
       child: Stack(
         children: [
-          ClipRRect(borderRadius: BorderRadius.circular(10),
+          ClipRRect(borderRadius: BorderRadius.circular(20),
             child: CachedNetworkImage(
         imageUrl: image[1],fit:BoxFit.cover,width: double.infinity,height: double.infinity,
         placeholder: (context, url) => Center(child: CircularProgressIndicator()),

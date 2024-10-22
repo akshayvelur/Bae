@@ -12,6 +12,7 @@ class UserModel {
  final List<String>like;
  final List<String>match;
  final  Map<String,dynamic>request;
+ final List<String>chatUsers;
 
   UserModel(
       {required this.name,
@@ -23,7 +24,7 @@ class UserModel {
       required this.expectation,
       required this.interest,
       required this.location,required this.profile,
-     required this.like,required this.match,required this.request
+     required this.like,required this.match,required this.request,required this.chatUsers
       });
   factory UserModel.fromMap(Map<String, dynamic> map) {
     return UserModel(
@@ -39,7 +40,8 @@ class UserModel {
           profile:map['Profile'] is Map<String, dynamic> ? map['Profile'] : {},
          like:List<String>.from(map['like']??''),
          request: map['request'] is Map<String, dynamic> ? map['request'] : {},
-         match:List<String>.from(map['match']??'')
+         match:List<String>.from(map['match']??'',
+         ),chatUsers: List<String>.from(map['chatUsers']??'')
          
           );
       

@@ -29,6 +29,7 @@ await documentReferenceforOwn.update({"like":FieldValue.arrayUnion([like])});
 }
 
 requestAccepting(String accepted)async{
+  FirebaseAuth _Auth=FirebaseAuth.instance;
   try{
 DocumentReference documentReference=await _firestore.collection("users").doc(_auth.currentUser!.uid);
 await documentReference.update({"match":FieldValue.arrayUnion([accepted])});
@@ -45,4 +46,15 @@ await deleteReference.update({"request":deleteRequestMap});
   }catch(e){
     log("request deleted from notification error${e}");
   }
+
+// Accepted Request
+try{
+DocumentReference acceptedReference=await _firestore.collection("users").doc(accepted);
+DocumentSnapshot snapshot=await acceptedReference.get();
+Map<String,dynamic>acceptedRequest=snapshot.get("request")??{};
+acceptedRequest[_Auth.currentUser!.uid]="Request Accepted";
+await acceptedReference.update({"request": acceptedRequest});
+}catch(e){
+  log("request Accespted in opposit:${e}");
+}
 }

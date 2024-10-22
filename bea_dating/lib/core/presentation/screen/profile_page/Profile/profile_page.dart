@@ -124,16 +124,16 @@ class _ProfilePageState extends State<ProfilePage> {
                           width: mediaqueryWidth(100, context),
                         //  height: mediaqueryHight(.34, context),
                           decoration: BoxDecoration(
-                              color: useraboutContainer,
-                              borderRadius: BorderRadius.circular(5)),
+                              color: useraboutContainer,image: DecorationImage(image: AssetImage("assets/drows.jpeg"),fit: BoxFit.cover),
+                              borderRadius: BorderRadius.circular(20)),
                           child: Padding(
-                            padding: const EdgeInsets.all(8.0),
+                            padding: const EdgeInsets.only(left: 20,right: 8,top: 12,bottom: 17),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 CommonTextWidget(
                                   text: "About User",
-                                  textfont: appFonts.flexhead(blackclr, size: 20),
+                                  textfont: appFonts.flexhead(Colors.amber, size: 20),
                                 ),
                                 SizedBox(
                                   height: mediaqueryHight(.02, context),

@@ -7,6 +7,7 @@ import 'package:bea_dating/core/presentation/utilit/color.dart';
 import 'package:bea_dating/core/presentation/utilit/fonts.dart';
 import 'package:bea_dating/core/presentation/utilit/mediaquery.dart';
 import 'package:bea_dating/core/presentation/utilit/page_transcation/fade_transition.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -65,7 +66,7 @@ class _NotificationPageState extends State<NotificationPage> {
                   }
 
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return CircularProgressIndicator();
+                    return Center(child: CircularProgressIndicator());
                   }
                   List<Map<String, dynamic>> mynotify = snapshot.data!.docs
                       .map(
@@ -80,7 +81,7 @@ class _NotificationPageState extends State<NotificationPage> {
                   List<String> requesters = [];
                   List<String> message = [];
                   if(request.isNotEmpty){
-                  request.forEach((key, value) {
+                   request.forEach((key, value) {
                     requesters.insert(0,key);
                     message.insert(0,value);
                     // requesters.add(key);
@@ -114,31 +115,18 @@ class _NotificationPageState extends State<NotificationPage> {
                                   leading: CircleAvatar(
                                     child: ClipRRect(
                                         borderRadius: BorderRadius.circular(40),
-                                        child: Image.network(
-                                          user["image"][0],
-                                          fit: BoxFit.cover,
-                                          width: double.infinity,
-                                          height: double.infinity,
-                                          loadingBuilder:
-                                              (context, child, loadingProgress) {
-                                            if (loadingProgress == null) {
-                                              return child;
-                                            } else {
-                                              return Center(
-                                                child: CircularProgressIndicator(
-                                                  value: loadingProgress
-                                                              .expectedTotalBytes !=
-                                                          null
-                                                      ? loadingProgress
-                                                              .cumulativeBytesLoaded /
-                                                          loadingProgress
-                                                              .expectedTotalBytes!
-                                                      : null,
-                                                ),
-                                              );
-                                            }
-                                          },
-                                        )),
+                                        child:ClipRRect(
+                borderRadius: BorderRadius.circular(5),
+                child: CachedNetworkImage(
+                  imageUrl:user["image"][0],
+                  fit: BoxFit.cover,
+                  width: double.infinity,
+                  height: double.infinity,
+                  placeholder: (context, url) =>
+                      Center(child: CircularProgressIndicator()),
+                  errorWidget: (context, url, error) => Icon(Icons.error),
+                ),
+              )),
                                     radius: 25,
                                   ),
                                   title: Text(

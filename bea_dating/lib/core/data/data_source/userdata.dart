@@ -58,26 +58,6 @@ catch(e){
 //   return  _firestore.collection("users").snapshots();
 // }
 
-  
-// Future<DocumentSnapshot?> getUsers(String uid)async{
-//  //String ?uid= instance.getString('uid');
-//   try{
-   
-// FirebaseFirestore _firestore=FirebaseFirestore.instance;
-// DocumentSnapshot snapshot =await _firestore.collection("users").doc(uid).get();
-// //print(snapshot.id);
-// if(snapshot.exists){
-//   print("Data fetched");
-//   return snapshot;
-// }
-// else{
-//   print ('no user found');
-// }}
-// catch(e){
-//   print("Get user error${e}");
-// }
-// return null ;
-// }
 
 
 
@@ -99,6 +79,11 @@ catch(e){
       return [];
     }
   }
- 
-
- }
+ Stream<QuerySnapshot<Map<String, dynamic>>> getAllUsers() {
+return _firestore.collection("users").snapshots();
+}
+  // ALL User Messages
+ Stream<QuerySnapshot<Map<String, dynamic>>> getAllMessage() {
+return _firestore.collection("messages").snapshots();
+}
+  }

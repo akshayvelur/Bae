@@ -37,3 +37,7 @@ final bottomBcr=Color.fromARGB(119, 72, 67, 67);
 final profileAppclr= const Color.fromARGB(255, 52, 50, 50);
 final shadowclr=Color.fromARGB(105, 55, 54, 53);
 final listTileclr= const Color.fromARGB(47, 170, 163, 163);
+final chatIconClr= const Color.fromARGB(232, 28, 173, 91);
+final chatSentIconClr= Colors.blue;
+final clrGreen= Colors.green;
+

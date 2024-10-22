@@ -101,7 +101,8 @@ class Authentic {
         'expectation': expectation,
         'like':[],
         'request':{},
-        'match':[]
+        'match':[],
+        'chatUsers':[]
       });
 
       log("database created");

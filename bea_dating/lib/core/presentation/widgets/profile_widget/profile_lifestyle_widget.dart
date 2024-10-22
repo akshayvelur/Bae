@@ -20,18 +20,18 @@ class LifeStyleWidget extends StatelessWidget {
     return  Container(
       width: mediaqueryWidth(100, context),
       //height: mediaqueryHight(.33, context),
-      decoration: BoxDecoration(
+      decoration: BoxDecoration(image: DecorationImage(image: AssetImage("assets/Лагуна Мудрости _ Couple photoshoot poses, Romantic couples photography, Couple photography poses.jpeg",),fit:BoxFit.cover),
         color: useraboutContainer,
-        borderRadius: BorderRadius.circular(5),
+        borderRadius: BorderRadius.circular(20),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.only(left: 20,right: 8,top: 11,bottom: 15),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             CommonTextWidget(
               text: "Lifestyle habit",
-              textfont: appFonts.flexhead(blackclr, size: 20),
+              textfont: appFonts.flexhead(const Color.fromRGBO(255, 193, 7, 1), size: 20),
             ),
             SizedBox(
               height: mediaqueryHight(.02, context),
