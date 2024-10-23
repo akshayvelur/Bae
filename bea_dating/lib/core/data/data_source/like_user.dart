@@ -30,9 +30,18 @@ await documentReferenceforOwn.update({"like":FieldValue.arrayUnion([like])});
 
 requestAccepting(String accepted)async{
   FirebaseAuth _Auth=FirebaseAuth.instance;
+// After Request Accespting current user Like and match updating
   try{
 DocumentReference documentReference=await _firestore.collection("users").doc(_auth.currentUser!.uid);
 await documentReference.update({"match":FieldValue.arrayUnion([accepted])});
+await documentReference.update({"like":FieldValue.arrayUnion([accepted])});
+  }catch(e){
+    log("Request accepting error${e}");
+  }
+// After Request Accespting Requester match updating
+    try{
+DocumentReference requesterReference=await _firestore.collection("users").doc(accepted);
+await requesterReference.update({"match":FieldValue.arrayUnion([_Auth.currentUser!.uid])});
   }catch(e){
     log("Request accepting error${e}");
   }

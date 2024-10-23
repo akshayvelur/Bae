@@ -8,17 +8,23 @@ import 'package:bea_dating/core/presentation/utilit/fonts.dart';
 import 'package:bea_dating/core/presentation/utilit/mediaquery.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 // ignore: must_be_immutable
 class IndividualChatPage extends StatelessWidget {
-  IndividualChatPage({super.key, required this.users});
-
+  IndividualChatPage({
+    super.key,
+    required this.users,
+    this.chatRoomUid,
+  });
   final Map<String, dynamic> users;
   AppFonts appFonts = AppFonts();
   UserData userData = UserData();
-  TextEditingController textController=TextEditingController();
+  final String? chatRoomUid;
+  FirebaseAuth _auth = FirebaseAuth.instance;
+  TextEditingController textController = TextEditingController();
   Stream<QuerySnapshot<Map<String, dynamic>>> usertream =
       FirebaseFirestore.instance.collection("users").snapshots();
   @override
@@ -34,16 +40,16 @@ class IndividualChatPage extends StatelessWidget {
             icon: Icon(Icons.arrow_back_ios_new),
           ),
           title: InkWell(
-            onTap: () {
-              
-            },
+            onTap: () {},
             child: Row(
               children: [
                 CircleAvatar(
                   radius: 20,
-                  child: ClipRRect(borderRadius: BorderRadius.circular(50),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(50),
                     child: CachedNetworkImage(
-                      imageUrl: users['image'][0],fit: BoxFit.cover,
+                      imageUrl: users['image'][0],
+                      fit: BoxFit.cover,
                       width: double.infinity,
                       height: double.infinity,
                       placeholder: (context, url) => CircularProgressIndicator(
@@ -63,7 +69,8 @@ class IndividualChatPage extends StatelessWidget {
                   children: [
                     Text(
                       users['name'],
-                      style: appFonts.flextext(blackclr,Fweight:400,size: 18 ),
+                      style:
+                          appFonts.flextext(blackclr, Fweight: 400, size: 18),
                     ),
                     Text(
                       "Last seen not available",
@@ -106,7 +113,7 @@ class IndividualChatPage extends StatelessWidget {
               children: [
                 Expanded(
                   child: StreamBuilder(
-                      stream: userData.getAllMessage(),
+                      stream: userData.getAllChat(chatRoomUid.toString()),
                       builder: (context,
                           AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
                               snapshot) {
@@ -140,12 +147,21 @@ class IndividualChatPage extends StatelessWidget {
 
                         // });
                         // }
-                        final List<String> data = [];
-                        return data.isNotEmpty
+
+                        return mynotify.isNotEmpty
                             ? ListView.builder(
-                                itemCount: data.length,
+                                itemCount: mynotify.length,
                                 itemBuilder: (context, index) {
-                                  return Text("message:${data[index]}");
+                                  final data = mynotify[index];
+                                  final String msg = data['msg'];
+                                  final bool isSender =
+                                      _auth.currentUser!.uid ==
+                                          data['senderId'];
+                                  return Align(
+                                      alignment: isSender
+                                          ? Alignment.centerRight
+                                          : Alignment.centerLeft,
+                                      child: Text(msg));
                                 },
                               )
                             : Center(
@@ -157,14 +173,14 @@ class IndividualChatPage extends StatelessWidget {
                               );
                       }),
                 ),
-                _chatInput(context,users['uid'])
+                _chatInput(context, users['uid'])
               ],
             ),
           ),
         ));
   }
 
-  Widget _chatInput(BuildContext context,String userUid) {
+  Widget _chatInput(BuildContext context, String userUid) {
     return Row(
       children: [
         SizedBox(
@@ -185,7 +201,7 @@ class IndividualChatPage extends StatelessWidget {
                     )),
                 Expanded(
                     child: TextField(
-                    controller: textController,
+                  controller: textController,
                   keyboardType: TextInputType.multiline,
                   maxLines: null,
                   decoration: InputDecoration(
@@ -204,9 +220,11 @@ class IndividualChatPage extends StatelessWidget {
           ),
         ),
         MaterialButton(
-          onPressed: () { 
-            context.read<ChatBloc>().add(TesxtMessagesentEvent(text: textController.text,receiverId: userUid));
-          textController.clear();},
+          onPressed: () {
+            context.read<ChatBloc>().add(TesxtMessagesentEvent(
+                text: textController.text, receiverId: userUid));
+            textController.clear();
+          },
           minWidth: 0,
           padding: EdgeInsets.only(left: 10, right: 5, bottom: 10, top: 10),
           color: chatSentIconClr,
