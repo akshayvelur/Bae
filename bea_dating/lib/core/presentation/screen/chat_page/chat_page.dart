@@ -90,8 +90,12 @@ class ChatPage extends StatelessWidget {
                               orElse: () => {},
                             );
                             String name = myuser["name"];
+                            String uid = myuser["uid"];
                             List<dynamic> image = myuser["image"];
                             //  log(name.toString());
+                            List<String>ids=[_auth.currentUser!.uid,uid];
+                            ids.sort();
+                            String mchatUid=ids.join('_');
                             return Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: InkWell(
@@ -99,7 +103,7 @@ class ChatPage extends StatelessWidget {
                                   Navigator.of(context).push(
                                       FadeTransitionPageRoute(
                                           child: IndividualChatPage(
-                                              users: myuser)));
+                                              users: myuser,chatRoomUid: mchatUid,)));
                                 },
                                 splashColor: blackshadow,
                                 borderRadius: BorderRadius.circular(10),
@@ -300,7 +304,6 @@ class ChatPage extends StatelessWidget {
                                                       EdgeInsets.only(left: 10,right: 10),
                                                   title: Text(
                                                     name,
-                                                 
                                                     style: appFonts.flextext(
                                                         blackclr,
                                                         Fweight: 400,

@@ -78,7 +78,7 @@ class UserData {
   // ALL User Messages
 
   Stream<QuerySnapshot<Map<String, dynamic>>> getAllMessage() {
-    return _firestore.collection("messages").snapshots();
+    return _firestore.collection("messages").orderBy("timestamp").snapshots();
   }
 
   Stream<QuerySnapshot<Map<String, dynamic>>> getAllChat(String chatRoomUid) {

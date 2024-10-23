@@ -14,10 +14,12 @@ class Chat {
     ids.sort();
     String chatRoomUid = ids.join('_');
 
-    DocumentReference ref = await _firestore.collection("users").doc(senderId);
-    ref.update({
+    DocumentReference senderref = await _firestore.collection("users").doc(senderId);
+    senderref.update({
       "chatUsers": FieldValue.arrayUnion([chatRoomUid])
     });
+    DocumentReference receiverref= await _firestore.collection("users").doc(receiverId);
+    receiverref.update({"chatUsers":FieldValue.arrayUnion([chatRoomUid])});
     Timestamp timestamp = Timestamp.now();
     log(chatRoomUid);
     Message newmessage = Message(

@@ -11,34 +11,65 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 
 // ignore: must_be_immutable
-class IndividualChatPage extends StatelessWidget {
+class IndividualChatPage extends StatefulWidget {
   IndividualChatPage({
     super.key,
     required this.users,
     this.chatRoomUid,
   });
   final Map<String, dynamic> users;
-  AppFonts appFonts = AppFonts();
-  UserData userData = UserData();
   final String? chatRoomUid;
+
+  @override
+  State<IndividualChatPage> createState() => _IndividualChatPageState();
+}
+
+class _IndividualChatPageState extends State<IndividualChatPage> {
+  AppFonts appFonts = AppFonts();
+
+  UserData userData = UserData();
+
   FirebaseAuth _auth = FirebaseAuth.instance;
+
   TextEditingController textController = TextEditingController();
+
   Stream<QuerySnapshot<Map<String, dynamic>>> usertream =
       FirebaseFirestore.instance.collection("users").snapshots();
+
+        ScrollController _scrollController = ScrollController();
+  @override
+  void initState() {
+  
+    // TODO: implement initState
+    super.initState();
+       WidgetsBinding.instance.addPostFrameCallback((_) {
+      _scrollToBottom();
+    });
+  }
+  void _scrollToBottom() {
+    // Delay the scrolling to make sure the layout is fully rendered
+    Future.delayed(Duration(milliseconds: 100), () {
+      _scrollController.jumpTo(
+        _scrollController.position.maxScrollExtent,
+      );
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
           backgroundColor: whiteclr,
-          centerTitle: true,
+        //  centerTitle: true,
           leading: IconButton(
             onPressed: () {
               Navigator.pop(context);
             },
             icon: Icon(Icons.arrow_back_ios_new),
           ),
+          titleSpacing: 0,
           title: InkWell(
             onTap: () {},
             child: Row(
@@ -48,7 +79,7 @@ class IndividualChatPage extends StatelessWidget {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(50),
                     child: CachedNetworkImage(
-                      imageUrl: users['image'][0],
+                      imageUrl: widget.users['image'][0],
                       fit: BoxFit.cover,
                       width: double.infinity,
                       height: double.infinity,
@@ -68,7 +99,7 @@ class IndividualChatPage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      users['name'],
+                      widget.users['name'],
                       style:
                           appFonts.flextext(blackclr, Fweight: 400, size: 18),
                     ),
@@ -106,14 +137,14 @@ class IndividualChatPage extends StatelessWidget {
             height: double.infinity,
             width: double.infinity,
             decoration: BoxDecoration(
-                // image: DecorationImage(
-                //     image: AssetImage("assets/chatbackground.JPEG"),fit: BoxFit.cover)
+                image: DecorationImage(
+                    image: AssetImage("assets/chatbackground.JPEG"),fit: BoxFit.cover)
                 ),
             child: Column(
               children: [
                 Expanded(
                   child: StreamBuilder(
-                      stream: userData.getAllChat(chatRoomUid.toString()),
+                      stream: userData.getAllChat(widget.chatRoomUid.toString()),
                       builder: (context,
                           AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
                               snapshot) {
@@ -132,36 +163,50 @@ class IndividualChatPage extends StatelessWidget {
                                 )
                                 .toList();
                         log(mynotify.toString());
-                        // var myuse = mynotify.firstWhere((user) => user['uid'] == uid);
-
-                        // Map<String, dynamic> request = myuse["request"]??{};
-
-                        // List<String> requesters = [];
-                        // List<String> message = [];
-                        // if(request.isNotEmpty){;
-                        // request.forEach((key, value) {
-                        //   requesters.insert(0,key);
-                        //   message.insert(0,value);
-                        //   // requesters.add(key);
-                        //   // message.add(value);
-
-                        // });
-                        // }
 
                         return mynotify.isNotEmpty
                             ? ListView.builder(
-                                itemCount: mynotify.length,
+                              controller: _scrollController,
+                                 itemCount: mynotify.length,
                                 itemBuilder: (context, index) {
                                   final data = mynotify[index];
                                   final String msg = data['msg'];
                                   final bool isSender =
                                       _auth.currentUser!.uid ==
                                           data['senderId'];
+                                   final timestamp=data['timestamp'].toDate();      
+                                    String time=DateFormat('hh:mm a').format(timestamp); 
                                   return Align(
                                       alignment: isSender
                                           ? Alignment.centerRight
                                           : Alignment.centerLeft,
-                                      child: Text(msg));
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(left: 10,right: 10,top: 5,bottom: 5),
+                                        child: Container(
+                                            decoration: isSender? BoxDecoration(
+                                                borderRadius: BorderRadius.only(
+                                                    bottomLeft:
+                                                        Radius.circular(15),
+                                                    topLeft: Radius.circular(15),
+                                                    topRight:
+                                                        Radius.circular(15)),
+                                                color:chatIconClr): BoxDecoration(
+                                                borderRadius: BorderRadius.only(
+                                                    bottomRight:
+                                                        Radius.circular(15),
+                                                    topLeft: Radius.circular(15),
+                                                    topRight:
+                                                        Radius.circular(15)),
+                                                color: blackshadow),
+                                            child: Padding(
+                                              padding: const EdgeInsets.all(13),
+                                              child: Column(crossAxisAlignment:isSender ?CrossAxisAlignment.end:CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(msg,style:isSender? appFonts.flextext(blackclr,Fweight: 400,size: 14):appFonts.flextext(whiteclr,Fweight: 400,size: 14),),
+                                                  Text(time,style:isSender? appFonts.flextext(blackclr,Fweight: 400,size: 10):appFonts.flextext(whiteclr,Fweight: 400,size: 10),)],
+                                              ),
+                                            )),
+                                      ));
                                 },
                               )
                             : Center(
@@ -173,7 +218,7 @@ class IndividualChatPage extends StatelessWidget {
                               );
                       }),
                 ),
-                _chatInput(context, users['uid'])
+                _chatInput(context, widget.users['uid'])
               ],
             ),
           ),
@@ -221,9 +266,10 @@ class IndividualChatPage extends StatelessWidget {
         ),
         MaterialButton(
           onPressed: () {
+            if(textController.text.isNotEmpty){
             context.read<ChatBloc>().add(TesxtMessagesentEvent(
                 text: textController.text, receiverId: userUid));
-            textController.clear();
+            textController.clear();}
           },
           minWidth: 0,
           padding: EdgeInsets.only(left: 10, right: 5, bottom: 10, top: 10),
