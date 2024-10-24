@@ -102,7 +102,9 @@ class Authentic {
         'like':[],
         'request':{},
         'match':[],
-        'chatUsers':[]
+        'chatUsers':[],
+        'status':"",
+        "lastSeen":null
       });
 
       log("database created");

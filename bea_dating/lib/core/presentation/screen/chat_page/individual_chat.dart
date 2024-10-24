@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:bea_dating/core/data/data_source/last_seen_calculation.dart';
 import 'package:bea_dating/core/data/data_source/userdata.dart';
 import 'package:bea_dating/core/presentation/screen/chat_page/bloc/chat_bloc.dart';
 import 'package:bea_dating/core/presentation/screen/notification_page/notification_page.dart';
@@ -33,7 +34,7 @@ class _IndividualChatPageState extends State<IndividualChatPage> {
   UserData userData = UserData();
 
   FirebaseAuth _auth = FirebaseAuth.instance;
-
+ String lastSeen="";
   TextEditingController textController = TextEditingController();
 
   Stream<QuerySnapshot<Map<String, dynamic>>> usertream =
@@ -42,9 +43,10 @@ class _IndividualChatPageState extends State<IndividualChatPage> {
         ScrollController _scrollController = ScrollController();
   @override
   void initState() {
-  
+   lastSeen =lastSeenCalculation(widget.users['lastSeen']);
     // TODO: implement initState
     super.initState();
+  
        WidgetsBinding.instance.addPostFrameCallback((_) {
       _scrollToBottom();
     });
@@ -103,8 +105,9 @@ class _IndividualChatPageState extends State<IndividualChatPage> {
                       style:
                           appFonts.flextext(blackclr, Fweight: 400, size: 18),
                     ),
+                    
                     Text(
-                      "Last seen not available",
+                      widget.users['status']=="online"?"Online":lastSeen,
                       style: appFonts.flextext(blackshadow,
                           Fweight: 400, size: 10),
                     ),
@@ -182,30 +185,33 @@ class _IndividualChatPageState extends State<IndividualChatPage> {
                                           : Alignment.centerLeft,
                                       child: Padding(
                                         padding: const EdgeInsets.only(left: 10,right: 10,top: 5,bottom: 5),
-                                        child: Container(
-                                            decoration: isSender? BoxDecoration(
-                                                borderRadius: BorderRadius.only(
-                                                    bottomLeft:
-                                                        Radius.circular(15),
-                                                    topLeft: Radius.circular(15),
-                                                    topRight:
-                                                        Radius.circular(15)),
-                                                color:chatIconClr): BoxDecoration(
-                                                borderRadius: BorderRadius.only(
-                                                    bottomRight:
-                                                        Radius.circular(15),
-                                                    topLeft: Radius.circular(15),
-                                                    topRight:
-                                                        Radius.circular(15)),
-                                                color: blackshadow),
-                                            child: Padding(
-                                              padding: const EdgeInsets.all(13),
-                                              child: Column(crossAxisAlignment:isSender ?CrossAxisAlignment.end:CrossAxisAlignment.start,
-                                                children: [
-                                                  Text(msg,style:isSender? appFonts.flextext(blackclr,Fweight: 400,size: 14):appFonts.flextext(whiteclr,Fweight: 400,size: 14),),
-                                                  Text(time,style:isSender? appFonts.flextext(blackclr,Fweight: 400,size: 10):appFonts.flextext(whiteclr,Fweight: 400,size: 10),)],
-                                              ),
-                                            )),
+                                        child: ConstrainedBox(constraints: BoxConstraints(maxWidth:250),
+                                          child: Container(
+                                              decoration: isSender? BoxDecoration(
+                                                  borderRadius: BorderRadius.only(
+                                                      bottomLeft:
+                                                          Radius.circular(15),
+                                                      topLeft: Radius.circular(15),
+                                                      topRight:
+                                                          Radius.circular(15)),
+                                                  color:chatIconClr): BoxDecoration(
+                                                  borderRadius: BorderRadius.only(
+                                                      bottomRight:
+                                                          Radius.circular(15),
+                                                      topLeft: Radius.circular(15),
+                                                      topRight:
+                                                          Radius.circular(15)),
+                                                  color: blackshadow),
+                                              child: Padding(
+                                                padding: const EdgeInsets.only(left: 13,right: 13,top: 13,bottom: 6),
+                                                child: Column(crossAxisAlignment:isSender ?CrossAxisAlignment.end:CrossAxisAlignment.start,mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                  children: [
+                                                    Text(msg,style:isSender? appFonts.flextext(blackclr,Fweight: 400,size: 14):appFonts.flextext(whiteclr,Fweight: 400,size: 14),),
+                                                   SizedBox(height: 5,),
+                                                    Text(time,style:isSender? appFonts.flextext(blackshadow,Fweight: 400,size: 10):appFonts.flextext(const Color.fromARGB(170, 255, 255, 255),Fweight: 400,size: 10),)],
+                                                ),
+                                              )),
+                                        ),
                                       ));
                                 },
                               )

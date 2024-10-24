@@ -17,6 +17,8 @@ import 'package:bea_dating/core/presentation/utilit/mediaquery.dart';
 import 'package:bea_dating/core/presentation/utilit/page_transcation/fade_transition.dart';
 import 'package:bea_dating/core/presentation/widgets/container/container.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
@@ -30,11 +32,13 @@ class HomeScreenPage extends StatefulWidget {
   State<HomeScreenPage> createState() => _HomeScreenPageState();
 }
 
-class _HomeScreenPageState extends State<HomeScreenPage> {
+class _HomeScreenPageState extends State<HomeScreenPage> with WidgetsBindingObserver{
   final CardSwiperController controller = CardSwiperController();
 
   AppFonts appFonts = AppFonts();
 
+final FirebaseFirestore _firebaseStorage=FirebaseFirestore.instance;
+FirebaseAuth _auth=FirebaseAuth.instance;
   UserData userData = UserData();
   Authentic _authentic = Authentic();
   Map<String, Map<String, dynamic>> temp = {};
@@ -52,10 +56,42 @@ class _HomeScreenPageState extends State<HomeScreenPage> {
   void initState() {
     mainindex = 0;
     context.read<HomeblocBloc>().add(InitEvent());
+    WidgetsBinding.instance.addObserver(this);
     // TODO: implement initState
     super.initState();
+    liveStatus("online");
   }
+  
+  void liveStatus(String status)async{
+    
+     await _firebaseStorage.collection("users").doc(_auth.currentUser!.uid).update({"status":status});
+   if(status=="offline"){
+    Timestamp timestamp=Timestamp.now();
+      await _firebaseStorage.collection("users").doc(_auth.currentUser!.uid).update({"lastSeen":timestamp});
+   }
+  }
+    @override
+  void didChangeAppLifecycleState(AppLifecycleState state){
+    if(state==AppLifecycleState.resumed){
+  
+   liveStatus("online");
+    }else{
+   
+   liveStatus("offline");
+  // if(_auth.currentUser !.ui) {
+  //     liveStatus("offline");
+  //   }
+    }
+      void dispose() {
 
+      if(_auth.currentUser != null) {
+      liveStatus("offline");
+    }
+    WidgetsBinding.instance.removeObserver(this);
+    liveStatus("offline");  // Set status to offline when disposing
+    super.dispose();
+  }
+  }
   Stream<QuerySnapshot<Map<String, dynamic>>> usersStream =
       FirebaseFirestore.instance.collection('users').snapshots();
   @override

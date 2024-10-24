@@ -22,6 +22,7 @@ class Chat {
     receiverref.update({"chatUsers":FieldValue.arrayUnion([chatRoomUid])});
     Timestamp timestamp = Timestamp.now();
     log(chatRoomUid);
+
     Message newmessage = Message(
         senderId: senderId,
         receiverId: receiverId,
@@ -38,7 +39,7 @@ class Chat {
       await _firestore
           .collection("messages")
           .doc(chatRoomUid)
-          .update({"timestamp": timestamp});
+          .update({"timestamp": timestamp,"lastMsg":text});
            await _firestore
           .collection("messages")
           .doc(chatRoomUid)
@@ -49,7 +50,8 @@ class Chat {
         "senderId": senderId,
         "receiverId": receiverId,
         "chatuid": chatRoomUid,
-        "timestamp": timestamp
+        "timestamp": timestamp,
+        "lastMsg":text
       });
       await _firestore
           .collection("messages")

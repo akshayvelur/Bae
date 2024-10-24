@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'package:bea_dating/core/data/data_source/last_seen_calculation.dart';
 import 'package:bea_dating/core/data/data_source/userdata.dart';
 import 'package:bea_dating/core/presentation/screen/chat_page/bloc/chat_bloc.dart';
 import 'package:bea_dating/core/presentation/screen/chat_page/individual_chat.dart';
@@ -222,6 +223,7 @@ class ChatPage extends StatelessWidget {
                             (doc) => doc.data() as Map<String, dynamic>,
                           )
                           .toList();
+                          log(chatroom.toString());
                           List<Map<String, dynamic>>userchat= chatroom.where((element) => element.values.contains(_auth.currentUser!.uid),).toList();
                       // var myuser = users.firstWhere(
                       //   (element) => element["uid"],
@@ -239,15 +241,21 @@ class ChatPage extends StatelessWidget {
                           child: chatList.isNotEmpty? ListView.separated(
                               itemCount: chatList.length,
                               itemBuilder: (context, index) {
-                             var chatid=userchat[index]["receiverId"];
-                             var chatRoomId=userchat[index]["chatuid"];
+                                final reversedIndex = chatList.length - 1 - index;
+                             var chatid=userchat[reversedIndex]["receiverId"];
+                             String lastMsg=userchat[reversedIndex]["lastMsg"];
+                             var chatRoomId=userchat[reversedIndex]["chatuid"];
                              if(chatid==_auth.currentUser!.uid){
-                              chatid=userchat[index]["senderId"];
+                              chatid=userchat[reversedIndex]["senderId"];
                              }
-                              DateTime timestamp=  userchat[index]['timestamp'].toDate();
-                              String formattedTime = DateFormat('hh:mm a').format(timestamp);
+                              
                              Map<String,dynamic> people=users.firstWhere((element) =>element["uid"]==chatid,);
                              var image=people['image'];
+                             String status=people["status"];
+                             //String lastSeen=people["lastSeen"];
+                              // DateTime timestamp=  people['lastSeen'].toDate();
+                              // String formattedTime = DateFormat('hh:mm a').format(timestamp);
+                              String formattedTime = lastSeenCalculationChatlist( people['lastSeen']);
                              String name=people['name'];
                          //   String chatRoomId=people["chatUsers"][index];
                              
@@ -270,7 +278,7 @@ class ChatPage extends StatelessWidget {
                                     borderRadius: BorderRadius.circular(10),
                                     child: Ink(
                                       child: Container(
-                                          height: mediaqueryHight(.07 , context),
+                                          height: mediaqueryHight(.085 , context),
                                           decoration: BoxDecoration(
                                               color: listTileclr,
                                               borderRadius:
@@ -308,7 +316,16 @@ class ChatPage extends StatelessWidget {
                                                         blackclr,
                                                         Fweight: 400,
                                                         size: 15.5),
-                                                  ),trailing: Text(formattedTime),))),
+                                                  ),subtitle: ConstrainedBox(constraints: BoxConstraints(minWidth: 50,maxWidth:200,maxHeight: 20),
+                                                    child: Text(
+                                                      lastMsg,overflow: TextOverflow.ellipsis,
+                                                      style: appFonts.flextext(
+                                                          blackshadow,
+                                                          Fweight: 400,
+                                                          size: 12),
+                                                    ),
+                                                  )
+                                                  ,trailing:status=="offline"? Text(formattedTime):Icon(Icons.circle,color: clrGreen,size: 10,)))),
                                     ),
                                   ),
                                 );
