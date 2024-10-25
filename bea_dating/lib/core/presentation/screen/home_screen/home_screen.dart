@@ -1,6 +1,6 @@
 import 'dart:developer';
 
-import 'package:bea_dating/core/data/data_source/userdata.dart';
+import 'package:bea_dating/core/data/data_source_getting/userdata.dart';
 import 'package:bea_dating/core/domin/usecase/authentication.dart';
 import 'package:bea_dating/core/presentation/screen/bottom_navigation/bottom_navigator.dart.dart';
 import 'package:bea_dating/core/presentation/screen/home_screen/bloc/homebloc_bloc.dart';

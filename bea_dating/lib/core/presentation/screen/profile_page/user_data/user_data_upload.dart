@@ -1,4 +1,4 @@
-import 'package:bea_dating/core/data/data_source/userdata.dart';
+import 'package:bea_dating/core/data/data_source_getting/userdata.dart';
 import 'package:bea_dating/core/data/model/usermodel.dart';
 import 'package:bea_dating/core/presentation/screen/profile_page/Profile/bloc/profile_bloc.dart';
 import 'package:bea_dating/core/presentation/screen/profile_page/Profile/profile_page.dart';

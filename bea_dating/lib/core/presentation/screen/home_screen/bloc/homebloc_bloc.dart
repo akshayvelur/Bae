@@ -3,10 +3,10 @@
 import 'dart:async';
 import 'dart:developer';
 
-import 'package:bea_dating/core/data/data_source/userdata.dart';
+import 'package:bea_dating/core/data/data_source_getting/userdata.dart';
 import 'package:bea_dating/core/data/model/usermodel.dart';
 import 'package:bea_dating/core/domin/usecase/authentication.dart';
-import 'package:bea_dating/core/data/data_source/like_user.dart';
+import 'package:bea_dating/core/data/data_source_getting/like_user.dart';
 import 'package:bea_dating/core/domin/usecase/viewed_account.dart';
 import 'package:bloc/bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';

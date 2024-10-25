@@ -14,3 +14,14 @@ class NavigateToIndividualState extends ChatState{
 class TesxtMessagesentState extends ChatState{
 
 }
+class EmojiCoditionState extends ChatState{
+ final bool isEmoji;
+
+  EmojiCoditionState({required this.isEmoji});
+}
+class ImagePickedState extends ChatState{
+
+}
+class CameraPickedState extends ChatState{
+  
+}

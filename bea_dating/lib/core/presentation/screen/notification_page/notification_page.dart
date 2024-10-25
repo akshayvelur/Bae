@@ -1,6 +1,6 @@
 import 'dart:developer';
 
-import 'package:bea_dating/core/data/data_source/userdata.dart';
+import 'package:bea_dating/core/data/data_source_getting/userdata.dart';
 import 'package:bea_dating/core/presentation/screen/home_screen/view_account/view_account.dart';
 import 'package:bea_dating/core/presentation/screen/notification_page/bloc/notification_bloc.dart';
 import 'package:bea_dating/core/presentation/utilit/color.dart';

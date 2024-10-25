@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:bea_dating/core/data/data_source/userdata.dart';
+import 'package:bea_dating/core/data/data_source_getting/userdata.dart';
 import 'package:bea_dating/core/data/model/usermodel.dart';
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';

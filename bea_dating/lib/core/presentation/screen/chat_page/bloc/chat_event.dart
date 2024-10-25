@@ -14,3 +14,18 @@ class TesxtMessagesentEvent extends ChatEvent{
 
   TesxtMessagesentEvent({required this.text,required this.receiverId});
 }
+class EmojiCoditionEvent extends ChatEvent{
+ final bool isEmoji;
+
+  EmojiCoditionEvent({required this.isEmoji});
+}
+class ImagePickEvent extends ChatEvent{
+    final String receiverId;
+
+  ImagePickEvent({required this.receiverId});
+}
+class CameraPickEvent extends ChatEvent{
+    final String receiverId;
+
+  CameraPickEvent({required this.receiverId});
+}

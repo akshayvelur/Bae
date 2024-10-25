@@ -1,6 +1,6 @@
 import 'dart:developer';
-import 'package:bea_dating/core/data/data_source/last_seen_calculation.dart';
-import 'package:bea_dating/core/data/data_source/userdata.dart';
+import 'package:bea_dating/core/data/data_source_getting/last_seen_calculation.dart';
+import 'package:bea_dating/core/data/data_source_getting/userdata.dart';
 import 'package:bea_dating/core/presentation/screen/chat_page/bloc/chat_bloc.dart';
 import 'package:bea_dating/core/presentation/screen/chat_page/individual_chat.dart';
 import 'package:bea_dating/core/presentation/utilit/color.dart';
@@ -244,6 +244,9 @@ class ChatPage extends StatelessWidget {
                                 final reversedIndex = chatList.length - 1 - index;
                              var chatid=userchat[reversedIndex]["receiverId"];
                              String lastMsg=userchat[reversedIndex]["lastMsg"];
+                           if(lastMsg.contains("https")){
+                              lastMsg="📷";
+                           }    
                              var chatRoomId=userchat[reversedIndex]["chatuid"];
                              if(chatid==_auth.currentUser!.uid){
                               chatid=userchat[reversedIndex]["senderId"];
