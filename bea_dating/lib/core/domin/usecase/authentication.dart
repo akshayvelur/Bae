@@ -37,7 +37,7 @@ class Authentic {
             await FirebaseAuth.instance.signInWithCredential(credential!);
        
         // Get the user's unique ID
-         userId = userCredential.user?.uid ?? "Unknown UID";
+        // userId = userCredential.user?.uid ?? "Unknown UID";
         print("User signed in successfully with UID: $userId");
 
         return userCredential; // Return the signed-in user's credentials if needed
@@ -53,35 +53,6 @@ class Authentic {
     }
   }
 
-  // Future<dynamic> signInWithGoogle() async {
-  //   print("sigin with google");
-  //   try {
-  //     final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-
-  //     if(googleUser!=null){
-  //       print("fined user");
-  //      print("${ await googleUser.authentication}");
-  //          final GoogleSignInAuthentication googleAuth =
-  //         await googleUser.authentication;
-
-  //           print("sigin Athu${googleAuth}");
-
-  //     final credential = GoogleAuthProvider.credential(
-  //         accessToken: googleAuth.accessToken, idToken: googleAuth.idToken);
-  //     print("sign In");
-  //     UserCredential userCredential =
-  //         await FirebaseAuth.instance.signInWithCredential(credential);
-  //         print("User CRedention${userCredential}");
-  //   userid=await _auth.currentUser!.uid;
-  //     //  final myuser = userCredential;
-  //     }else{
-  //       print("user not logged");
-  //     }
-
-  //   } catch (e) {
-  //   log("user Authentic error ;${e}");
-  //  }
-  // }
 
 //create user
   Future<void> createUser(String name, String dob, Map<String,String> location,

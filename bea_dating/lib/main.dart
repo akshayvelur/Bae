@@ -10,20 +10,27 @@ import 'package:bea_dating/core/presentation/screen/user_inital_data/block/user_
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:zego_uikit_prebuilt_call/zego_uikit_prebuilt_call.dart';
+import 'package:zego_uikit_signaling_plugin/zego_uikit_signaling_plugin.dart';
 import 'firebase_options.dart';
-
+ final navigatorKey=GlobalKey<NavigatorState>();
 void main() async{
+ 
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
   options: DefaultFirebaseOptions.currentPlatform,
 );
-
-  runApp(const MyApp());
+ZegoUIKitPrebuiltCallInvitationService().setNavigatorKey(navigatorKey);
+  ZegoUIKit().initLog().then((value) {
+    ZegoUIKitPrebuiltCallInvitationService().useSystemCallingUI(
+      [ZegoUIKitSignalingPlugin()],
+    );
+    runApp(MyApp(navigatorKey: navigatorKey));
+});
 }
-
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
+  const MyApp({super.key,required this.navigatorKey});
+ final GlobalKey <NavigatorState>navigatorKey;
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
@@ -40,6 +47,7 @@ class MyApp extends StatelessWidget {
        
       ],
       child: MaterialApp(
+        navigatorKey: navigatorKey,
         debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
         theme: ThemeData(

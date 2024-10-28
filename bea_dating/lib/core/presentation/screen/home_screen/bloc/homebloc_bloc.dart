@@ -65,7 +65,10 @@ class HomeblocBloc extends Bloc<HomeblocEvent, HomeblocState> {
 
   FutureOr<void> profileViewInitEvent(ProfileViewInitEvent event, Emitter<HomeblocState> emit)async {
     FirebaseAuth _ath=FirebaseAuth.instance;
+    log("again");
+    log("again${event.uid}");
     if(event.uid.toString()!=_ath.currentUser!.uid.toString()){
+      log("again${event.uid}");
     viewedUser(event.uid);
     }
         try{

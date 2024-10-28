@@ -77,6 +77,7 @@ class ChatPage extends StatelessWidget {
                           (element) => element["uid"] == _auth.currentUser!.uid,
                           orElse: () => {});
                       List<dynamic> matchList = filterduse['match'];
+                      String currentUserName=filterduse["name"];
                       //  log(matchList.toString());
 
                       return Container(
@@ -104,7 +105,7 @@ class ChatPage extends StatelessWidget {
                                   Navigator.of(context).push(
                                       FadeTransitionPageRoute(
                                           child: IndividualChatPage(
-                                              users: myuser,chatRoomUid: mchatUid,)));
+                                              users: myuser,chatRoomUid: mchatUid,currentUserName: currentUserName,)));
                                 },
                                 splashColor: blackshadow,
                                 borderRadius: BorderRadius.circular(10),
@@ -200,6 +201,7 @@ class ChatPage extends StatelessWidget {
                         (element) => element["uid"] == _auth.currentUser!.uid,
                       );
                       List chatList = myuser["chatUsers"];
+                      String currentUserName=myuser['name'];
                       //log(chatList.length.toString());
                       return  StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
                     stream: userData.getAllMessage(),
@@ -272,7 +274,7 @@ class ChatPage extends StatelessWidget {
                                       Navigator.of(context).push(
                                       FadeTransitionPageRoute(
                                           child: IndividualChatPage(
-                                              users: people,chatRoomUid: chatRoomId,)));
+                                              users: people,chatRoomUid: chatRoomId,currentUserName: currentUserName,)));
              
                                      //context.read<ChatBloc>().add(IndividualEvent(user: chatUserList));
                                       //Individual chat Inkwell

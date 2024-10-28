@@ -32,13 +32,14 @@ class HomeScreenPage extends StatefulWidget {
   State<HomeScreenPage> createState() => _HomeScreenPageState();
 }
 
-class _HomeScreenPageState extends State<HomeScreenPage> with WidgetsBindingObserver{
+class _HomeScreenPageState extends State<HomeScreenPage>
+    with WidgetsBindingObserver {
   final CardSwiperController controller = CardSwiperController();
 
   AppFonts appFonts = AppFonts();
 
-final FirebaseFirestore _firebaseStorage=FirebaseFirestore.instance;
-FirebaseAuth _auth=FirebaseAuth.instance;
+  final FirebaseFirestore _firebaseStorage = FirebaseFirestore.instance;
+  FirebaseAuth _auth = FirebaseAuth.instance;
   UserData userData = UserData();
   Authentic _authentic = Authentic();
   Map<String, Map<String, dynamic>> temp = {};
@@ -61,37 +62,41 @@ FirebaseAuth _auth=FirebaseAuth.instance;
     super.initState();
     liveStatus("online");
   }
-  
-  void liveStatus(String status)async{
-    
-     await _firebaseStorage.collection("users").doc(_auth.currentUser!.uid).update({"status":status});
-   if(status=="offline"){
-    Timestamp timestamp=Timestamp.now();
-      await _firebaseStorage.collection("users").doc(_auth.currentUser!.uid).update({"lastSeen":timestamp});
-   }
-  }
-    @override
-  void didChangeAppLifecycleState(AppLifecycleState state){
-    if(state==AppLifecycleState.resumed){
-  
-   liveStatus("online");
-    }else{
-   
-   liveStatus("offline");
-  // if(_auth.currentUser !.ui) {
-  //     liveStatus("offline");
-  //   }
-    }
-      void dispose() {
 
-      if(_auth.currentUser != null) {
-      liveStatus("offline");
+  void liveStatus(String status) async {
+    await _firebaseStorage
+        .collection("users")
+        .doc(_auth.currentUser!.uid)
+        .update({"status": status});
+    if (status == "offline") {
+      Timestamp timestamp = Timestamp.now();
+      await _firebaseStorage
+          .collection("users")
+          .doc(_auth.currentUser!.uid)
+          .update({"lastSeen": timestamp});
     }
-    WidgetsBinding.instance.removeObserver(this);
-    liveStatus("offline");  // Set status to offline when disposing
-    super.dispose();
   }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      liveStatus("online");
+    } else {
+      liveStatus("offline");
+      // if(_auth.currentUser !.ui) {
+      //     liveStatus("offline");
+      //   }
+    }
+    void dispose() {
+      if (_auth.currentUser != null) {
+        liveStatus("offline");
+      }
+      WidgetsBinding.instance.removeObserver(this);
+      liveStatus("offline"); // Set status to offline when disposing
+      super.dispose();
+    }
   }
+
   Stream<QuerySnapshot<Map<String, dynamic>>> usersStream =
       FirebaseFirestore.instance.collection('users').snapshots();
   @override
@@ -108,8 +113,11 @@ FirebaseAuth _auth=FirebaseAuth.instance;
         // if (state is NumberOfUserSelectedState) {
 
         // }
-         if (state is ViewAccountState) {
-          Navigator.of(context).push(FadeTransitionPageRoute(child: ViewAccount(uid: state.uid,)));
+        if (state is ViewAccountState) {
+          Navigator.of(context).push(FadeTransitionPageRoute(
+              child: ViewAccount(
+            uid: state.uid,
+          )));
         }
         // TODO: implement listener
       },
@@ -143,43 +151,45 @@ FirebaseAuth _auth=FirebaseAuth.instance;
                           return Center(child: CircularProgressIndicator());
                         }
 
-                List<Map<String, dynamic>> dataList = snapshot.data!.docs
-                     .map((doc) => doc.data() as Map<String, dynamic>)
-                       .toList();
-                      log(dataList.toString());
-                       if (uid != null) {
-                             dataList.removeWhere((user) =>user['uid']==uid ,);
-                               }
-                                var image ;
-                                 var profile ;
-                                  var dob="";
-                                   var name;
-                                   Map user={};
-                             int numberOfUser =0;
+                        List<Map<String, dynamic>> dataList = snapshot
+                            .data!.docs
+                            .map((doc) => doc.data() as Map<String, dynamic>)
+                            .toList();
+                        log(dataList.toString());
+                        if (uid != null) {
+                          dataList.removeWhere(
+                            (user) => user['uid'] == uid,
+                          );
+                        }
+                        var image;
+                        var profile;
+                        var dob = "";
+                        var name;
+                        Map user = {};
+                        int numberOfUser = 0;
 
-                               if(dataList.isNotEmpty){
-                                log("is empty"); 
-                               
-                         user=dataList[mainindex];
-                              // Debug log to check the list after removal
-                      //  log("List after removal: ${dataList[mainindex]}");
-                        //Data collecting area
-                        log("datalist length${dataList.length}");
-                         name = user['name'];
-                        image = user['image'];
-                        profile = user["Profile"];
-                         dob=user['dob'];
-                        if(profile==null&&mainindex < dataList.length - 1)
-                        mainindex++;
-                          
-                        
-                       numberOfUser= dataList.length-1.abs();
-                        
-                               }
-                     print("gym null error check>>>>>>>>>>${user['profile']}");
+                        if (dataList.isNotEmpty) {
+                          log("is empty");
 
-                   return profile!=null&&dataList.isNotEmpty? 
-                      CardSwiper(
+                          user = dataList[mainindex];
+                          // Debug log to check the list after removal
+                          //  log("List after removal: ${dataList[mainindex]}");
+                          //Data collecting area
+                          log("datalist length${dataList.length}");
+                          name = user['name'];
+                          image = user['image'];
+                          profile = user["Profile"];
+                          dob = user['dob'];
+                          if (profile == null &&
+                              mainindex < dataList.length - 1) mainindex++;
+
+                          numberOfUser = dataList.length - 1.abs();
+                        }
+                        print(
+                            "gym null error check>>>>>>>>>>${user['profile']}");
+
+                        return profile != null && dataList.isNotEmpty
+                            ? CardSwiper(
                                 controller: controller,
                                 cardsCount: dataList.length,
                                 onSwipe: _onSwipe,
@@ -194,11 +204,26 @@ FirebaseAuth _auth=FirebaseAuth.instance;
                                   horizontalThresholdPercentage,
                                   verticalThresholdPercentage,
                                 ) =>
-                                     InkWell(onTap: () {
-                                       context.read<HomeblocBloc>().add(ViewAccountEvent(uid: user['uid']));
-                                     },child: TabControllers(image: image, name: name, profile: profile, mainindex: mainindex, numberOfUser: numberOfUser, controller: controller,dob: dob,currentuserUid: uid,user: user,))
-                                    
-                   ): Center(child: LottieBuilder.asset("assets/Animation - 1728468830285.json"));
+                                    InkWell(
+                                        onTap: () {
+                                          context.read<HomeblocBloc>().add(
+                                              ViewAccountEvent(
+                                                  uid: user['uid']));
+                                        },
+                                        child: TabControllers(
+                                          image: image,
+                                          name: name,
+                                          profile: profile,
+                                          mainindex: mainindex,
+                                          numberOfUser: numberOfUser,
+                                          controller: controller,
+                                          dob: dob,
+                                          currentuserUid: uid,
+                                          user: user,
+                                        )))
+                            : Center(
+                                child: LottieBuilder.asset(
+                                    "assets/Animation - 1728468830285.json"));
                       },
                     )),
               ],

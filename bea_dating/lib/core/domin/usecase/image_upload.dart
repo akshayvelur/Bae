@@ -13,6 +13,7 @@ Future<String>uploadImage(String childName,Uint8List imagei)async{
     print("UPLOAD TASK${uploadTask.snapshot}");
   TaskSnapshot taskSnapshot=await uploadTask;
     print("TASK SNAP${taskSnapshot}");
+    
   String downloadUrl=await taskSnapshot.ref.getDownloadURL();
     print("DOWNLOAD URL${downloadUrl}");
   return downloadUrl;

@@ -1,5 +1,7 @@
 import 'dart:developer';
 import 'dart:io';
+import 'package:bea_dating/core/data/constant/call_info.dart';
+import 'package:bea_dating/core/presentation/screen/chat_page/calling_page/calling_page.dart';
 import 'package:bea_dating/core/presentation/screen/chat_page/image_view.dart';
 import 'package:bea_dating/core/presentation/screen/chat_page/widgets/Emoji_widget/emoji_widget.dart';
 import 'package:bea_dating/core/presentation/utilit/page_transcation/fade_transition.dart';
@@ -16,17 +18,21 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:zego_uikit_prebuilt_call/zego_uikit_prebuilt_call.dart';
+import 'package:zego_uikit_signaling_plugin/zego_uikit_signaling_plugin.dart';
 
 // ignore: must_be_immutable
 class IndividualChatPage extends StatefulWidget {
   IndividualChatPage({
     super.key,
     required this.users,
-    this.chatRoomUid,
+    this.chatRoomUid,required this.currentUserName
   });
   final Map<String, dynamic> users;
   final String? chatRoomUid;
+  final String currentUserName;
 
   @override
   State<IndividualChatPage> createState() => _IndividualChatPageState();
@@ -34,13 +40,14 @@ class IndividualChatPage extends StatefulWidget {
 
 class _IndividualChatPageState extends State<IndividualChatPage> {
   AppFonts appFonts = AppFonts();
-
+  late ImageSource _imageSource;
+  String? imagePath;
   UserData userData = UserData();
 
   FirebaseAuth _auth = FirebaseAuth.instance;
   String lastSeen = "";
   TextEditingController textController = TextEditingController();
-
+  String currentUser="";
   Stream<QuerySnapshot<Map<String, dynamic>>> usertream =
       FirebaseFirestore.instance.collection("users").snapshots();
 
@@ -48,6 +55,7 @@ class _IndividualChatPageState extends State<IndividualChatPage> {
   bool isShowEmoji = false;
   @override
   void initState() {
+    currentUser=_auth.currentUser!.uid;
     isShowEmoji = false;
     lastSeen = lastSeenCalculation(widget.users['lastSeen']);
     // TODO: implement initState
@@ -140,9 +148,19 @@ class _IndividualChatPageState extends State<IndividualChatPage> {
                 ),
                 actions: [
                   TextButton(
-                      onPressed: () {},
+                      onPressed: () async{
+                        await ZegoUIKitPrebuiltCallInvitationService().init(
+                   appID: CallInfo.appId /*input your AppID*/,
+                   appSign: CallInfo.appSign /*input your AppSign*/,
+                   userID:currentUser,
+                  userName:  widget.currentUserName ,
+                  plugins: [ZegoUIKitSignalingPlugin()],
+                 );
+                 ZegoUIKitPrebuiltCallInvitationService().send(invitees: [ZegoCallUser( widget.users['uid'], widget.currentUserName)], isVideoCall: true);
+                        //Navigator.of(context).push(FadeTransitionPageRoute(child:CallPage(callID: widget.users['uid'], currentuserId: currentUser, username:widget.currentUserName )));
+                      },
                       child: Image.asset(
-                        'assets/icons8-video-48.png',
+                        'assets/icons8-video-48.png', 
                         scale: 1.8,
                       )),
                   Transform.translate(
@@ -280,43 +298,38 @@ class _IndividualChatPageState extends State<IndividualChatPage> {
                                                                           size:
                                                                               14),
                                                                 )
-                                                              : InkWell(onTap: () {
-                                                                Navigator.of(context).push(FadeTransitionPageRoute(child: ImageViewPage(image: msg)));
-                                                              },
-                                                                child: Container(
-                                                                    height:
-                                                                        mediaqueryHight(
-                                                                            .35,
-                                                                            context),
-                                                                    width: mediaqueryWidth(
-                                                                        .5,
-                                                                        context),
-                                                                    child: ClipRRect(
-                                                                        borderRadius: BorderRadius.circular(10),
-                                                                        child: CachedNetworkImage(
-                                                                          imageUrl:
-                                                                              msg,
-                                                                          fit: BoxFit
-                                                                              .cover,
-                                                                          width: double
-                                                                              .infinity,
-                                                                          height:
-                                                                              double.infinity,
-                                                                          placeholder:
-                                                                              (context, url) =>
-                                                                                  Center(
+                                                              : InkWell(
+                                                                  onTap: () {
+                                                                    Navigator.of(
+                                                                            context)
+                                                                        .push(FadeTransitionPageRoute(
                                                                             child:
-                                                                                CircularProgressIndicator(
-                                                                              color:
-                                                                                  clrGreen,
+                                                                                ImageViewPage(image: msg)));
+                                                                  },
+                                                                  child: Container(
+                                                                      height: mediaqueryHight(.35, context),
+                                                                      width: mediaqueryWidth(.5, context),
+                                                                      child: ClipRRect(
+                                                                          borderRadius: BorderRadius.circular(10),
+                                                                          child: CachedNetworkImage(
+                                                                            imageUrl:
+                                                                                msg,
+                                                                            fit:
+                                                                                BoxFit.cover,
+                                                                            width:
+                                                                                double.infinity,
+                                                                            height:
+                                                                                double.infinity,
+                                                                            placeholder: (context, url) =>
+                                                                                Center(
+                                                                              child: CircularProgressIndicator(
+                                                                                color: clrGreen,
+                                                                              ),
                                                                             ),
-                                                                          ),
-                                                                          errorWidget: (context,
-                                                                                  url,
-                                                                                  error) =>
-                                                                              Icon(Icons.error),
-                                                                        ))),
-                                                              ),
+                                                                            errorWidget: (context, url, error) =>
+                                                                                Icon(Icons.error),
+                                                                          ))),
+                                                                ),
                                                           SizedBox(
                                                             height: 5,
                                                           ),
@@ -415,10 +428,16 @@ class _IndividualChatPageState extends State<IndividualChatPage> {
                           .add(ImagePickEvent(receiverId: receiverUid));
                     },
                     icon: Icon(Icons.image, size: 25, color: chatIconClr)),
-                IconButton(
-                    // camer button
-                    onPressed: () {},
-                    icon: Icon(Icons.camera_alt, size: 26, color: chatIconClr))
+                // IconButton(
+                //     // camer button
+                //     onPressed: () {
+                //       _imageSource = ImageSource.camera;
+                //      imagePath=_getImage();
+                //      if(imagePath!.isNotEmpty){
+                //      context.read<ChatBloc>().add(CameraPickEvent(imagePath: imagePath!,receiverId:receiverUid ));
+                //      }
+                //     },
+                //     icon: Icon(Icons.camera_alt, size: 26, color: chatIconClr))
               ],
             ),
           ),
@@ -442,5 +461,12 @@ class _IndividualChatPageState extends State<IndividualChatPage> {
         )
       ],
     );
+  }
+
+   _getImage() async {
+    final selectedImage = await ImagePicker().pickImage(source: _imageSource);
+    if (selectedImage != null) {
+    return selectedImage.toString();
+    }
   }
 }

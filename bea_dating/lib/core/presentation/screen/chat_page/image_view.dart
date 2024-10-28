@@ -16,10 +16,10 @@ class ImageViewPage extends StatelessWidget {
             },
             icon: Icon(Icons.arrow_back_ios,color: whiteclr,)),
       ),
-      body: Container(
+      body: Container(color: blackclr,
         child: CachedNetworkImage(
           imageUrl: image,
-          fit: BoxFit.cover,
+          fit: BoxFit.contain,
           width: double.infinity,
           height: double.infinity,
           placeholder: (context, url) => Center(

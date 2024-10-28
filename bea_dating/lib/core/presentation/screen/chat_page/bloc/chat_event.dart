@@ -26,6 +26,7 @@ class ImagePickEvent extends ChatEvent{
 }
 class CameraPickEvent extends ChatEvent{
     final String receiverId;
+    final String imagePath;
 
-  CameraPickEvent({required this.receiverId});
+  CameraPickEvent({required this.receiverId,required this.imagePath});
 }

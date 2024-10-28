@@ -6,6 +6,7 @@ import 'package:bea_dating/core/presentation/utilit/color.dart';
 import 'package:bea_dating/core/presentation/utilit/logo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:zego_uikit_prebuilt_call/zego_uikit_prebuilt_call.dart';
 
 AppBar profileAppbar(BuildContext context,Authentic authentic) {
     return AppBar(
@@ -27,6 +28,7 @@ AppBar profileAppbar(BuildContext context,Authentic authentic) {
               color: blackclr,
             )),IconButton(onPressed: (){
                    showAlertDialog(context,authentic);
+                     ZegoUIKitPrebuiltCallInvitationService().uninit();
             }, icon: Icon(Icons.logout))
       ],
     );

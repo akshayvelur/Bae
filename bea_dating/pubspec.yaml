@@ -39,25 +39,32 @@ dependencies:
   animated_text_kit: ^4.2.2
   google_fonts: ^6.2.1
   provider: ^6.1.2
-  firebase_core: ^2.24.2
+  firebase_core: ^3.6.0
   google_sign_in: ^6.2.1 
-  firebase_auth: ^4.16.0 
+  firebase_auth: ^5.3.1
   lottie: ^3.1.2
   shared_preferences: ^2.3.2
-  cloud_firestore: ^4.14.0
+  cloud_firestore: ^5.4.4
   floating_bottom_navigation_bar: ^1.5.2
   flutter_card_swiper: ^7.0.1
   zo_animated_border: ^0.0.1
   animated_loading_border: ^0.0.2
-  location: ^6.0.2
+  location: ^7.0.1
   image_picker: ^1.1.2
-  firebase_storage: ^11.6.5
-  firebase_app_check: ^0.2.2
+  firebase_storage: ^12.3.4
+  firebase_app_check: ^0.3.1+4
   shimmer: ^3.0.0
   cached_network_image: ^3.4.0
-  intl: ^0.17.0
+  intl: ^0.19.0
   emoji_picker_flutter: ^3.1.0
+  video_player: ^2.9.2
+  zego_uikit_prebuilt_call: ^4.16.12
+  zego_uikit_signaling_plugin: ^2.8.6
 
+
+ 
+
+  
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -68,7 +75,7 @@ dev_dependencies:
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-  flutter_lints: ^3.0.0
+  flutter_lints: ^5.0.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
