@@ -71,7 +71,7 @@ lastSeenCalculationChatlist(Timestamp timeStamp) {
   DateTime fiveday = now.subtract(const Duration(days: 5));
   DateTime sixday = now.subtract(const Duration(days: 6));
   DateTime sevenday = now.subtract(const Duration(days: 7));
-  DateTime oneweek = now.subtract(const Duration(days: 8));
+  now.subtract(const Duration(days: 8));
 
   if (daytme.day == now.day &&
       daytme.month == now.month &&

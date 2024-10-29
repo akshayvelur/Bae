@@ -472,6 +472,7 @@ class _IndividualChatPageState extends State<IndividualChatPage> {
     );
   }
 
+   // ignore: unused_element
    _getImage() async {
     final selectedImage = await ImagePicker().pickImage(source: _imageSource);
     if (selectedImage != null) {

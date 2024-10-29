@@ -50,5 +50,6 @@ class AppFonts {
           return GoogleFonts.ubuntu(
       color:color,fontSize: size,fontWeight:FontWeight.values[(Fweight~/100)-1]);
         } 
-
+    var cardCount=GoogleFonts.dynaPuff(color: blackclr,fontSize: 32,fontWeight: FontWeight.w700);
+    var cardCountWhite=GoogleFonts.dynaPuff(color: whiteclr,fontSize: 32,fontWeight: FontWeight.w700);
 }

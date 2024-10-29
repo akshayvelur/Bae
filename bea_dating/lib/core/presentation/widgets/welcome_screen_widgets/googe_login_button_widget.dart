@@ -53,7 +53,6 @@ class GoogleLoginButtonWidget extends StatelessWidget {
                   SizedBox(
                     width: mediaqueryWidth(.15, context),
                   ),
-                
                   Text(
                     "Sign in with Google",
                     style: appFonts.nextbuttongreen,

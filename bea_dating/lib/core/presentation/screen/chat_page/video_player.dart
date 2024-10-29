@@ -13,8 +13,7 @@ class VideoPlayerPage extends StatefulWidget {
 
 
 class _VideoPlayerState extends State<VideoPlayer> {
-  @override
-    late VideoPlayerController _controller;
+  late VideoPlayerController _controller;
   void initState() {
     // TODO: implement initState
  

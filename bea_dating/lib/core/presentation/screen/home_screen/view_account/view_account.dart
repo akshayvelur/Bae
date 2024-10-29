@@ -90,6 +90,7 @@ class _ViewAccountState extends State<ViewAccount> {
                             Column(
                               children: [
                             if(myuser!=null
+                            // ignore: unnecessary_null_comparison
                             &&myuser!.like!=null&&myuser!.match!=null
                             )    ViewMatchAndFollowWidget(appFonts: appFonts,user: myuser!,),
                                 SizedBox(
@@ -141,6 +142,7 @@ class _ViewAccountState extends State<ViewAccount> {
                             //       headline: "Height",
                             //       userOut: myuser!.profile['height'].toString(),
                             //     ),
+                              // ignore: unnecessary_null_comparison
                               if(myuser!.gender!=null)   ViewUserCoreCollection(
                                   headline: "Gender?",
                                   userOut: myuser!.gender,
@@ -153,6 +155,7 @@ class _ViewAccountState extends State<ViewAccount> {
                                 ),  SizedBox(
                                   height: mediaqueryHight(.01, context),
                                 ),
+                               // ignore: unnecessary_null_comparison
                                if(myuser!.expectation!=null) ViewUserCoreCollection(
                                   headline: "Expectation ?",
                                   userOut: myuser!.expectation,
@@ -160,6 +163,7 @@ class _ViewAccountState extends State<ViewAccount> {
                                 SizedBox(
                                   height: mediaqueryHight(.01, context),
                                 ),
+                               // ignore: unnecessary_null_comparison
                                if(myuser!.interest !=null)   ViewUserCoreCollection(
                                   headline: "Gender preference?",
                                   userOut: myuser!.interest,

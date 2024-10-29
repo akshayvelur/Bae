@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_type_check
+
 import 'dart:developer';
 
 import 'package:bea_dating/core/data/data_source_getting/userdata.dart';
@@ -97,6 +99,7 @@ class _NotificationPageState extends State<NotificationPage> {
                     itemCount: requesters.length,
                     itemBuilder: (context, index) {
                       var user=mynotify.firstWhere((user) => user["uid"]==requesters[index],);
+                      // ignore: unused_local_variable
                       String name =user['name'];
                      
                        return Container(

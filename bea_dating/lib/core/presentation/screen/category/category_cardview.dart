@@ -114,6 +114,7 @@ class _CategoryViewScreenState extends State<CategoryViewScreen> {
                         }
 
                 List<Map<String, dynamic>> dataList = snapshot.data!.docs
+                     // ignore: unnecessary_cast
                      .map((doc) => doc.data() as Map<String, dynamic>)
                        .toList();
                      // log(dataList.toString());

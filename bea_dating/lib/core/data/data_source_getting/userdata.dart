@@ -110,6 +110,7 @@ return userName;
  
     }
   }
+// ignore: body_might_complete_normally_catch_error
 }).catchError((error) {
   print('Error getting user data: $error');
 });

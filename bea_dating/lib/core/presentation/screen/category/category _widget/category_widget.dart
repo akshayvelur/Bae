@@ -3,6 +3,7 @@
 import 'package:bea_dating/core/presentation/utilit/color.dart';
 import 'package:bea_dating/core/presentation/utilit/logo.dart';
 import 'package:flutter/material.dart';
+// ignore: unnecessary_import
 import 'package:flutter/widgets.dart';
 
 class AppBarwidget extends StatelessWidget {

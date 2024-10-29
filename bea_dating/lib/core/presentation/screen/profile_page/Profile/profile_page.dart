@@ -91,6 +91,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             Column(
                               children: [
                             if(myuser!=null
+                            // ignore: unnecessary_null_comparison
                             &&myuser!.like!=null&&myuser!.match!=null
                             )    MatchAndFollowWidget(appFonts: appFonts,user: myuser!,),
                                 SizedBox(
@@ -142,6 +143,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             //       headline: "Height",
                             //       userOut: myuser!.profile['height'].toString(),
                             //     ),
+                              // ignore: unnecessary_null_comparison
                               if(myuser!.gender!=null)   UserCoreCollection(
                                   headline: "Gender?",
                                   userOut: myuser!.gender,
@@ -154,6 +156,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                 ),  SizedBox(
                                   height: mediaqueryHight(.01, context),
                                 ),
+                               // ignore: unnecessary_null_comparison
                                if(myuser!.expectation!=null) UserCoreCollection(
                                   headline: "Expectation ?",
                                   userOut: myuser!.expectation,
@@ -161,6 +164,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                 SizedBox(
                                   height: mediaqueryHight(.01, context),
                                 ),
+                               // ignore: unnecessary_null_comparison
                                if(myuser!.interest !=null)   UserCoreCollection(
                                   headline: "Gender preference?",
                                   userOut: myuser!.interest,

@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_cast
+
 import 'dart:developer';
 
 import 'package:bea_dating/core/data/constant/call_info.dart';

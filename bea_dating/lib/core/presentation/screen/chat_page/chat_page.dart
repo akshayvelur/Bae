@@ -73,6 +73,7 @@ class ChatPage extends StatelessWidget {
                       }
                       List<Map<String, dynamic>> allUser = snapshot.data!.docs
                           .map(
+                            // ignore: unnecessary_cast
                             (doc) => doc.data() as Map<String, dynamic>,
                           )
                           .toList();
@@ -203,6 +204,7 @@ class ChatPage extends StatelessWidget {
                       }
                       List<Map<String, dynamic>> users = snapshot.data!.docs
                           .map(
+                            // ignore: unnecessary_cast
                             (doc) => doc.data() as Map<String, dynamic>,
                           )
                           .toList();
@@ -231,6 +233,7 @@ class ChatPage extends StatelessWidget {
                       }
                       List<Map<String, dynamic>> chatroom = snapshot.data!.docs
                           .map(
+                            // ignore: unnecessary_cast
                             (doc) => doc.data() as Map<String, dynamic>,
                           )
                           .toList();

@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_null_comparison
+
 import 'package:bea_dating/core/presentation/utilit/color.dart';
 import 'package:bea_dating/core/presentation/utilit/fonts.dart';
 import 'package:bea_dating/core/presentation/utilit/mediaquery.dart';

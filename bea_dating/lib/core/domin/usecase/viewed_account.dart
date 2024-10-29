@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
  FirebaseAuth _auth=FirebaseAuth.instance;
+ // ignore: unused_element
  FirebaseFirestore _firestore= FirebaseFirestore.instance;
  
 viewedUser(String view )async{

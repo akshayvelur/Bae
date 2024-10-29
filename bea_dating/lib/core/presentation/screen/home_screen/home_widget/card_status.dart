@@ -54,6 +54,7 @@ class _CardStatusState extends State<CardStatus> {
         ), Padding(
           padding: const EdgeInsets.all(8.0),
           child: Row(
+              // ignore: unnecessary_null_comparison
               children: [  if(age!=null) myContainer(title:"Age : ${age}",),SizedBox(width: mediaqueryWidth(.06, context),),
             if(widget.profile!=null&&widget.profile.containsKey("gym")) myContainer(title:"Gym : ${widget.profile['gym']}"),
             ],
@@ -94,10 +95,10 @@ class _CardStatusState extends State<CardStatus> {
               FloatingActionButton(
                 backgroundColor: shadowclr,
                 onPressed: () {
-                     if(widget.mainindex<=widget.numberOfUser!){
+                     if(widget.mainindex<=widget.numberOfUser){
                      context.read<HomeblocBloc>().add(UserLikeEvent(likeduser: widget.user['uid']));
                   }
-                  if(widget.mainindex<widget.numberOfUser!){
+                  if(widget.mainindex<widget.numberOfUser){
                   context.read<HomeblocBloc>().add(CountEvent(count:widget.mainindex+1));}
                
                     widget.controller.swipe(CardSwiperDirection.right);},
