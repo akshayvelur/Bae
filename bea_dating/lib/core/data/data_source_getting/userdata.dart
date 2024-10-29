@@ -1,9 +1,12 @@
 import 'package:bea_dating/core/data/model/usermodel.dart';
+import 'package:bea_dating/core/presentation/screen/user_inital_data/username_data.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UserData {
   FirebaseFirestore _firestore = FirebaseFirestore.instance;
+ 
 // For Profile page
   Future<UserModel?> getUserData() async {
     SharedPreferences instance = await SharedPreferences.getInstance();
@@ -28,7 +31,6 @@ class UserData {
 
 // For friends profile
   Future<UserModel?> viewProfile(String uid) async {
-    SharedPreferences instance = await SharedPreferences.getInstance();
     //String ?uid= instance.getString('uid');
     try {
       //    print("uid${uid}");
@@ -88,5 +90,28 @@ class UserData {
         .collection('message')
         .orderBy("timestamp")
         .snapshots();
+  }
+
+  userNameFromFirebase()async{
+String currentUserId = FirebaseAuth.instance.currentUser!.uid;
+
+// Get the user's document reference
+DocumentReference userRef = FirebaseFirestore.instance.collection('users').doc(currentUserId);
+
+// Fetch the user's data
+userRef.get().then((DocumentSnapshot snapshot) {
+  if (snapshot.exists) {
+    Map<String, dynamic>? userData = snapshot.data() as Map<String, dynamic>?;
+    if (userData != null) {
+      String userName = userData['name'];
+    
+return userName;
+      // Use the retrieved name and age
+ 
+    }
+  }
+}).catchError((error) {
+  print('Error getting user data: $error');
+});
   }
 }

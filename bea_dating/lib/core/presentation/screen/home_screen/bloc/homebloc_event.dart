@@ -7,6 +7,9 @@ class BottoNavigatorEindexEvent extends HomeblocEvent{
 
   BottoNavigatorEindexEvent({required this.Eindex});
 }
+class InitUserNameEvent extends HomeblocEvent{
+
+}
 class CountEvent extends HomeblocEvent{
 final int count;
 

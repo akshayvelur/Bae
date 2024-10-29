@@ -1,11 +1,24 @@
 part of 'homebloc_bloc.dart';
 
 @immutable
-abstract class HomeblocState {}
+abstract class HomeblocState {
 
-abstract class HomeActionState extends HomeblocState{}
 
- class HomeblocInitial extends HomeblocState {}
+}
+
+abstract class HomeActionState extends HomeblocState{
+
+}
+class InitUserNameState extends HomeblocState{
+final String userName;
+
+  InitUserNameState({required this.userName});
+
+}
+
+ class HomeblocInitial extends HomeblocState {
+
+}
 class BottomNavigatorEindexState extends HomeblocState{
   final int Eindex;
 
@@ -25,7 +38,7 @@ class InitState extends HomeblocState{
   InitState({required this.uid});
 }
 class UserLikeAddedState extends HomeblocState{
-  
+ 
 }
 class ViewAccountState extends HomeblocState{
   final String uid;

@@ -6,7 +6,6 @@ import 'package:bea_dating/core/data/data_uploading/chat_image_service.dart';
 import 'package:bea_dating/core/domin/usecase/image_upload.dart';
 import 'package:bloc/bloc.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:meta/meta.dart';
 part 'chat_event.dart';
 part 'chat_state.dart';

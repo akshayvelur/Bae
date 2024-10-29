@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:bea_dating/core/data/constant/call_info.dart';
 import 'package:bea_dating/core/data/data_source_getting/userdata.dart';
 import 'package:bea_dating/core/domin/usecase/authentication.dart';
 import 'package:bea_dating/core/presentation/screen/bottom_navigation/bottom_navigator.dart.dart';
@@ -23,6 +24,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
 import 'package:lottie/lottie.dart';
+import 'package:zego_uikit_prebuilt_call/zego_uikit_prebuilt_call.dart';
+import 'package:zego_uikit_signaling_plugin/zego_uikit_signaling_plugin.dart';
 
 // ignore: must_be_immutable
 class HomeScreenPage extends StatefulWidget {
@@ -41,8 +44,10 @@ class _HomeScreenPageState extends State<HomeScreenPage>
   final FirebaseFirestore _firebaseStorage = FirebaseFirestore.instance;
   FirebaseAuth _auth = FirebaseAuth.instance;
   UserData userData = UserData();
+  // ignore: unused_field
   Authentic _authentic = Authentic();
   Map<String, Map<String, dynamic>> temp = {};
+  String? currentUsername;
 
   int mainindex = 0;
   String? uid;
@@ -56,11 +61,13 @@ class _HomeScreenPageState extends State<HomeScreenPage>
   @override
   void initState() {
     mainindex = 0;
-    context.read<HomeblocBloc>().add(InitEvent());
+   context.read<HomeblocBloc>().add(InitUserNameEvent());
     WidgetsBinding.instance.addObserver(this);
     // TODO: implement initState
     super.initState();
     liveStatus("online");
+    context.read<HomeblocBloc>().add(InitEvent()); 
+                         
   }
 
   void liveStatus(String status) async {
@@ -87,14 +94,6 @@ class _HomeScreenPageState extends State<HomeScreenPage>
       //     liveStatus("offline");
       //   }
     }
-    void dispose() {
-      if (_auth.currentUser != null) {
-        liveStatus("offline");
-      }
-      WidgetsBinding.instance.removeObserver(this);
-      liveStatus("offline"); // Set status to offline when disposing
-      super.dispose();
-    }
   }
 
   Stream<QuerySnapshot<Map<String, dynamic>>> usersStream =
@@ -104,9 +103,13 @@ class _HomeScreenPageState extends State<HomeScreenPage>
     return BlocConsumer<HomeblocBloc, HomeblocState>(
       listener: (context, state) {
         if (state is InitState) {
+         
           print(state.uid);
           uid = state.uid;
         }
+         if(state is InitUserNameState){
+        
+          }
         if (state is CountUpdatestate) {
           mainindex = state.count;
         }
@@ -255,84 +258,6 @@ class _HomeScreenPageState extends State<HomeScreenPage>
     );
     return true;
   }
+
 }
 
-
-                // Flexible(
-                //   flex: 2,
-                //   child: FutureBuilder<List<Map<String, dynamic>>>(
-                //       future: userData.getData(),
-                //       builder: (context, snapshot) {
-                //         if (snapshot.connectionState ==
-                //             ConnectionState.waiting) {
-                //           return Center(child: CircularProgressIndicator());
-                //         }
-                //         if (snapshot.hasError) {
-                //           return Center(
-                //               child: Text('Error: ${snapshot.error}'));
-                //         }
-                //         if (!snapshot.hasData ||
-                //             snapshot.data!.isEmpty ||
-                //             snapshot.data!.isEmpty) {
-                //           return Center(child: Text('No data found'));
-                //         }
-
-                //         List<Map<String, dynamic>> dataList =
-                //             snapshot.data!;
-                //            if (uid != null) {
-                //              dataList.removeWhere((user) =>user['uid']==uid ,);
-                //                }
-
-                //                 var image ;
-                //                  var profile ;
-                //                   var dob="";
-                //                    var name;
-                //                    Map user={};
-                //              int numberOfUser =0;
-
-                //                if(dataList.isNotEmpty){
-                //                 log("is empty"); 
-                               
-                //          user=dataList[mainindex];
-                //               // Debug log to check the list after removal
-                //       //  log("List after removal: ${dataList[mainindex]}");
-                //         //Data collecting area
-                //         log("datalist length${dataList.length}");
-                //          name = user['name'];
-                //         image = user['image'];
-                //         profile = user["Profile"];
-                //          dob=user['dob'];
-                //         if(profile==null&&mainindex < dataList.length - 1)
-                //         mainindex++;
-                          
-                        
-                //        numberOfUser= dataList.length-1.abs();
-                        
-                //                }
-                //      print("gym null error check>>>>>>>>>>${user['profile']}");
-
-                //         return profile!=null&&dataList.isNotEmpty? InkWell(onTap: () {
-                          
-                //         },
-                //           child: CardSwiper(
-                //               controller: controller,
-                //               cardsCount: dataList.length,
-                //               onSwipe: _onSwipe,
-                //               onUndo: _onUndo,
-                //               numberOfCardsDisplayed: 1,
-                //               backCardOffset: const Offset(40, 40),
-                //               padding: const EdgeInsets.only(
-                //                   left: 10, right: 10, bottom: 10),
-                //               cardBuilder: (
-                //                 context,
-                //                 index,
-                //                 horizontalThresholdPercentage,
-                //                 verticalThresholdPercentage,
-                //               ) =>
-                //                    TabControllers(image: image, name: name, profile: profile, mainindex: mainindex, numberOfUser: numberOfUser, controller: controller,dob: dob,currentuserUid: uid,user: user,)
-                //                   ),
-                //         )
-                //                 :
-                //      Center(child: LottieBuilder.asset("assets/Animation - 1728468830285.json"));
-                //       }),
-                // ),

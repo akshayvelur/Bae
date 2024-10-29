@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'package:bea_dating/core/data/constant/call_info.dart';
 import 'package:bea_dating/core/data/data_source_getting/last_seen_calculation.dart';
 import 'package:bea_dating/core/data/data_source_getting/userdata.dart';
 import 'package:bea_dating/core/presentation/screen/chat_page/bloc/chat_bloc.dart';
@@ -13,6 +14,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+import 'package:zego_uikit_prebuilt_call/zego_uikit_prebuilt_call.dart';
+import 'package:zego_uikit_signaling_plugin/zego_uikit_signaling_plugin.dart';
 
 // ignore: must_be_immutable
 class ChatPage extends StatelessWidget {
@@ -78,6 +81,12 @@ class ChatPage extends StatelessWidget {
                           orElse: () => {});
                       List<dynamic> matchList = filterduse['match'];
                       String currentUserName=filterduse["name"];
+                         ZegoUIKitPrebuiltCallInvitationService().init(
+                        appID: CallInfo.appId /*input your AppID*/,
+                   appSign: CallInfo.appSign /*input your AppSign*/,
+                   userID:_auth.currentUser!.uid,
+                  userName: currentUserName,
+                  plugins: [ZegoUIKitSignalingPlugin()],);  
                       //  log(matchList.toString());
 
                       return Container(

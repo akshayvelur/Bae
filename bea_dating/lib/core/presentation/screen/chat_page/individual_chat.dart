@@ -157,7 +157,7 @@ class _IndividualChatPageState extends State<IndividualChatPage> {
                   plugins: [ZegoUIKitSignalingPlugin()],
                  );
                  ZegoUIKitPrebuiltCallInvitationService().send(invitees: [ZegoCallUser( widget.users['uid'], widget.currentUserName)], isVideoCall: true);
-                        //Navigator.of(context).push(FadeTransitionPageRoute(child:CallPage(callID: widget.users['uid'], currentuserId: currentUser, username:widget.currentUserName )));
+         
                       },
                       child: Image.asset(
                         'assets/icons8-video-48.png', 
@@ -166,7 +166,16 @@ class _IndividualChatPageState extends State<IndividualChatPage> {
                   Transform.translate(
                     offset: Offset(-12, 0),
                     child: TextButton(
-                        onPressed: () {},
+                        onPressed: () async{
+                            await ZegoUIKitPrebuiltCallInvitationService().init(
+                   appID: CallInfo.appId /*input your AppID*/,
+                   appSign: CallInfo.appSign /*input your AppSign*/,
+                   userID:currentUser,
+                  userName:  widget.currentUserName ,
+                  plugins: [ZegoUIKitSignalingPlugin()],
+                 );
+                 ZegoUIKitPrebuiltCallInvitationService().send(invitees: [ZegoCallUser( widget.users['uid'], widget.currentUserName)], isVideoCall: false);
+                        },
                         child: Image.asset(
                           'assets/icons8-call-100.png',
                           scale: 4.5,

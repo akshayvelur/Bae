@@ -37,6 +37,7 @@ class _CategoryViewScreenState extends State<CategoryViewScreen> {
   AppFonts appFonts = AppFonts();
 
   UserData userData = UserData();
+  // ignore: unused_field
   Authentic _authentic = Authentic();
   Map<String, Map<String, dynamic>> temp = {};
 

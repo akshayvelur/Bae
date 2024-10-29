@@ -49,9 +49,9 @@ lastSeenCalculation(Timestamp timeStamp) {
       daytme.year == sevenday.year) {
     return "last seen 7 days ago";
   } 
-  else if (daytme.day >= twoday.day &&
-      daytme.month >= sevenday.month &&
-      daytme.year >= sevenday.year) {
+  else if (daytme.day >= oneweek.day &&
+      daytme.month >= oneweek.month &&
+      daytme.year >= oneweek.year) {
     return "last seen 1 week ago";
   } 
   else {
