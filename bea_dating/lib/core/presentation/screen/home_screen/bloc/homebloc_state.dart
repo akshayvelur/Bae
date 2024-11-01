@@ -55,3 +55,8 @@ class ProfileLoadingSuccessState extends HomeActionState{
 
   ProfileLoadingSuccessState({required this.user});
 }
+class DistanceFilterState extends HomeblocState{
+    final List<String>mydata;
+
+  DistanceFilterState({required this.mydata});
+  }

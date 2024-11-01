@@ -39,6 +39,12 @@ class NumberOfUserEvent extends HomeblocEvent{
 
   ProfileViewInitEvent({required this.uid});
   }
+  class DistanceFilterEvent extends HomeblocEvent{
+
+    final double distance;
+
+  DistanceFilterEvent({required this.distance});
+  }
 
 
 

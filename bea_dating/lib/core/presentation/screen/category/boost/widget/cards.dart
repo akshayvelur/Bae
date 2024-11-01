@@ -104,7 +104,6 @@ class CardTwo extends StatelessWidget {
     );
   }
 }
-
 class CardOne extends StatelessWidget {
   const CardOne({
     super.key,

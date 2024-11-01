@@ -4,6 +4,7 @@ import 'dart:developer';
 
 import 'package:bea_dating/core/data/constant/call_info.dart';
 import 'package:bea_dating/core/data/data_source_getting/userdata.dart';
+import 'package:bea_dating/core/data/distance_finding/distance_finding.dart';
 import 'package:bea_dating/core/domin/usecase/authentication.dart';
 import 'package:bea_dating/core/presentation/screen/bottom_navigation/bottom_navigator.dart.dart';
 import 'package:bea_dating/core/presentation/screen/home_screen/bloc/homebloc_bloc.dart';
@@ -50,9 +51,13 @@ class _HomeScreenPageState extends State<HomeScreenPage>
   Authentic _authentic = Authentic();
   Map<String, Map<String, dynamic>> temp = {};
   String? currentUsername;
+  double radiusInKm=10;
 
   int mainindex = 0;
   String? uid;
+  double? currentUserLatitude;
+  double? currentUserLongitude;
+  List<String>distancefilterd=[];
 
   final cards = [
     'assets/Ride.MPEG.jpg',
@@ -64,6 +69,7 @@ class _HomeScreenPageState extends State<HomeScreenPage>
   void initState() {
     mainindex = 0;
    context.read<HomeblocBloc>().add(InitUserNameEvent());
+            context.read<HomeblocBloc>().add(DistanceFilterEvent(distance: radiusInKm));
     WidgetsBinding.instance.addObserver(this);
     // TODO: implement initState
     super.initState();
@@ -104,6 +110,10 @@ class _HomeScreenPageState extends State<HomeScreenPage>
   Widget build(BuildContext context) {
     return BlocConsumer<HomeblocBloc, HomeblocState>(
       listener: (context, state) {
+            if(state is DistanceFilterState){
+          distancefilterd=state.mydata;
+           print("filterduser${distancefilterd}");
+        }
         if (state is InitState) {
          
           print(state.uid);
@@ -111,7 +121,9 @@ class _HomeScreenPageState extends State<HomeScreenPage>
         }
          if(state is InitUserNameState){
         
+       
           }
+       
         if (state is CountUpdatestate) {
           mainindex = state.count;
         }
@@ -136,7 +148,7 @@ class _HomeScreenPageState extends State<HomeScreenPage>
               style: subLogoblack,
             ),
             backgroundColor: Colors.transparent,
-          ),
+           actions: [ElevatedButton(onPressed: (){}, child: Image.asset("assets/icons8-filter-100.png",color: blackclr,scale: 4.4,))],),
           body: SafeArea(
             child: Column(
               children: [
@@ -160,12 +172,27 @@ class _HomeScreenPageState extends State<HomeScreenPage>
                             .data!.docs
                             .map((doc) => doc.data() as Map<String, dynamic>)
                             .toList();
-                        log(dataList.toString());
+                       // log(dataList.toString());
+                      //  finding the current user
+                         var mydata= dataList.firstWhere((element) => element["uid"]==uid,)as Map<String,dynamic>;
+                       List<dynamic> likeList= mydata['like'];
+             
+                          //  distance filter
+                          dataList.removeWhere((users)=>!distancefilterd.contains(users["uid"]),);
+                          
                         if (uid != null) {
+                          // removing Current user Account
                           dataList.removeWhere(
                             (user) => user['uid'] == uid,
                           );
+                          if(likeList.isNotEmpty){
+                           dataList.removeWhere(
+                            (user) =>likeList.contains(user["uid"]),
+                          );}
+                     
                         }
+                        // nearby us
+                          //log("myUser${myUser["name"]}");
                         var image;
                         var profile;
                         var dob = "";
@@ -174,13 +201,13 @@ class _HomeScreenPageState extends State<HomeScreenPage>
                         int numberOfUser = 0;
 
                         if (dataList.isNotEmpty) {
-                          log("is empty");
-
+                        
+                         //if(dataList[mainindex])
                           user = dataList[mainindex];
                           // Debug log to check the list after removal
                           //  log("List after removal: ${dataList[mainindex]}");
                           //Data collecting area
-                          log("datalist length${dataList.length}");
+                        //  log("datalist length${dataList.length}");
                           name = user['name'];
                           image = user['image'];
                           profile = user["Profile"];
@@ -188,10 +215,10 @@ class _HomeScreenPageState extends State<HomeScreenPage>
                           if (profile == null &&
                               mainindex < dataList.length - 1) mainindex++;
 
-                          numberOfUser = dataList.length - 1.abs();
+                              numberOfUser = dataList.length - 1.abs();
                         }
                         print(
-                            "gym null error check>>>>>>>>>>${user['profile']}");
+                            "User profile  Not Found>>>>>>>>>>${user['profile']}");
 
                         return profile != null && dataList.isNotEmpty
                             ? CardSwiper(
