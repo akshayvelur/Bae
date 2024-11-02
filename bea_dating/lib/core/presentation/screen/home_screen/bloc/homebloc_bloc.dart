@@ -21,7 +21,7 @@ part 'homebloc_event.dart';
 part 'homebloc_state.dart';
 
 class HomeblocBloc extends Bloc<HomeblocEvent, HomeblocState> {
-  HomeblocBloc() : super(HomeblocInitial()) {
+  HomeblocBloc() : super(HomeblocInitial(gender: null, index: null, age1: null, age2: null, distance: null)) {
     on<BottoNavigatorEindexEvent>(bottoNavigatorEindexEvent);
     on<CountEvent>(countEvent);
     on<NumberOfUserEvent>(numberOfUserEvent);
@@ -31,21 +31,25 @@ class HomeblocBloc extends Bloc<HomeblocEvent, HomeblocState> {
     on<ProfileViewInitEvent>(profileViewInitEvent);
     on<InitUserNameEvent>(initUserNameEvent);
     on<DistanceFilterEvent>(distanceFilterEvent);
+    on<DistanceFilterSliderEvent>(distanceFilterSliderEvent);
+    on<AgeFilterEvent>(ageFilterEvent);
+    on<ShowmeEvent>(showmeEvent);
+    on<DiscoverySubmissionEvent>(discoverySubmissionEvent);
   }
 
   FutureOr<void> bottoNavigatorEindexEvent(
       BottoNavigatorEindexEvent event, Emitter<HomeblocState> emit) {
-    emit(BottomNavigatorEindexState(Eindex: event.Eindex));
+    emit(BottomNavigatorEindexState(Eindex: event.Eindex, gender:state.gender, index: state.index, age1: state.age1, age2: state.age2, distance: state.distance));
   }
 
   FutureOr<void> countEvent(CountEvent event, Emitter<HomeblocState> emit) {
     print(event.count);
-    emit(CountUpdatestate(count: event.count));
+    emit(CountUpdatestate(count: event.count,gender:state.gender, index: state.index, age1: state.age1, age2: state.age2, distance: state.distance));
   }
 
   FutureOr<void> numberOfUserEvent(
       NumberOfUserEvent event, Emitter<HomeblocState> emit) {
-    emit(NumberOfUserSelectedState(numberOfUser: event.numberOfUser));
+    emit(NumberOfUserSelectedState(numberOfUser: event.numberOfUser,gender:state.gender, index: state.index, age1: state.age1, age2: state.age2, distance: state.distance));
   }
 
   FutureOr<void> initEvent(InitEvent event, Emitter<HomeblocState> emit) async {
@@ -53,7 +57,7 @@ class HomeblocBloc extends Bloc<HomeblocEvent, HomeblocState> {
     final vp = await authentic.userUidFromSharedpref();
 //   String g=vp.toString();
 // log("quuuuu${vp.runtimeType}");
-    emit(InitState(uid: vp));
+    emit(InitState(uid: vp,gender:state.gender, index: state.index, age1: state.age1, age2: state.age2, distance: state.distance));
   }
 
   FutureOr<void> userLikeEvent(
@@ -64,7 +68,7 @@ class HomeblocBloc extends Bloc<HomeblocEvent, HomeblocState> {
 
   FutureOr<void> viewAccountEvent(
       ViewAccountEvent event, Emitter<HomeblocState> emit) {
-    emit(ViewAccountState(uid: event.uid));
+    emit(ViewAccountState(uid: event.uid,gender:state.gender, index: state.index, age1: state.age1, age2: state.age2, distance: state.distance));
   }
 
   FutureOr<void> profileViewInitEvent(
@@ -83,8 +87,8 @@ class HomeblocBloc extends Bloc<HomeblocEvent, HomeblocState> {
       if (user != null) {
         print("profile data fetched");
 
-        emit(ProfileViewInitState(user: user));
-        emit(ProfileLoadingSuccessState(user: user));
+        emit(ProfileViewInitState(user: user,gender:state.gender, index: state.index, age1: state.age1, age2: state.age2, distance: state.distance));
+        emit(ProfileLoadingSuccessState(user: user,gender:state.gender, index: state.index, age1: state.age1, age2: state.age2, distance: state.distance));
       } else {
         print("NO DATA");
       }
@@ -110,7 +114,7 @@ class HomeblocBloc extends Bloc<HomeblocEvent, HomeblocState> {
         if (userData != null) {
           String userName = userData['name'];
 
-          emit(InitUserNameState(userName: userName));
+          emit(InitUserNameState(userName: userName,gender:state.gender, index: state.index, age1: state.age1, age2: state.age2, distance: state.distance));
 
           // Use the retrieved name and age
         }
@@ -128,6 +132,22 @@ class HomeblocBloc extends Bloc<HomeblocEvent, HomeblocState> {
       DistanceFilterEvent event, Emitter<HomeblocState> emit) async{
     var filerdData=await getNearbyUsers(event.distance);
     //print("filterduser${filerdData}");
-  emit(DistanceFilterState(mydata:filerdData));
+  emit(DistanceFilterState(mydata:filerdData,gender:state.gender, index: state.index, age1: state.age1, age2: state.age2, distance: state.distance));
+  }
+
+  FutureOr<void> distanceFilterSliderEvent(DistanceFilterSliderEvent event, Emitter<HomeblocState> emit) {
+    print("distane tapped");
+    emit(DistanceFilterSliderState(gender:state.gender, index: state.index, age1: state.age1, age2: state.age2, distance:event.distance));
+  }
+
+  FutureOr<void> ageFilterEvent(AgeFilterEvent event, Emitter<HomeblocState> emit) {
+    emit(AgeFilterState(gender:state.gender, index: state.index, age1: event.age1, age2: event.age2, distance: state.distance));
+  }
+
+  FutureOr<void> showmeEvent(ShowmeEvent event, Emitter<HomeblocState> emit) {
+    emit(ShowmeState(gender:event.gender, index: event.index, age1: state.age1, age2: state.age2, distance: state.distance));  }
+
+  FutureOr<void> discoverySubmissionEvent(DiscoverySubmissionEvent event, Emitter<HomeblocState> emit) {
+    
   }
 }

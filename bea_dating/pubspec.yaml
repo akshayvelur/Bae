@@ -60,6 +60,7 @@ dependencies:
   video_player: ^2.9.2
   zego_uikit_prebuilt_call: ^4.16.12
   zego_uikit_signaling_plugin: ^2.8.6
+  flutter_multi_slider: ^2.0.1
 
 
  

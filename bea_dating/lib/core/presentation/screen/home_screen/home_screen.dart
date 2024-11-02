@@ -12,6 +12,7 @@ import 'package:bea_dating/core/presentation/screen/home_screen/home_widget/Tab_
 import 'package:bea_dating/core/presentation/screen/home_screen/home_widget/card-data_widget.dart';
 import 'package:bea_dating/core/presentation/screen/home_screen/home_widget/card_images.dart';
 import 'package:bea_dating/core/presentation/screen/home_screen/home_widget/card_status.dart';
+import 'package:bea_dating/core/presentation/screen/home_screen/view_account/filter_Page/discovery_settings.dart';
 import 'package:bea_dating/core/presentation/screen/home_screen/view_account/view_account.dart';
 import 'package:bea_dating/core/presentation/screen/user_inital_data/block/user_details_bloc.dart';
 import 'package:bea_dating/core/presentation/utilit/color.dart';
@@ -51,7 +52,7 @@ class _HomeScreenPageState extends State<HomeScreenPage>
   Authentic _authentic = Authentic();
   Map<String, Map<String, dynamic>> temp = {};
   String? currentUsername;
-  double radiusInKm=10;
+  double radiusInKm=20;
 
   int mainindex = 0;
   String? uid;
@@ -148,7 +149,7 @@ class _HomeScreenPageState extends State<HomeScreenPage>
               style: subLogoblack,
             ),
             backgroundColor: Colors.transparent,
-           actions: [ElevatedButton(onPressed: (){}, child: Image.asset("assets/icons8-filter-100.png",color: blackclr,scale: 4.4,))],),
+           actions: [ElevatedButton(onPressed: (){Navigator.of(context).push(FadeTransitionPageRoute(child:DiscoverySettings() ));}, child: Image.asset("assets/icons8-filter-100.png",color: blackclr,scale: 4.4,))],),
           body: SafeArea(
             child: Column(
               children: [
