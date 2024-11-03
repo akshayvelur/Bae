@@ -180,7 +180,7 @@ class _HomeScreenPageState extends State<HomeScreenPage>
              
                           //  distance filter
                           dataList.removeWhere((users)=>!distancefilterd.contains(users["uid"]),);
-                          
+                          // 
                         if (uid != null) {
                           // removing Current user Account
                           dataList.removeWhere(

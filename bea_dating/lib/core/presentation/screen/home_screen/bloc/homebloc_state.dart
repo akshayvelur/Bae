@@ -88,3 +88,14 @@ class DistanceFilterState extends HomeblocState{
   DiscoverySubmissionState({required super.gender, required super.index, required super.age1, required super.age2, required super.distance});
 
   }
+  class DiscoveryInitState extends HomeblocState{
+  DiscoveryInitState({required super.gender, required super.index, required super.age1, required super.age2, required super.distance});
+    
+  }
+    class NavigateToDiacoveryState extends HomeblocState{
+      final List<String> ageRange;
+      final String showme;
+      final String maxDistance;
+  NavigateToDiacoveryState({required this.ageRange,required this.maxDistance,required this.showme,required super.gender, required super.index, required super.age1, required super.age2, required super.distance});
+    
+  }

@@ -64,6 +64,9 @@ class NumberOfUserEvent extends HomeblocEvent{
   ShowmeEvent({required this.gender, required this.index});
   }
   class DiscoverySubmissionEvent extends HomeblocEvent{
+
+  }
+  class NavigateToDiacoveryEvent extends HomeblocEvent{
     
   }
 

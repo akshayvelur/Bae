@@ -115,4 +115,32 @@ return userName;
   print('Error getting user data: $error');
 });
   }
+
+
+  // User data
+   getDataForDiscovery()async{
+String currentUserId = FirebaseAuth.instance.currentUser!.uid;
+
+// Get the user's document reference
+DocumentReference userRef = FirebaseFirestore.instance.collection('users').doc(currentUserId);
+
+// Fetch the user's data
+userRef.get().then((DocumentSnapshot snapshot) {
+
+  if (snapshot.exists) {
+    Map<String, dynamic>? userData = snapshot.data() as Map<String, dynamic>?;
+
+    if (userData != null) {
+            
+    
+return userData  ;
+      // Use the retrieved name and age
+ 
+    }
+  }
+// ignore: body_might_complete_normally_catch_error
+}).catchError((error) {
+  print('Error getting user data: $error');
+});
+  }
 }

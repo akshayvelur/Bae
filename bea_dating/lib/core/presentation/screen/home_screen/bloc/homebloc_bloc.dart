@@ -4,6 +4,7 @@ import 'dart:async';
 import 'dart:developer';
 import 'package:bea_dating/core/data/constant/call_info.dart';
 import 'package:bea_dating/core/data/data_source_getting/userdata.dart';
+import 'package:bea_dating/core/data/data_uploading/discovery_upload.dart';
 import 'package:bea_dating/core/data/distance_finding/distance_finding.dart';
 import 'package:bea_dating/core/data/model/usermodel.dart';
 import 'package:bea_dating/core/domin/usecase/authentication.dart';
@@ -35,6 +36,7 @@ class HomeblocBloc extends Bloc<HomeblocEvent, HomeblocState> {
     on<AgeFilterEvent>(ageFilterEvent);
     on<ShowmeEvent>(showmeEvent);
     on<DiscoverySubmissionEvent>(discoverySubmissionEvent);
+    on<NavigateToDiacoveryEvent>(navigateToDiacoveryEvent);
   }
 
   FutureOr<void> bottoNavigatorEindexEvent(
@@ -145,9 +147,65 @@ class HomeblocBloc extends Bloc<HomeblocEvent, HomeblocState> {
   }
 
   FutureOr<void> showmeEvent(ShowmeEvent event, Emitter<HomeblocState> emit) {
+
     emit(ShowmeState(gender:event.gender, index: event.index, age1: state.age1, age2: state.age2, distance: state.distance));  }
 
-  FutureOr<void> discoverySubmissionEvent(DiscoverySubmissionEvent event, Emitter<HomeblocState> emit) {
-    
+  FutureOr<void> discoverySubmissionEvent(DiscoverySubmissionEvent event, Emitter<HomeblocState> emit) async{
+emit(DiscoveryInitState(gender:state. gender, index: state.index, age1:state. age1, age2:state. age2, distance:state. distance));
+ String maxDistance;
+  String showme;
+  List<String>ageRange=[];
+  showme=state.gender.toString();
+  maxDistance=state.distance!.round().toString();
+  ageRange.add(state.age1!.round().toString());
+  ageRange.add(state.age2!.round().toString());
+  if(maxDistance.isNotEmpty&&showme.isNotEmpty&&ageRange.isNotEmpty){
+  
+Discovery discovery=Discovery();
+await discovery.discoveryUpload(ageRange, maxDistance, showme);
   }
+  }
+
+  FutureOr<void> navigateToDiacoveryEvent(NavigateToDiacoveryEvent event, Emitter<HomeblocState> emit) async{
+
+  List<String>_agerange=[];
+  final String showme;
+ final String  maxDistance;
+String currentUserId = FirebaseAuth.instance.currentUser!.uid;
+
+// Get the user's document reference
+DocumentReference userRef = await FirebaseFirestore.instance.collection('users').doc(currentUserId);
+
+// Fetch the user's data
+try{
+   DocumentSnapshot snapshot= await userRef.get();
+  if (snapshot.exists) {
+    Map<String, dynamic>? mydata = snapshot.data() as Map<String, dynamic>?;
+    if (mydata != null) {
+
+
+  List<dynamic>agerange=mydata["ageRange"];
+final _agerange=agerange.map((e) => e as String,).toList();
+final showme=mydata["showme"].toString();
+final maxDistance=mydata["maxDistance"].toString();
+
+
+emit(NavigateToDiacoveryState(ageRange: _agerange ,maxDistance: maxDistance, showme: showme, gender: state.gender, index: state.index, age1: state.age1, age2: state.age2, distance: state.distance));
+     var filerdData=await getNearbyUsers(double.parse(maxDistance));
+    //print("filterduser${filerdData}");
+  emit(DistanceFilterState(mydata:filerdData,gender:state.gender, index: state.index, age1: state.age1, age2: state.age2, distance: state.distance));
+  
+    
+    }
+  }
+// ignore: body_might_complete_normally_catch_error
+
+}
+catch(e){
+
+  print("everything oki error${e}");
+
+}
+
+      }
 }

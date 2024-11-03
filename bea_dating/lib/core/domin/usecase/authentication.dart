@@ -75,7 +75,10 @@ class Authentic {
         'match':[],
         'chatUsers':[],
         'status':"",
-        "lastSeen":null
+        "lastSeen":null,
+        "showme":"",
+         "ageRange":[],
+         "maxDistance":""
       });
 
       log("database created");
