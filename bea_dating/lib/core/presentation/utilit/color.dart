@@ -40,5 +40,6 @@ final listTileclr= const Color.fromARGB(47, 170, 163, 163);
 final chatIconClr= const Color.fromARGB(232, 28, 173, 91);
 final chatSentIconClr= Colors.blue;
 final clrGreen= Colors.green;
+final clrRed= Colors.red;
 
 final whiteclrshadow=const Color.fromARGB(170, 255, 255, 255);
