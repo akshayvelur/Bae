@@ -22,7 +22,13 @@ part 'homebloc_event.dart';
 part 'homebloc_state.dart';
 
 class HomeblocBloc extends Bloc<HomeblocEvent, HomeblocState> {
-  HomeblocBloc() : super(HomeblocInitial(gender: null, index: null, age1: null, age2: null, distance: null)) {
+  HomeblocBloc()
+      : super(HomeblocInitial(
+            gender: null,
+            index: null,
+            age1: null,
+            age2: null,
+            distance: null)) {
     on<BottoNavigatorEindexEvent>(bottoNavigatorEindexEvent);
     on<CountEvent>(countEvent);
     on<NumberOfUserEvent>(numberOfUserEvent);
@@ -30,7 +36,7 @@ class HomeblocBloc extends Bloc<HomeblocEvent, HomeblocState> {
     on<UserLikeEvent>(userLikeEvent);
     on<ViewAccountEvent>(viewAccountEvent);
     on<ProfileViewInitEvent>(profileViewInitEvent);
-    on<InitUserNameEvent>(initUserNameEvent);
+    on<InitUserEvent>(initUserEvent);
     on<DistanceFilterEvent>(distanceFilterEvent);
     on<DistanceFilterSliderEvent>(distanceFilterSliderEvent);
     on<AgeFilterEvent>(ageFilterEvent);
@@ -41,17 +47,35 @@ class HomeblocBloc extends Bloc<HomeblocEvent, HomeblocState> {
 
   FutureOr<void> bottoNavigatorEindexEvent(
       BottoNavigatorEindexEvent event, Emitter<HomeblocState> emit) {
-    emit(BottomNavigatorEindexState(Eindex: event.Eindex, gender:state.gender, index: state.index, age1: state.age1, age2: state.age2, distance: state.distance));
+    emit(BottomNavigatorEindexState(
+        Eindex: event.Eindex,
+        gender: state.gender,
+        index: state.index,
+        age1: state.age1,
+        age2: state.age2,
+        distance: state.distance));
   }
 
   FutureOr<void> countEvent(CountEvent event, Emitter<HomeblocState> emit) {
     print(event.count);
-    emit(CountUpdatestate(count: event.count,gender:state.gender, index: state.index, age1: state.age1, age2: state.age2, distance: state.distance));
+    emit(CountUpdatestate(
+        count: event.count,
+        gender: state.gender,
+        index: state.index,
+        age1: state.age1,
+        age2: state.age2,
+        distance: state.distance));
   }
 
   FutureOr<void> numberOfUserEvent(
       NumberOfUserEvent event, Emitter<HomeblocState> emit) {
-    emit(NumberOfUserSelectedState(numberOfUser: event.numberOfUser,gender:state.gender, index: state.index, age1: state.age1, age2: state.age2, distance: state.distance));
+    emit(NumberOfUserSelectedState(
+        numberOfUser: event.numberOfUser,
+        gender: state.gender,
+        index: state.index,
+        age1: state.age1,
+        age2: state.age2,
+        distance: state.distance));
   }
 
   FutureOr<void> initEvent(InitEvent event, Emitter<HomeblocState> emit) async {
@@ -59,7 +83,13 @@ class HomeblocBloc extends Bloc<HomeblocEvent, HomeblocState> {
     final vp = await authentic.userUidFromSharedpref();
 //   String g=vp.toString();
 // log("quuuuu${vp.runtimeType}");
-    emit(InitState(uid: vp,gender:state.gender, index: state.index, age1: state.age1, age2: state.age2, distance: state.distance));
+    emit(InitState(
+        uid: vp,
+        gender: state.gender,
+        index: state.index,
+        age1: state.age1,
+        age2: state.age2,
+        distance: state.distance));
   }
 
   FutureOr<void> userLikeEvent(
@@ -70,7 +100,13 @@ class HomeblocBloc extends Bloc<HomeblocEvent, HomeblocState> {
 
   FutureOr<void> viewAccountEvent(
       ViewAccountEvent event, Emitter<HomeblocState> emit) {
-    emit(ViewAccountState(uid: event.uid,gender:state.gender, index: state.index, age1: state.age1, age2: state.age2, distance: state.distance));
+    emit(ViewAccountState(
+        uid: event.uid,
+        gender: state.gender,
+        index: state.index,
+        age1: state.age1,
+        age2: state.age2,
+        distance: state.distance));
   }
 
   FutureOr<void> profileViewInitEvent(
@@ -89,8 +125,20 @@ class HomeblocBloc extends Bloc<HomeblocEvent, HomeblocState> {
       if (user != null) {
         print("profile data fetched");
 
-        emit(ProfileViewInitState(user: user,gender:state.gender, index: state.index, age1: state.age1, age2: state.age2, distance: state.distance));
-        emit(ProfileLoadingSuccessState(user: user,gender:state.gender, index: state.index, age1: state.age1, age2: state.age2, distance: state.distance));
+        emit(ProfileViewInitState(
+            user: user,
+            gender: state.gender,
+            index: state.index,
+            age1: state.age1,
+            age2: state.age2,
+            distance: state.distance));
+        emit(ProfileLoadingSuccessState(
+            user: user,
+            gender: state.gender,
+            index: state.index,
+            age1: state.age1,
+            age2: state.age2,
+            distance: state.distance));
       } else {
         print("NO DATA");
       }
@@ -99,113 +147,158 @@ class HomeblocBloc extends Bloc<HomeblocEvent, HomeblocState> {
     }
   }
 
-  FutureOr<void> initUserNameEvent(
-      InitUserNameEvent event, Emitter<HomeblocState> emit) {
+  FutureOr<void> initUserEvent(
+      InitUserEvent event, Emitter<HomeblocState> emit) async {
+   
+
     String currentUserId = FirebaseAuth.instance.currentUser!.uid;
 
 // Get the user's document reference
-    DocumentReference userRef =
-        FirebaseFirestore.instance.collection('users').doc(currentUserId);
+    try {
+      DocumentReference userRef =
+          FirebaseFirestore.instance.collection('users').doc(currentUserId);
 
 // Fetch the user's data
-    userRef.get().then((DocumentSnapshot snapshot) {
+      DocumentSnapshot snapshot = await userRef.get();
       if (snapshot.exists) {
         Map<String, dynamic>? userData =
             snapshot.data() as Map<String, dynamic>?;
 
         if (userData != null) {
-          String userName = userData['name'];
+          // String userName = userData['name'];
+          final temp = userData;
+          // Users distance filtering function calling
+          add(DistanceFilterEvent(distance:double.parse(userData['maxDistance']) ));
 
-          emit(InitUserNameState(userName: userName,gender:state.gender, index: state.index, age1: state.age1, age2: state.age2, distance: state.distance));
+          emit(InitUserNameState(
+              user: temp,
+              gender: state.gender,
+              index: state.index,
+              age1: state.age1,
+              age2: state.age2,
+              distance: state.distance));
 
           // Use the retrieved name and age
         }
       }
-    }).catchError((error) {
-      print('Error getting user data: $error');
-    });
-    // FirebaseAuth _auth=FirebaseAuth.instance;
-    // UserData userData=UserData();
-    // String temp= userData.userNameFromFirebase();
-    // log("MYYYYmessage${temp}");
+    } catch (e) {
+      log("home page current user fetching error${e}");
+    }
   }
 
   FutureOr<void> distanceFilterEvent(
-      DistanceFilterEvent event, Emitter<HomeblocState> emit) async{
-    var filerdData=await getNearbyUsers(event.distance);
+      DistanceFilterEvent event, Emitter<HomeblocState> emit) async {
+    var filerdData = await getNearbyUsers(event.distance);
     //print("filterduser${filerdData}");
-  emit(DistanceFilterState(mydata:filerdData,gender:state.gender, index: state.index, age1: state.age1, age2: state.age2, distance: state.distance));
+    emit(DistanceFilterState(
+        mydata: filerdData,
+        gender: state.gender,
+        index: state.index,
+        age1: state.age1,
+        age2: state.age2,
+        distance: state.distance));
   }
-
-  FutureOr<void> distanceFilterSliderEvent(DistanceFilterSliderEvent event, Emitter<HomeblocState> emit) {
+// Distance Slider function
+  FutureOr<void> distanceFilterSliderEvent(
+      DistanceFilterSliderEvent event, Emitter<HomeblocState> emit) {
     print("distane tapped");
-    emit(DistanceFilterSliderState(gender:state.gender, index: state.index, age1: state.age1, age2: state.age2, distance:event.distance));
+    emit(DistanceFilterSliderState(
+        gender: state.gender,
+        index: state.index,
+        age1: state.age1,
+        age2: state.age2,
+        distance: event.distance));
   }
 
-  FutureOr<void> ageFilterEvent(AgeFilterEvent event, Emitter<HomeblocState> emit) {
-    emit(AgeFilterState(gender:state.gender, index: state.index, age1: event.age1, age2: event.age2, distance: state.distance));
+  FutureOr<void> ageFilterEvent(
+      AgeFilterEvent event, Emitter<HomeblocState> emit) {
+    emit(AgeFilterState(
+        gender: state.gender,
+        index: state.index,
+        age1: event.age1,
+        age2: event.age2,
+        distance: state.distance));
   }
-
+// Gender filter
   FutureOr<void> showmeEvent(ShowmeEvent event, Emitter<HomeblocState> emit) {
-
-    emit(ShowmeState(gender:event.gender, index: event.index, age1: state.age1, age2: state.age2, distance: state.distance));  }
-
-  FutureOr<void> discoverySubmissionEvent(DiscoverySubmissionEvent event, Emitter<HomeblocState> emit) async{
-emit(DiscoveryInitState(gender:state. gender, index: state.index, age1:state. age1, age2:state. age2, distance:state. distance));
- String maxDistance;
-  String showme;
-  List<String>ageRange=[];
-  showme=state.gender.toString();
-  maxDistance=state.distance!.round().toString();
-  ageRange.add(state.age1!.round().toString());
-  ageRange.add(state.age2!.round().toString());
-  if(maxDistance.isNotEmpty&&showme.isNotEmpty&&ageRange.isNotEmpty){
-  
-Discovery discovery=Discovery();
-await discovery.discoveryUpload(ageRange, maxDistance, showme);
+    emit(ShowmeState(
+        gender: event.gender,
+        index: event.index,
+        age1: state.age1,
+        age2: state.age2,
+        distance: state.distance));
   }
+// Discover data updating
+  FutureOr<void> discoverySubmissionEvent(
+      DiscoverySubmissionEvent event, Emitter<HomeblocState> emit) async {
+          Discovery discovery = Discovery();
+    emit(DiscoveryInitState(
+        gender: state.gender,
+        index: state.index,
+        age1: state.age1,
+        age2: state.age2,
+        distance: state.distance));
+    String maxDistance;
+    String showme;
+    List<String> ageRange = [];
+    showme = state.gender.toString();
+    maxDistance = state.distance!.round().toString();
+    ageRange.add(state.age1!.round().toString());
+    ageRange.add(state.age2!.round().toString());
+   
+      await discovery.discoveryUpload(ageRange??[], maxDistance??"", showme??"");
+    
   }
 
-  FutureOr<void> navigateToDiacoveryEvent(NavigateToDiacoveryEvent event, Emitter<HomeblocState> emit) async{
-
-  List<String>_agerange=[];
-  final String showme;
- final String  maxDistance;
-String currentUserId = FirebaseAuth.instance.currentUser!.uid;
+  FutureOr<void> navigateToDiacoveryEvent(
+      NavigateToDiacoveryEvent event, Emitter<HomeblocState> emit) async {
+    List<String> _agerange = [];
+    final String showme;
+    final String maxDistance;
+    String currentUserId = FirebaseAuth.instance.currentUser!.uid;
 
 // Get the user's document reference
-DocumentReference userRef = await FirebaseFirestore.instance.collection('users').doc(currentUserId);
+    DocumentReference userRef =
+        await FirebaseFirestore.instance.collection('users').doc(currentUserId);
 
 // Fetch the user's data
-try{
-   DocumentSnapshot snapshot= await userRef.get();
-  if (snapshot.exists) {
-    Map<String, dynamic>? mydata = snapshot.data() as Map<String, dynamic>?;
-    if (mydata != null) {
+    try {
+      DocumentSnapshot snapshot = await userRef.get();
+      if (snapshot.exists) {
+        Map<String, dynamic>? mydata = snapshot.data() as Map<String, dynamic>?;
+        if (mydata != null) {
+          List<dynamic> agerange = mydata["ageRange"];
+          final _agerange = agerange
+              .map(
+                (e) => e as String,
+              )
+              .toList();
+          final showme = mydata["showme"].toString();
+          final maxDistance = mydata["maxDistance"].toString();
 
-
-  List<dynamic>agerange=mydata["ageRange"];
-final _agerange=agerange.map((e) => e as String,).toList();
-final showme=mydata["showme"].toString();
-final maxDistance=mydata["maxDistance"].toString();
-
-
-emit(NavigateToDiacoveryState(ageRange: _agerange ,maxDistance: maxDistance, showme: showme, gender: state.gender, index: state.index, age1: state.age1, age2: state.age2, distance: state.distance));
-     var filerdData=await getNearbyUsers(double.parse(maxDistance));
-    //print("filterduser${filerdData}");
-  emit(DistanceFilterState(mydata:filerdData,gender:state.gender, index: state.index, age1: state.age1, age2: state.age2, distance: state.distance));
-  
-    
+          emit(NavigateToDiacoveryState(
+              ageRange: _agerange,
+              maxDistance: maxDistance,
+              showme: showme,
+              gender: state.gender,
+              index: state.index,
+              age1: state.age1,
+              age2: state.age2,
+              distance: state.distance));
+          var filerdData = await getNearbyUsers(double.parse(maxDistance));
+          //print("filterduser${filerdData}");
+          emit(DistanceFilterState(
+              mydata: filerdData,
+              gender: state.gender,
+              index: state.index,
+              age1: state.age1,
+              age2: state.age2,
+              distance: state.distance));
+        }
+      }
+// ignore: body_might_complete_normally_catch_error
+    } catch (e) {
+      print("everything oki error${e}");
     }
   }
-// ignore: body_might_complete_normally_catch_error
-
-}
-catch(e){
-
-  print("everything oki error${e}");
-
-}
-
-      }
 }

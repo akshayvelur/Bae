@@ -1,7 +1,7 @@
 import 'package:bea_dating/core/presentation/screen/bottom_navigation/bottom_navigator.dart.dart';
 import 'package:bea_dating/core/presentation/screen/home_screen/bloc/homebloc_bloc.dart';
-import 'package:bea_dating/core/presentation/screen/home_screen/view_account/filter_Page/widget/age_widget.dart';
-import 'package:bea_dating/core/presentation/screen/home_screen/view_account/filter_Page/widget/distance_widget.dart';
+import 'package:bea_dating/core/presentation/screen/home_screen/filter_Page/widget/age_widget.dart';
+import 'package:bea_dating/core/presentation/screen/home_screen/filter_Page/widget/distance_widget.dart';
 import 'package:bea_dating/core/presentation/utilit/color.dart';
 import 'package:bea_dating/core/presentation/utilit/fonts.dart';
 import 'package:bea_dating/core/presentation/utilit/mediaquery.dart';

@@ -12,7 +12,7 @@ import 'package:bea_dating/core/presentation/screen/home_screen/home_widget/Tab_
 import 'package:bea_dating/core/presentation/screen/home_screen/home_widget/card-data_widget.dart';
 import 'package:bea_dating/core/presentation/screen/home_screen/home_widget/card_images.dart';
 import 'package:bea_dating/core/presentation/screen/home_screen/home_widget/card_status.dart';
-import 'package:bea_dating/core/presentation/screen/home_screen/view_account/filter_Page/discovery_settings.dart';
+import 'package:bea_dating/core/presentation/screen/home_screen/filter_Page/discovery_settings.dart';
 import 'package:bea_dating/core/presentation/screen/home_screen/view_account/view_account.dart';
 import 'package:bea_dating/core/presentation/screen/user_inital_data/block/user_details_bloc.dart';
 import 'package:bea_dating/core/presentation/utilit/color.dart';
@@ -53,13 +53,14 @@ class _HomeScreenPageState extends State<HomeScreenPage>
   Map<String, Map<String, dynamic>> temp = {};
   String? currentUsername;
   double radiusInKm=20;
-
+  int age=0;
+  int currentyear =DateTime.now().year;
   int mainindex = 0;
   String? uid;
   double? currentUserLatitude;
   double? currentUserLongitude;
   List<String>distancefilterd=[];
-
+  Map<String,dynamic>currentUser={};
   final cards = [
     'assets/Ride.MPEG.jpg',
     "assets/myBeach.MPEG - Copy.jpg",
@@ -69,8 +70,8 @@ class _HomeScreenPageState extends State<HomeScreenPage>
   @override
   void initState() {
     mainindex = 0;
-   context.read<HomeblocBloc>().add(InitUserNameEvent());
-            context.read<HomeblocBloc>().add(DistanceFilterEvent(distance: radiusInKm));
+   context.read<HomeblocBloc>().add(InitUserEvent());
+   //context.read<HomeblocBloc>().add(DistanceFilterEvent(distance: radiusInKm));
     WidgetsBinding.instance.addObserver(this);
     // TODO: implement initState
     super.initState();
@@ -121,8 +122,7 @@ class _HomeScreenPageState extends State<HomeScreenPage>
           uid = state.uid;
         }
          if(state is InitUserNameState){
-        
-       
+            currentUser=state.user;
           }
        
         if (state is CountUpdatestate) {
@@ -176,11 +176,15 @@ class _HomeScreenPageState extends State<HomeScreenPage>
                        // log(dataList.toString());
                       //  finding the current user
                          var mydata= dataList.firstWhere((element) => element["uid"]==uid,)as Map<String,dynamic>;
-                       List<dynamic> likeList= mydata['like'];
+                         List<dynamic> likeList= mydata['like'];
+                         List<dynamic> ageRange =mydata['ageRange'];
              
                           //  distance filter
                           dataList.removeWhere((users)=>!distancefilterd.contains(users["uid"]),);
                           // 
+                          // //Age filter
+                          // dataList.removeWhere((element) => int.parse(ageRange[0])>=element['age'],); 
+
                         if (uid != null) {
                           // removing Current user Account
                           dataList.removeWhere(
@@ -210,13 +214,18 @@ class _HomeScreenPageState extends State<HomeScreenPage>
                           //Data collecting area
                         //  log("datalist length${dataList.length}");
                           name = user['name'];
-                          image = user['image'];
+                          image = user['image']??'';
                           profile = user["Profile"];
                           dob = user['dob'];
+                            //   List<String>uyear =dob.split("/");
+                            // age=currentyear-int.parse(uyear.last);
+                           print("kichuooo${ageRange[0]}");
+
+                          dataList.removeWhere((element) => (currentyear-int.parse(element['dob'].split("/").last))>=int.parse(ageRange[1])&& int.parse(ageRange[0])<=currentyear-int.parse(element['dob'].split("/").last));
                           if (profile == null &&
                               mainindex < dataList.length - 1) mainindex++;
 
-                              numberOfUser = dataList.length - 1.abs();
+                              numberOfUser = dataList.length - 1.abs();           
                         }
                         print(
                             "User profile  Not Found>>>>>>>>>>${user['profile']}");
@@ -250,7 +259,7 @@ class _HomeScreenPageState extends State<HomeScreenPage>
                                           mainindex: mainindex,
                                           numberOfUser: numberOfUser,
                                           controller: controller,
-                                          dob: dob,
+                                          dob:dob,
                                           currentuserUid: uid,
                                           user: user,
                                         )))

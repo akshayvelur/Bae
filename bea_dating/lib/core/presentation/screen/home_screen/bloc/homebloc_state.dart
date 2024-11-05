@@ -16,9 +16,9 @@ abstract class HomeActionState extends HomeblocState{
 
 }
 class InitUserNameState extends HomeblocState{
-final String userName;
+final Map<String,dynamic> user;
 
-  InitUserNameState({required this.userName, required super.gender, required super.index, required super.age1, required super.age2, required super.distance});
+  InitUserNameState({required this.user, required super.gender, required super.index, required super.age1, required super.age2, required super.distance});
 
 }
 

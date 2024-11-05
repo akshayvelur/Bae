@@ -25,18 +25,20 @@ class CardStatus extends StatefulWidget {
  final String dob;
  final String currentuserUid;
  final Map user;
+ 
   @override
   State<CardStatus> createState() => _CardStatusState();
 }
 
 class _CardStatusState extends State<CardStatus> {
+    @override
   int currentyear =DateTime.now().year;
     int age=0;
+   
   void initState() {
-       List<String>uyear =widget.dob.split("/");
-  age=currentyear-int.parse(uyear.last);
+        super.initState();
+        print("hhh");
     // TODO: implement initState
-    super.initState();
   }
   @override
   Widget build(BuildContext context) {
@@ -50,12 +52,11 @@ class _CardStatusState extends State<CardStatus> {
              myContainer(title: widget.name,),SizedBox(width: mediaqueryWidth(.06, context),),
            if(widget.profile['height']!=null&&widget.profile.containsKey("height"))  myContainer(title:"Height : ${widget.profile['height']}",)],
           ),
-    
         ), Padding(
           padding: const EdgeInsets.all(8.0),
           child: Row(
               // ignore: unnecessary_null_comparison
-              children: [  if(age!=null) myContainer(title:"Age : ${age}",),SizedBox(width: mediaqueryWidth(.06, context),),
+              children: [  if(age!=null) myContainer(title:"Age : ${currentyear-int.parse(widget.dob.split("/").last)}",),SizedBox(width: mediaqueryWidth(.06, context),),
             if(widget.profile!=null&&widget.profile.containsKey("gym")) myContainer(title:"Gym : ${widget.profile['gym']}"),
             ],
             ),

@@ -21,6 +21,7 @@ class BoostPage extends StatefulWidget {
 class _BoostPageState extends State<BoostPage> {
   AppFonts appFonts = AppFonts(); 
   late Razorpay _razorpay;
+  int ?currentamount;
   TextEditingController amountController = TextEditingController();
 
   void openCheckOut(amount) async {
@@ -41,18 +42,22 @@ class _BoostPageState extends State<BoostPage> {
     }
   }
 
-  void handlePaymentSuccess(PaymentSuccessResponse response,int amoount) {
-    Fluttertoast.showToast(
+  void handlePaymentSuccess(PaymentSuccessResponse response){
+  //  here call function and update the payment details to firebase
+   Fluttertoast.showToast(
         msg: "Payment Succesful" + response.paymentId!,
         toastLength: Toast.LENGTH_SHORT);
+ 
   }
 
-  void handlePaymentError(PaymentFailureResponse response) {
+  void handlePaymentError(PaymentFailureResponse response) async{
     Fluttertoast.showToast(
         msg: "Payment Fail" + response.message!,
         toastLength: Toast.LENGTH_SHORT);
   }
-
+ void aftersuccess(PaymentFailureResponse response){
+  print("kittigys");
+ }
   void handleExternalWallet(ExternalWalletResponse response) {
     Fluttertoast.showToast(
         msg: "External Wallet" + response.walletName!,
@@ -64,7 +69,6 @@ class _BoostPageState extends State<BoostPage> {
     // TODO: implement initState
     super.initState();
     _razorpay = Razorpay();
-       
     _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, handlePaymentSuccess);
     _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, handlePaymentError);
     _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, handlePaymentSuccess);
@@ -162,6 +166,9 @@ class _BoostPageState extends State<BoostPage> {
                   InkWell(
                       onTap: () {
                              openCheckOut(89);
+                             setState(() {
+                               currentamount=89;
+                             });
                       },
                       splashColor: const Color.fromARGB(162, 125, 96, 139),
                       borderRadius: BorderRadius.circular(10),

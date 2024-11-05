@@ -5,7 +5,7 @@ import 'package:bea_dating/core/presentation/utilit/mediaquery.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../bloc/homebloc_bloc.dart';
+import '../../bloc/homebloc_bloc.dart';
 
 class Distance_widget extends StatelessWidget {
   const Distance_widget({

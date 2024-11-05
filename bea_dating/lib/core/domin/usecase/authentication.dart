@@ -78,7 +78,8 @@ class Authentic {
         "lastSeen":null,
         "showme":"",
          "ageRange":[],
-         "maxDistance":""
+         "maxDistance":"",
+         
       });
 
       log("database created");
