@@ -167,7 +167,8 @@ class HomeblocBloc extends Bloc<HomeblocEvent, HomeblocState> {
         if (userData != null) {
           // String userName = userData['name'];
           final temp = userData;
-          // Users distance filtering function calling
+          // Users distance filtering function 
+          print("filterduser${userData['maxDistance']}");
           add(DistanceFilterEvent(distance:double.parse(userData['maxDistance']) ));
 
           emit(InitUserNameState(
@@ -188,8 +189,10 @@ class HomeblocBloc extends Bloc<HomeblocEvent, HomeblocState> {
 
   FutureOr<void> distanceFilterEvent(
       DistanceFilterEvent event, Emitter<HomeblocState> emit) async {
+   try{   
     var filerdData = await getNearbyUsers(event.distance);
-    //print("filterduser${filerdData}");
+    print("filterduser${filerdData}");
+
     emit(DistanceFilterState(
         mydata: filerdData,
         gender: state.gender,
@@ -197,6 +200,9 @@ class HomeblocBloc extends Bloc<HomeblocEvent, HomeblocState> {
         age1: state.age1,
         age2: state.age2,
         distance: state.distance));
+}catch(e){
+  log("DistanceFilterState${e}");
+}
   }
 // Distance Slider function
   FutureOr<void> distanceFilterSliderEvent(
@@ -247,7 +253,8 @@ class HomeblocBloc extends Bloc<HomeblocEvent, HomeblocState> {
     ageRange.add(state.age2!.round().toString());
    
       await discovery.discoveryUpload(ageRange??[], maxDistance??"", showme??"");
-    
+
+   emit(DiscoverySubmissionState(gender: state.gender, index:state. index, age1:state. age1, age2:state. age2, distance:state. distance));
   }
 
   FutureOr<void> navigateToDiacoveryEvent(
@@ -286,7 +293,7 @@ class HomeblocBloc extends Bloc<HomeblocEvent, HomeblocState> {
               age2: state.age2,
               distance: state.distance));
           var filerdData = await getNearbyUsers(double.parse(maxDistance));
-          //print("filterduser${filerdData}");
+          print("filterduser${filerdData}");
           emit(DistanceFilterState(
               mydata: filerdData,
               gender: state.gender,

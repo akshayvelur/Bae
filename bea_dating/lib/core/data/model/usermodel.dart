@@ -19,7 +19,8 @@ class UserModel {
   final Timestamp? lastSeen;
   final String maxDistance;
   final String showme;
-  final List<String>ageRange;
+  final List<String> ageRange;
+  final bool isReport;
 
   UserModel(
       {required this.name,
@@ -37,7 +38,11 @@ class UserModel {
       required this.request,
       required this.chatUsers,
       required this.status,
-      required this.lastSeen,required this.ageRange,required this.maxDistance,required this.showme});
+      required this.lastSeen,
+      required this.ageRange,
+      required this.maxDistance,
+      required this.showme,
+      required this.isReport});
   factory UserModel.fromMap(Map<String, dynamic> map) {
     return UserModel(
         name: map['name'] ?? '',
@@ -54,12 +59,15 @@ class UserModel {
         like: List<String>.from(map['like'] ?? ''),
         request: map['request'] is Map<String, dynamic> ? map['request'] : {},
         match: List<String>.from(
-          map['match'] ?? '', ),
+          map['match'] ?? '',
+        ),
         chatUsers: List<String>.from(map['chatUsers'] ?? ''),
         status: map['status'] ?? '',
-        lastSeen: map["lastSeen"] != null ? map["lastSeen"] as Timestamp : null,ageRange: List<String>.from(map['ageRange'])
-        ,maxDistance:map['maxDistance']??"" ,
-        showme: map['showme']??"");
+        lastSeen: map["lastSeen"] != null ? map["lastSeen"] as Timestamp : null,
+        ageRange: List<String>.from(map['ageRange']),
+        maxDistance: map['maxDistance'] ?? "",
+        showme: map['showme'] ?? "",
+        isReport: map['isReport'] ?? false);
   }
 // Map<String,dynamic> toMap() {
 //     return {

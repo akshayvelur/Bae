@@ -113,8 +113,9 @@ class _HomeScreenPageState extends State<HomeScreenPage>
     return BlocConsumer<HomeblocBloc, HomeblocState>(
       listener: (context, state) {
             if(state is DistanceFilterState){
-          distancefilterd=state.mydata;
-           print("filterduser${distancefilterd}");
+             
+       distancefilterd=state.mydata;
+          mainindex=0;
         }
         if (state is InitState) {
          
@@ -178,7 +179,7 @@ class _HomeScreenPageState extends State<HomeScreenPage>
                          var mydata= dataList.firstWhere((element) => element["uid"]==uid,)as Map<String,dynamic>;
                          List<dynamic> likeList= mydata['like'];
                          List<dynamic> ageRange =mydata['ageRange'];
-                       final  String showMe=mydata["showme"];
+                         final  String showMe=mydata["showme"];
              
                           //  distance filter
                           dataList.removeWhere((users)=>!distancefilterd.contains(users["uid"]),);
@@ -215,7 +216,7 @@ class _HomeScreenPageState extends State<HomeScreenPage>
                           profile = user["Profile"];
                           dob = user['dob'];
                         //  gender filter
-                        dataList.removeWhere((element) => element['gender']!=showMe);
+                        dataList.removeWhere((element) => element['gender']!=showMe.toLowerCase() );
                         //  age Filter
                           dataList.removeWhere((element) => (currentyear-int.parse(element['dob'].split("/").last))>=int.parse(ageRange[1])&& int.parse(ageRange[0])<=currentyear-int.parse(element['dob'].split("/").last));
                           if (profile == null &&

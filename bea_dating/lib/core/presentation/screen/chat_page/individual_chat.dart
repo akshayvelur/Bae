@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'dart:io';
 import 'package:bea_dating/core/data/constant/call_info.dart';
 import 'package:bea_dating/core/presentation/screen/chat_page/calling_page/calling_page.dart';
+import 'package:bea_dating/core/presentation/screen/chat_page/chat_more.dart';
 import 'package:bea_dating/core/presentation/screen/chat_page/image_view.dart';
 import 'package:bea_dating/core/presentation/screen/chat_page/widgets/Emoji_widget/emoji_widget.dart';
 import 'package:bea_dating/core/presentation/utilit/page_transcation/fade_transition.dart';
@@ -66,9 +67,9 @@ class _IndividualChatPageState extends State<IndividualChatPage> {
     });
   }
 
-  void _scrollToBottom() {
+  void _scrollToBottom() async{
     // Delay the scrolling to make sure the layout is fully rendered
-    Future.delayed(Duration(milliseconds: 100), () {
+   await Future.delayed(Duration(milliseconds: 100), () {
       _scrollController.jumpTo(
         _scrollController.position.maxScrollExtent,
       );
@@ -101,7 +102,9 @@ class _IndividualChatPageState extends State<IndividualChatPage> {
                 ),
                 titleSpacing: 0,
                 title: InkWell(
-                  onTap: () {},
+                  onTap: () { 
+                    Navigator.of(context).push(FadeTransitionPageRoute(child: ChatMorePage(user: widget.users)));
+                  },
                   child: Row(
                     children: [
                       CircleAvatar(

@@ -64,6 +64,9 @@ class _DiscoverySettingsState extends State<DiscoverySettings> {
           shomeGend=state.gender;
           currentIndex=state.index;
         }
+        if(state is DiscoverySubmissionState){
+          Navigator.pop(context);
+        }
         if(state is NavigateToDiacoveryState){
           _age1=double.parse(state.ageRange[0]);
           _age2=double.parse(state.ageRange[1]);

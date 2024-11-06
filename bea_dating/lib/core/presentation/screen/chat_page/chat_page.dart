@@ -108,7 +108,7 @@ class ChatPage extends StatelessWidget {
                             List<String>ids=[_auth.currentUser!.uid,uid];
                             ids.sort();
                             String mchatUid=ids.join('_');
-                            return Padding(
+                            return matchList.isNotEmpty? Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: InkWell(
                                 onTap: () {
@@ -169,7 +169,7 @@ class ChatPage extends StatelessWidget {
                                   ),
                                 ),
                               ),
-                            );
+                            ):Text("Empty",style: appFonts.flextext(blackclr,size: 15,Fweight: 400),);
                           },
                         ),
                       );
