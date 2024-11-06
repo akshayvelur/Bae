@@ -178,12 +178,12 @@ class _HomeScreenPageState extends State<HomeScreenPage>
                          var mydata= dataList.firstWhere((element) => element["uid"]==uid,)as Map<String,dynamic>;
                          List<dynamic> likeList= mydata['like'];
                          List<dynamic> ageRange =mydata['ageRange'];
+                       final  String showMe=mydata["showme"];
              
                           //  distance filter
                           dataList.removeWhere((users)=>!distancefilterd.contains(users["uid"]),);
                           // 
-                          // //Age filter
-                          // dataList.removeWhere((element) => int.parse(ageRange[0])>=element['age'],); 
+                         
 
                         if (uid != null) {
                           // removing Current user Account
@@ -209,18 +209,14 @@ class _HomeScreenPageState extends State<HomeScreenPage>
                         
                          //if(dataList[mainindex])
                           user = dataList[mainindex];
-                          // Debug log to check the list after removal
-                          //  log("List after removal: ${dataList[mainindex]}");
-                          //Data collecting area
-                        //  log("datalist length${dataList.length}");
+                        
                           name = user['name'];
                           image = user['image']??'';
                           profile = user["Profile"];
                           dob = user['dob'];
-                            //   List<String>uyear =dob.split("/");
-                            // age=currentyear-int.parse(uyear.last);
-                           print("kichuooo${ageRange[0]}");
-
+                        //  gender filter
+                        dataList.removeWhere((element) => element['gender']!=showMe);
+                        //  age Filter
                           dataList.removeWhere((element) => (currentyear-int.parse(element['dob'].split("/").last))>=int.parse(ageRange[1])&& int.parse(ageRange[0])<=currentyear-int.parse(element['dob'].split("/").last));
                           if (profile == null &&
                               mainindex < dataList.length - 1) mainindex++;
