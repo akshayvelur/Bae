@@ -26,7 +26,7 @@ class _DiscoverySettingsState extends State<DiscoverySettings> {
 
   @override
   AppFonts appFonts = AppFonts();
-  List<String> genderpre = ["Men", "Women", "Others", "All"];
+  List<String> genderpre = ["Men", "Women", "Everyone", "All"];
   double _currentValue = 20;
   double _age1 = 18;
   double _age2 = 30;
@@ -129,7 +129,7 @@ class _DiscoverySettingsState extends State<DiscoverySettings> {
                                               gender: genderpre[index],
                                               index: index));
                                     },
-                                    child: Container(
+                                    child: Container(   
                                       decoration: BoxDecoration(
                                           color: index == currentIndex||shomeGend==genderpre[index]
                                               ? clrGreen
@@ -144,7 +144,7 @@ class _DiscoverySettingsState extends State<DiscoverySettings> {
                                       child: Center(
                                           child: Padding(
                                         padding: const EdgeInsets.only(
-                                            left: 21.5, right: 21.5),
+                                            left: 18.6, right: 18.6),
                                         child: Text(
                                           genderpre[index],
                                           style: appFonts.flextext(blackclr,

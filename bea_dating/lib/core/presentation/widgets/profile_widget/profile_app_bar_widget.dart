@@ -4,6 +4,8 @@ import 'package:bea_dating/core/presentation/screen/profile_page/Profile/bloc/pr
 import 'package:bea_dating/core/presentation/screen/welcome&rule/welcome_screen.dart';
 import 'package:bea_dating/core/presentation/utilit/color.dart';
 import 'package:bea_dating/core/presentation/utilit/logo.dart';
+import 'package:bea_dating/core/presentation/utilit/page_transcation/fade_transition.dart';
+import 'package:bea_dating/core/presentation/widgets/profile_widget/settings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:zego_uikit_prebuilt_call/zego_uikit_prebuilt_call.dart';
@@ -27,9 +29,11 @@ AppBar profileAppbar(BuildContext context,Authentic authentic) {
               Icons.edit_document,
               color: blackclr,
             )),IconButton(onPressed: (){
-                   showAlertDialog(context,authentic);
-                     ZegoUIKitPrebuiltCallInvitationService().uninit();
-            }, icon: Icon(Icons.logout))
+              Navigator.of(context).push(FadeTransitionPageRoute(child: SettingsPage()));
+                  //  showAlertDialog(context,authentic);
+                  //    ZegoUIKitPrebuiltCallInvitationService().uninit();
+
+            }, icon: Icon(Icons.settings))
       ],
     );
   }
