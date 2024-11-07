@@ -79,7 +79,8 @@ class Authentic {
         "showme":"",
          "ageRange":[],
          "maxDistance":"",
-         "isReport":false
+         "isReport":false,
+         "boost":[]
          
       });
 

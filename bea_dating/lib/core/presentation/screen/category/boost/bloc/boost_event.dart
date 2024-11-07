@@ -7,3 +7,8 @@ final int amount;
 
   PaymentUpdatedEvent({required this.amount});
 }
+class BoostUpdatingEvent extends BoostEvent{
+  final String topUp;
+
+  BoostUpdatingEvent({required this.topUp});
+}

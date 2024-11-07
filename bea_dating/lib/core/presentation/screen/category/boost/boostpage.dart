@@ -1,3 +1,4 @@
+import 'package:bea_dating/core/presentation/screen/category/boost/bloc/boost_bloc.dart';
 import 'package:bea_dating/core/presentation/screen/category/boost/razorpay_page.dart';
 import 'package:bea_dating/core/presentation/screen/category/boost/widget/cards.dart';
 import 'package:bea_dating/core/presentation/utilit/color.dart';
@@ -5,6 +6,7 @@ import 'package:bea_dating/core/presentation/utilit/fonts.dart';
 import 'package:bea_dating/core/presentation/utilit/mediaquery.dart';
 import 'package:bea_dating/core/presentation/utilit/page_transcation/fade_transition.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -42,8 +44,9 @@ class _BoostPageState extends State<BoostPage> {
     }
   }
 
-  void handlePaymentSuccess(PaymentSuccessResponse response){
+  void handlePaymentSuccess(PaymentSuccessResponse response)async{
   //  here call function and update the payment details to firebase
+  log("successfull");
    Fluttertoast.showToast(
         msg: "Payment Succesful" + response.paymentId!,
         toastLength: Toast.LENGTH_SHORT);
@@ -55,9 +58,7 @@ class _BoostPageState extends State<BoostPage> {
         msg: "Payment Fail" + response.message!,
         toastLength: Toast.LENGTH_SHORT);
   }
- void aftersuccess(PaymentFailureResponse response){
-  print("kittigys");
- }
+
   void handleExternalWallet(ExternalWalletResponse response) {
     Fluttertoast.showToast(
         msg: "External Wallet" + response.walletName!,
@@ -70,6 +71,7 @@ class _BoostPageState extends State<BoostPage> {
     super.initState();
     _razorpay = Razorpay();
     _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, handlePaymentSuccess);
+   // _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, handlePaymentSuccess);
     _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, handlePaymentError);
     _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, handlePaymentSuccess);
   }

@@ -6,4 +6,6 @@ abstract class BoostState {}
 class BoostInitial extends BoostState {}
 class PaymentUpdatedState extends BoostState{
   
+}class BoostUpdatingState extends BoostState{
+
 }

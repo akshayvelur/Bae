@@ -21,6 +21,7 @@ class UserModel {
   final String showme;
   final List<String> ageRange;
   final bool isReport;
+  final List<String>boost;
 
   UserModel(
       {required this.name,
@@ -42,7 +43,7 @@ class UserModel {
       required this.ageRange,
       required this.maxDistance,
       required this.showme,
-      required this.isReport});
+      required this.isReport,required this.boost});
   factory UserModel.fromMap(Map<String, dynamic> map) {
     return UserModel(
         name: map['name'] ?? '',
@@ -67,7 +68,8 @@ class UserModel {
         ageRange: List<String>.from(map['ageRange']),
         maxDistance: map['maxDistance'] ?? "",
         showme: map['showme'] ?? "",
-        isReport: map['isReport'] ?? false);
+        isReport: map['isReport'] ?? false,
+        boost: List<String>.from(map['boost']?? ""));
   }
 // Map<String,dynamic> toMap() {
 //     return {
