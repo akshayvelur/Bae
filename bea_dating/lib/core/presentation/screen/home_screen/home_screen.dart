@@ -5,6 +5,7 @@ import 'dart:developer';
 import 'package:bea_dating/core/data/constant/call_info.dart';
 import 'package:bea_dating/core/data/data_source_getting/userdata.dart';
 import 'package:bea_dating/core/data/distance_finding/distance_finding.dart';
+import 'package:bea_dating/core/data/service/day_timer.dart';
 import 'package:bea_dating/core/domin/usecase/authentication.dart';
 import 'package:bea_dating/core/presentation/screen/bottom_navigation/bottom_navigator.dart.dart';
 import 'package:bea_dating/core/presentation/screen/home_screen/bloc/homebloc_bloc.dart';
@@ -71,6 +72,7 @@ class _HomeScreenPageState extends State<HomeScreenPage>
   @override
   void initState() {
     mainindex = 0;
+    scheduleDailyTask();
     context.read<HomeblocBloc>().add(InitUserEvent());
     //context.read<HomeblocBloc>().add(DistanceFilterEvent(distance: radiusInKm));
     WidgetsBinding.instance.addObserver(this);

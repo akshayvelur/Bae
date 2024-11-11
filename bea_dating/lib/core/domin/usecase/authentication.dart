@@ -80,7 +80,7 @@ class Authentic {
          "ageRange":[],
          "maxDistance":"",
          "isReport":false,
-         "boost":[]
+         "boost":"5"
          
       });
 

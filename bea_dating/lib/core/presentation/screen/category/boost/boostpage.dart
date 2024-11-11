@@ -1,3 +1,4 @@
+import 'package:bea_dating/core/data/data_uploading/boost_service.dart';
 import 'package:bea_dating/core/presentation/screen/category/boost/bloc/boost_bloc.dart';
 import 'package:bea_dating/core/presentation/screen/category/boost/razorpay_page.dart';
 import 'package:bea_dating/core/presentation/screen/category/boost/widget/cards.dart';
@@ -23,7 +24,8 @@ class BoostPage extends StatefulWidget {
 class _BoostPageState extends State<BoostPage> {
   AppFonts appFonts = AppFonts(); 
   late Razorpay _razorpay;
-  int ?currentamount;
+  Boost boost=Boost();
+  int ?currentboost;
   TextEditingController amountController = TextEditingController();
 
   void openCheckOut(amount) async {
@@ -46,7 +48,8 @@ class _BoostPageState extends State<BoostPage> {
 
   void handlePaymentSuccess(PaymentSuccessResponse response)async{
   //  here call function and update the payment details to firebase
-  log("successfull");
+  log("payment successfull");
+  boost.boostService(currentboost!);
    Fluttertoast.showToast(
         msg: "Payment Succesful" + response.paymentId!,
         toastLength: Toast.LENGTH_SHORT);
@@ -70,7 +73,7 @@ class _BoostPageState extends State<BoostPage> {
     // TODO: implement initState
     super.initState();
     _razorpay = Razorpay();
-    _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, handlePaymentSuccess);
+    _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS,handlePaymentSuccess);
    // _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, handlePaymentSuccess);
     _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, handlePaymentError);
     _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, handlePaymentSuccess);
@@ -150,6 +153,9 @@ class _BoostPageState extends State<BoostPage> {
                   InkWell(
                       onTap: () {
                           openCheckOut(475);
+                           setState(() {
+                               currentboost=10;
+                             });
                         // Navigator.of(context).push(FadeTransitionPageRoute(child: RazorpayPage()))
                         // ;
                         },
@@ -160,6 +166,9 @@ class _BoostPageState extends State<BoostPage> {
                   InkWell(
                       onTap: () {
                           openCheckOut(189);
+                           setState(() {
+                               currentboost=3;
+                             });
                       },
                       splashColor: const Color.fromARGB(162, 125, 96, 139),
                       borderRadius: BorderRadius.circular(10),
@@ -169,7 +178,7 @@ class _BoostPageState extends State<BoostPage> {
                       onTap: () {
                              openCheckOut(89);
                              setState(() {
-                               currentamount=89;
+                               currentboost=1;
                              });
                       },
                       splashColor: const Color.fromARGB(162, 125, 96, 139),

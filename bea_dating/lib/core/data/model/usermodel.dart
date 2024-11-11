@@ -21,7 +21,7 @@ class UserModel {
   final String showme;
   final List<String> ageRange;
   final bool isReport;
-  final List<String>boost;
+  final String boost;
 
   UserModel(
       {required this.name,
@@ -69,7 +69,7 @@ class UserModel {
         maxDistance: map['maxDistance'] ?? "",
         showme: map['showme'] ?? "",
         isReport: map['isReport'] ?? false,
-        boost: List<String>.from(map['boost']?? ""));
+        boost:map['boost']);
   }
 // Map<String,dynamic> toMap() {
 //     return {
