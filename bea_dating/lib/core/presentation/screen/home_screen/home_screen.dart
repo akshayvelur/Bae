@@ -111,6 +111,8 @@ class _HomeScreenPageState extends State<HomeScreenPage>
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<HomeblocBloc, HomeblocState>(
+      buildWhen: (previous, current) =>
+          previous is HomeActionState || current is HomeblocState,
       listener: (context, state) {
         if (state is DistanceFilterState) {
           distancefilterd = state.mydata;
@@ -199,40 +201,47 @@ class _HomeScreenPageState extends State<HomeScreenPage>
                         var name;
                         Map user = {};
                         int numberOfUser = 0;
+                             //  gender filter
+                            List<Map<String, dynamic>> genderfilter =[];
+                           if(showMe.contains('All')){ 
+                           genderfilter=[...dataList];
+                           }else{
+                           genderfilter= dataList.where((element) {
+                            return element['gender'].toString().toLowerCase()==showMe.toLowerCase();},).toList();
+                           }
+                         //age filter
+                           List<Map<String, dynamic>> filteredList =genderfilter.where((element) {
+                            int age = currentyear -
+                                int.parse(element['dob'].split("/").last);
+                          return age>= int.parse(ageRange[0])&&age<=int.parse(ageRange[1]);   
+                         },).toList();
 
-                        if (dataList.isNotEmpty) {
+                        if (filteredList.isNotEmpty) {
                           //if(dataList[mainindex])
-                          user = dataList[mainindex];
+                          user = filteredList[mainindex];
 
                           name = user['name'];
                           image = user['image'] ?? '';
                           profile = user["Profile"];
                           dob = user['dob'];
-                          //  gender filter
-                          //dataList.removeWhere((element) => element['gender'].toString().contains("men"),);
-                        
+                     
+
                           print(dataList.length);
-                          //  age Filter
-                          dataList.removeWhere((element) =>
-                              (currentyear -
-                                      int.parse(
-                                          element['dob'].split("/").last)) >=
-                                  int.parse(ageRange[1])&&
-                              int.parse(ageRange[0]) <=
-                                  currentyear -
-                                      int.parse(
-                                          element['dob'].split("/").last));
+                       
                           if (profile == null &&
-                              mainindex < dataList.length - 1) mainindex++;
-                              numberOfUser = dataList.length - 1.abs();
+                              mainindex < filteredList.length - 1) mainindex++;
+                          numberOfUser = filteredList.length - 1.abs();
                         }
                         print(
                             "User profile  Not Found>>>>>>>>>>${user['profile']}");
+                         
+                        // reported users
+                        // dataList.removeWhere((element) => element["isReport"]=="false",);
 
-                        return profile != null && dataList.isNotEmpty
+                        return profile != null && filteredList.isNotEmpty
                             ? CardSwiper(
                                 controller: controller,
-                                cardsCount: dataList.length,
+                                cardsCount: filteredList.length,
                                 onSwipe: _onSwipe,
                                 onUndo: _onUndo,
                                 numberOfCardsDisplayed: 1,
@@ -274,8 +283,6 @@ class _HomeScreenPageState extends State<HomeScreenPage>
       },
     );
   }
-
-
 
   bool _onSwipe(
     int previousIndex,

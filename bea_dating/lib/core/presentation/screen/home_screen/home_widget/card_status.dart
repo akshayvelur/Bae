@@ -37,7 +37,7 @@ class _CardStatusState extends State<CardStatus> {
    
   void initState() {
         super.initState();
-        print("hhh");
+   
     // TODO: implement initState
   }
   @override
@@ -54,6 +54,7 @@ class _CardStatusState extends State<CardStatus> {
           ),
         ), Padding(
           padding: const EdgeInsets.all(8.0),
+          
           child: Row(
               // ignore: unnecessary_null_comparison
               children: [  if(age!=null) myContainer(title:"Age : ${currentyear-int.parse(widget.dob.split("/").last)}",),SizedBox(width: mediaqueryWidth(.06, context),),

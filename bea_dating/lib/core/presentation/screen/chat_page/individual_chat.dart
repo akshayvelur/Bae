@@ -1,7 +1,5 @@
-
-
 ///////////
-///// 
+/////
 import 'dart:developer';
 import 'dart:io';
 import 'package:bea_dating/core/data/constant/call_info.dart';
@@ -32,11 +30,11 @@ import 'package:zego_uikit_signaling_plugin/zego_uikit_signaling_plugin.dart';
 
 // ignore: must_be_immutable
 class IndividualChatPage extends StatefulWidget {
-  IndividualChatPage({
-    super.key,
-    required this.users,
-    this.chatRoomUid,required this.currentUserName
-  });
+  IndividualChatPage(
+      {super.key,
+      required this.users,
+      this.chatRoomUid,
+      required this.currentUserName});
   final Map<String, dynamic> users;
   final String? chatRoomUid;
   final String currentUserName;
@@ -54,7 +52,7 @@ class _IndividualChatPageState extends State<IndividualChatPage> {
   FirebaseAuth _auth = FirebaseAuth.instance;
   String lastSeen = "";
   TextEditingController textController = TextEditingController();
-  String currentUser="";
+  String currentUser = "";
   Stream<QuerySnapshot<Map<String, dynamic>>> usertream =
       FirebaseFirestore.instance.collection("users").snapshots();
 
@@ -62,7 +60,7 @@ class _IndividualChatPageState extends State<IndividualChatPage> {
   bool isShowEmoji = false;
   @override
   void initState() {
-    currentUser=_auth.currentUser!.uid;
+    currentUser = _auth.currentUser!.uid;
     isShowEmoji = false;
     lastSeen = lastSeenCalculation(widget.users['lastSeen']);
     // TODO: implement initState
@@ -73,9 +71,9 @@ class _IndividualChatPageState extends State<IndividualChatPage> {
     });
   }
 
-  void _scrollToBottom() async{
+  void _scrollToBottom() async {
     // Delay the scrolling to make sure the layout is fully rendered
-   await Future.delayed(Duration(milliseconds: 100), () {
+    await Future.delayed(Duration(milliseconds: 100), () {
       _scrollController.jumpTo(
         _scrollController.position.maxScrollExtent,
       );
@@ -108,8 +106,9 @@ class _IndividualChatPageState extends State<IndividualChatPage> {
                 ),
                 titleSpacing: 0,
                 title: InkWell(
-                  onTap: () { 
-                    Navigator.of(context).push(FadeTransitionPageRoute(child: ChatMorePage(user: widget.users)));
+                  onTap: () {
+                    Navigator.of(context).push(FadeTransitionPageRoute(
+                        child: ChatMorePage(user: widget.users)));
                   },
                   child: Row(
                     children: [
@@ -117,39 +116,51 @@ class _IndividualChatPageState extends State<IndividualChatPage> {
                       SizedBox(
                         width: mediaqueryWidth(.03, context),
                       ),
-                      ChatProfileBasicDetails(widget: widget, appFonts: appFonts, lastSeen: lastSeen)
+                      ChatProfileBasicDetails(
+                          widget: widget,
+                          appFonts: appFonts,
+                          lastSeen: lastSeen)
                     ],
                   ),
                 ),
                 actions: [
                   TextButton(
-                      onPressed: () async{
+                      onPressed: () async {
                         await ZegoUIKitPrebuiltCallInvitationService().init(
-                   appID: CallInfo.appId /*input your AppID*/,
-                   appSign: CallInfo.appSign /*input your AppSign*/,
-                   userID:currentUser,
-                  userName:  widget.currentUserName ,
-                  plugins: [ZegoUIKitSignalingPlugin()],
-                 );
-                 ZegoUIKitPrebuiltCallInvitationService().send(invitees: [ZegoCallUser( widget.users['uid'], widget.currentUserName)], isVideoCall: true);
-         
+                          appID: CallInfo.appId /*input your AppID*/,
+                          appSign: CallInfo.appSign /*input your AppSign*/,
+                          userID: currentUser,
+                          userName: widget.currentUserName,
+                          plugins: [ZegoUIKitSignalingPlugin()],
+                        );
+                        ZegoUIKitPrebuiltCallInvitationService().send(
+                            invitees: [
+                              ZegoCallUser(
+                                  widget.users['uid'], widget.currentUserName)
+                            ],
+                            isVideoCall: true);
                       },
                       child: Image.asset(
-                        'assets/icons8-video-48.png', 
+                        'assets/icons8-video-48.png',
                         scale: 1.8,
                       )),
                   Transform.translate(
                     offset: Offset(-12, 0),
                     child: TextButton(
-                        onPressed: () async{
-                            await ZegoUIKitPrebuiltCallInvitationService().init(
-                   appID: CallInfo.appId /*input your AppID*/,
-                   appSign: CallInfo.appSign /*input your AppSign*/,
-                   userID:currentUser,
-                  userName:  widget.currentUserName ,
-                  plugins: [ZegoUIKitSignalingPlugin()],
-                 );
-                 ZegoUIKitPrebuiltCallInvitationService().send(invitees: [ZegoCallUser( widget.users['uid'], widget.currentUserName)], isVideoCall: false);
+                        onPressed: () async {
+                          await ZegoUIKitPrebuiltCallInvitationService().init(
+                            appID: CallInfo.appId /*input your AppID*/,
+                            appSign: CallInfo.appSign /*input your AppSign*/,
+                            userID: currentUser,
+                            userName: widget.currentUserName,
+                            plugins: [ZegoUIKitSignalingPlugin()],
+                          );
+                          ZegoUIKitPrebuiltCallInvitationService().send(
+                              invitees: [
+                                ZegoCallUser(
+                                    widget.users['uid'], widget.currentUserName)
+                              ],
+                              isVideoCall: false);
                         },
                         child: Image.asset(
                           'assets/icons8-call-100.png',
@@ -170,87 +181,108 @@ class _IndividualChatPageState extends State<IndividualChatPage> {
                   child: Column(
                     children: [
                       Expanded(
-                        child:StreamBuilder(
-  stream: userData.getAllChat(widget.chatRoomUid.toString()),
-  builder: (context, AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
-    if (snapshot.hasError) {
-      return Text('Error: ${snapshot.error}');
-    }
+                          child: StreamBuilder(
+                        stream:
+                            userData.getAllChat(widget.chatRoomUid.toString()),
+                        builder: (context,
+                            AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
+                                snapshot) {
+                          if (snapshot.hasError) {
+                            return Text('Error: ${snapshot.error}');
+                          }
 
-    if (snapshot.connectionState == ConnectionState.waiting) {
-      return Center(child: CircularProgressIndicator());
-    }
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return Center(child: CircularProgressIndicator());
+                          }
 
-    List<Map<String, dynamic>> mynotify = snapshot.data!.docs
-        .map((doc) => doc.data())
-        .toList();
+                          List<Map<String, dynamic>> mynotify = snapshot
+                              .data!.docs
+                              .map((doc) => doc.data())
+                              .toList();
 
-    if (mynotify.isEmpty) {
-      return Center(
-        child: Text("Say Haii 👋", style: appFonts.flextext(blackclr, Fweight: 400, size: 16)),
-      );
-    }
+                          if (mynotify.isEmpty) {
+                            return Center(
+                              child: Text("Say Haii 👋",
+                                  style: appFonts.flextext(blackclr,
+                                      Fweight: 400, size: 16)),
+                            );
+                          }
 
-    // Group messages by day
-    Map<String, List<Map<String, dynamic>>> groupedMessages = {};
-    for (var msg in mynotify) {
-      final timestamp = msg['timestamp'].toDate();
-      final date = DateFormat('yyyy-MM-dd').format(timestamp); // Group by date
+                          // Group messages by day
+                          Map<String, List<Map<String, dynamic>>>
+                              groupedMessages = {};
+                          for (var msg in mynotify) {
+                            final timestamp = msg['timestamp'].toDate();
+                            final date = DateFormat('yyyy-MM-dd')
+                                .format(timestamp); // Group by date
 
-      if (groupedMessages[date] == null) {
-        groupedMessages[date] = [];
-      }
-      groupedMessages[date]!.add(msg);
-    }
+                            if (groupedMessages[date] == null) {
+                              groupedMessages[date] = [];
+                            }
+                            groupedMessages[date]!.add(msg);
+                          }
 
-    // Create a sorted list of dates
-    List<String> dates = groupedMessages.keys.toList();
-    dates.sort((a, b) => b.compareTo(a)); // Sort by date in descending order
+                          // Create a sorted list of dates
+                          List<String> dates = groupedMessages.keys.toList();
+                          dates.sort((a, b) => b.compareTo(
+                              a)); // Sort by date in descending order
 
-    return ListView.builder(
-      controller: _scrollController,
-      itemCount: dates.length,
-      itemBuilder: (context, dateIndex) {
-        final date = dates[ dates.length-1-dateIndex];
-        final dateMessages = groupedMessages[date]!;
+                          return ListView.builder(
+                            controller: _scrollController,
+                            itemCount: dates.length,
+                            itemBuilder: (context, dateIndex) {
+                              final date = dates[dates.length - 1 - dateIndex];
+                              final dateMessages = groupedMessages[date]!;
 
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8.0),
-              child: Center(
-                child: Text(
-                  DateFormat('MMMM dd, yyyy').format(DateFormat('yyyy-MM-dd').parse(date)),
-                  style: appFonts.flextext(blackshadow, Fweight: 400, size: 14),
-                ),
-              ),
-            ),
-            ListView.builder(
-              shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
-              itemCount: dateMessages.length,
-              itemBuilder: (context, index) { 
-               // final revindex=dateMessages.length-1-index;
-                final data = dateMessages[index];
-               
-                final String msg = data['msg'];
-                final String msgType = data["type"];
-                final bool isSender = _auth.currentUser!.uid == data['senderId'];
-                final timestamp = data['timestamp'].toDate();
-                String time = DateFormat('hh:mm a').format(timestamp);
+                              return Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 8.0),
+                                    child: Center(
+                                      child: Text(
+                                        DateFormat('MMMM dd, yyyy').format(
+                                            DateFormat('yyyy-MM-dd')
+                                                .parse(date)),
+                                        style: appFonts.flextext(blackshadow,
+                                            Fweight: 400, size: 14),
+                                      ),
+                                    ),
+                                  ),
+                                  ListView.builder(
+                                    shrinkWrap: true,
+                                    physics: NeverScrollableScrollPhysics(),
+                                    itemCount: dateMessages.length,
+                                    itemBuilder: (context, index) {
+                                      // final revindex=dateMessages.length-1-index;
+                                      final data = dateMessages[index];
 
-                return ChatCard(isSender: isSender, msgType: msgType, msg: msg, appFonts: appFonts, time: time);
-              },
-            ),
-          ],
-        );
-      },
-    );
-  },
-)
+                                      final String msg = data['msg'];
+                                      final String msgType = data["type"];
+                                      final bool isSender =
+                                          _auth.currentUser!.uid ==
+                                              data['senderId'];
+                                      final timestamp =
+                                          data['timestamp'].toDate();
+                                      String time = DateFormat('hh:mm a')
+                                          .format(timestamp);
 
-                      ),
+                                      return ChatCard(
+                                          isSender: isSender,
+                                          msgType: msgType,
+                                          msg: msg,
+                                          appFonts: appFonts,
+                                          time: time);
+                                    },
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+                        },
+                      )),
                       _chatInput(context, widget.users['uid']),
                       if (isShowEmoji)
                         EmojiPickerWidget(textController: textController),
@@ -346,11 +378,11 @@ class _IndividualChatPageState extends State<IndividualChatPage> {
     );
   }
 
-   // ignore: unused_element
-   _getImage() async {
+  // ignore: unused_element
+  _getImage() async {
     final selectedImage = await ImagePicker().pickImage(source: _imageSource);
     if (selectedImage != null) {
-    return selectedImage.toString();
+      return selectedImage.toString();
     }
   }
 }
@@ -461,7 +493,7 @@ class _IndividualChatPageState extends State<IndividualChatPage> {
 //                 ),
 //                 titleSpacing: 0,
 //                 title: InkWell(
-//                   onTap: () { 
+//                   onTap: () {
 //                     Navigator.of(context).push(FadeTransitionPageRoute(child: ChatMorePage(user: widget.users)));
 //                   },
 //                   child: Row(
@@ -485,10 +517,10 @@ class _IndividualChatPageState extends State<IndividualChatPage> {
 //                   plugins: [ZegoUIKitSignalingPlugin()],
 //                  );
 //                  ZegoUIKitPrebuiltCallInvitationService().send(invitees: [ZegoCallUser( widget.users['uid'], widget.currentUserName)], isVideoCall: true);
-         
+
 //                       },
 //                       child: Image.asset(
-//                         'assets/icons8-video-48.png', 
+//                         'assets/icons8-video-48.png',
 //                         scale: 1.8,
 //                       )),
 //                   Transform.translate(

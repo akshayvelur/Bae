@@ -84,7 +84,7 @@ class DistanceFilterState extends HomeblocState{
   ShowmeState({required super.gender, required super.index, required super.age1, required super.age2, required super.distance});
 
   }
-  class DiscoverySubmissionState extends HomeblocState{
+  class DiscoverySubmissionState extends HomeActionState{
   DiscoverySubmissionState({required super.gender, required super.index, required super.age1, required super.age2, required super.distance});
 
   }

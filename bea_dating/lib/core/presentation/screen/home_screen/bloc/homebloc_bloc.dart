@@ -251,7 +251,7 @@ class HomeblocBloc extends Bloc<HomeblocEvent, HomeblocState> {
     maxDistance = state.distance!.round().toString();
     ageRange.add(state.age1!.round().toString());
     ageRange.add(state.age2!.round().toString());
-   
+   print(showme);
       await discovery.discoveryUpload(ageRange??[], maxDistance??"", showme??"");
 
    emit(DiscoverySubmissionState(gender: state.gender, index:state. index, age1:state. age1, age2:state. age2, distance:state. distance));
