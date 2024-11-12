@@ -1,14 +1,17 @@
 
+import 'package:bea_dating/core/data/data_uploading/boost_service.dart';
+import 'package:bea_dating/core/presentation/screen/category/boost/boostpage.dart';
 import 'package:bea_dating/core/presentation/screen/home_screen/bloc/homebloc_bloc.dart';
 import 'package:bea_dating/core/presentation/utilit/color.dart';
 import 'package:bea_dating/core/presentation/utilit/mediaquery.dart';
+import 'package:bea_dating/core/presentation/utilit/page_transcation/fade_transition.dart';
 import 'package:bea_dating/core/presentation/widgets/container/container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
 
 class CardStatus extends StatefulWidget {
-  const CardStatus({
+   CardStatus({
     super.key,
     required this.name,
     required this.profile,
@@ -25,7 +28,7 @@ class CardStatus extends StatefulWidget {
  final String dob;
  final String currentuserUid;
  final Map user;
- 
+ Boost boost=Boost();
   @override
   State<CardStatus> createState() => _CardStatusState();
 }
@@ -74,6 +77,7 @@ class _CardStatusState extends State<CardStatus> {
                 onPressed: () {
                   if(widget.mainindex<widget.numberOfUser){
                     print(widget.numberOfUser);
+                       widget.boost.boostReducing(1); 
                   context.read<HomeblocBloc>().add(CountEvent(count:widget.mainindex+1));}
                     widget.controller.swipe(CardSwiperDirection.left);
                }, child: Image.asset(
@@ -85,7 +89,7 @@ class _CardStatusState extends State<CardStatus> {
               FloatingActionButton(
                 backgroundColor: shadowclr,
                 onPressed: () {
-                  
+                 Navigator.of(context).push(FadeTransitionPageRoute(child:  BoostPage()));
                     // controller.swipe(CardSwiperDirection.top);
                     },
                 child: Image.asset(
@@ -94,10 +98,12 @@ class _CardStatusState extends State<CardStatus> {
                   fit: BoxFit.cover,
                 ),
               ),
+              // Like requesting 
               FloatingActionButton(
                 backgroundColor: shadowclr,
                 onPressed: () {
                      if(widget.mainindex<=widget.numberOfUser){
+                     widget.boost.boostReducing(1); 
                      context.read<HomeblocBloc>().add(UserLikeEvent(likeduser: widget.user['uid']));
                   }
                   if(widget.mainindex<widget.numberOfUser){

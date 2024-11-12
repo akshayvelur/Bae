@@ -59,6 +59,7 @@ class _HomeScreenPageState extends State<HomeScreenPage>
   int currentyear = DateTime.now().year;
   int mainindex = 0;
   String? uid;
+  int ?boost;
   double? currentUserLatitude;
   double? currentUserLongitude;
   List<String> distancefilterd = [];
@@ -177,7 +178,7 @@ class _HomeScreenPageState extends State<HomeScreenPage>
                         List<dynamic> likeList = mydata['like'];
                         List<dynamic> ageRange = mydata['ageRange'];
                         final String showMe = mydata["showme"];
-
+                             boost=int.parse(mydata["boost"]);
                         //  distance filter
                         dataList.removeWhere(
                           (users) => !distancefilterd.contains(users["uid"]),
@@ -226,17 +227,20 @@ class _HomeScreenPageState extends State<HomeScreenPage>
                           image = user['image'] ?? '';
                           profile = user["Profile"];
                           dob = user['dob'];
-                     
+                      
+                      print("boost${boost}");
 
                           print(dataList.length);
                        
                           if (profile == null &&
-                              mainindex < filteredList.length - 1) mainindex++;
-                          numberOfUser = filteredList.length - 1.abs();
+                              mainindex < filteredList.length - 1) 
+                              mainindex++;
+                          numberOfUser =(filteredList.length- 1.abs() > boost! )?boost!-1:filteredList.length- 1.abs();
+                          //  filteredList.length - 1.abs();
                         }
                         print(
                             "User profile  Not Found>>>>>>>>>>${user['profile']}");
-                         
+                        
                         // reported users
                         // dataList.removeWhere((element) => element["isReport"]=="false",);
 
@@ -290,6 +294,8 @@ class _HomeScreenPageState extends State<HomeScreenPage>
     int previousIndex,
     int? currentIndex,
     CardSwiperDirection direction,
+
+    
   ) {
     debugPrint(
       'The card $previousIndex was swiped to the ${direction.name}. Now the card $currentIndex is on top',
