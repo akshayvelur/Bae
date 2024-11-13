@@ -1,4 +1,5 @@
 import 'package:bea_dating/core/data/data_uploading/report_upload.dart';
+import 'package:bea_dating/core/data/service/block_service.dart';
 import 'package:bea_dating/core/presentation/screen/home_screen/view_account/view_account.dart';
 import 'package:bea_dating/core/presentation/utilit/color.dart';
 import 'package:bea_dating/core/presentation/utilit/fonts.dart';
@@ -6,6 +7,7 @@ import 'package:bea_dating/core/presentation/utilit/mediaquery.dart';
 import 'package:bea_dating/core/presentation/utilit/page_transcation/fade_transition.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ChatMorePage extends StatelessWidget {
   ChatMorePage({super.key, required this.user});
@@ -13,6 +15,7 @@ class ChatMorePage extends StatelessWidget {
   @override
   AppFonts appFonts = AppFonts();
   Reporting reporting=Reporting();
+  Block block=Block();
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -81,7 +84,9 @@ class ChatMorePage extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(10),
                                 color: Colors.grey),
                             child: TextButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  block.blockService(user['uid']);
+                                },
                                 child: Text(
                                   "Block",
                                   style: appFonts.flextext(blackclr,

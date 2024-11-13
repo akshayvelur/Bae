@@ -81,7 +81,8 @@ class Authentic {
          "maxDistance":"",
          "isReport":false,
          "boost":"5",
-         "freeBoostTime":DateTime.now()
+         "freeBoostTime":DateTime.now(),
+         "blockList":[]
          
       });
 

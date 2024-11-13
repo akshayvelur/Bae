@@ -237,24 +237,29 @@ class HomeblocBloc extends Bloc<HomeblocEvent, HomeblocState> {
 // Discover data updating
   FutureOr<void> discoverySubmissionEvent(
       DiscoverySubmissionEvent event, Emitter<HomeblocState> emit) async {
+   
           Discovery discovery = Discovery();
-    emit(DiscoveryInitState(
-        gender: state.gender,
-        index: state.index,
-        age1: state.age1,
-        age2: state.age2,
-        distance: state.distance));
+    // emit(DiscoveryInitState(
+    //     gender: state.gender,
+    //     index: state.index,
+    //     age1: state.age1,
+    //     age2: state.age2,
+    //     distance: state.distance));
     String maxDistance;
     String showme;
     List<String> ageRange = [];
     showme = state.gender.toString();
     maxDistance = state.distance!.round().toString();
+    if(state.age1!=null){
     ageRange.add(state.age1!.round().toString());
+    }
+          print("discovery back${state.age1}");
+            if(state.age2!=null){
     ageRange.add(state.age2!.round().toString());
-   print(showme);
+            }
+   print("discovery back${state.age1}");
       await discovery.discoveryUpload(ageRange??[], maxDistance??"", showme??"");
-
-   emit(DiscoverySubmissionState(gender: state.gender, index:state. index, age1:state. age1, age2:state. age2, distance:state. distance));
+  emit(DiscoverySubmissionState(gender: state.gender, index:state. index, age1:state. age1, age2:state. age2, distance:state. distance));
   }
 
   FutureOr<void> navigateToDiacoveryEvent(

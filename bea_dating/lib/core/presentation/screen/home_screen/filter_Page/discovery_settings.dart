@@ -2,9 +2,11 @@ import 'package:bea_dating/core/presentation/screen/bottom_navigation/bottom_nav
 import 'package:bea_dating/core/presentation/screen/home_screen/bloc/homebloc_bloc.dart';
 import 'package:bea_dating/core/presentation/screen/home_screen/filter_Page/widget/age_widget.dart';
 import 'package:bea_dating/core/presentation/screen/home_screen/filter_Page/widget/distance_widget.dart';
+import 'package:bea_dating/core/presentation/screen/home_screen/home_screen.dart';
 import 'package:bea_dating/core/presentation/utilit/color.dart';
 import 'package:bea_dating/core/presentation/utilit/fonts.dart';
 import 'package:bea_dating/core/presentation/utilit/mediaquery.dart';
+import 'package:bea_dating/core/presentation/utilit/page_transcation/fade_transition.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_multi_slider/flutter_multi_slider.dart';
@@ -41,7 +43,7 @@ class _DiscoverySettingsState extends State<DiscoverySettings> {
         leading: IconButton(
             onPressed: () {
               context.read<HomeblocBloc>().add(DiscoverySubmissionEvent());
-              Navigator.pop(context);
+              //Navigator.pop(context);
             },
             icon: Icon(Icons.arrow_back_ios)),
         centerTitle: true,
@@ -65,7 +67,7 @@ class _DiscoverySettingsState extends State<DiscoverySettings> {
           currentIndex=state.index;
         }
         if(state is DiscoverySubmissionState){
-          Navigator.pop(context);
+          Navigator.of(context).pop(FadeTransitionPageRoute(child: HomeScreenPage()));
         }
         if(state is NavigateToDiacoveryState){
           _age1=double.parse(state.ageRange[0]);
@@ -78,7 +80,7 @@ class _DiscoverySettingsState extends State<DiscoverySettings> {
         },
         builder: (context, state) {
              if(state is  DiscoveryInitState ){
-         return Center(child: CircularProgressIndicator(color: clrGreen,),);
+        // return Center(child: CircularProgressIndicator(color: clrGreen,),);
         }
           return Padding(
             padding: const EdgeInsets.all(10),

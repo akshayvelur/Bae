@@ -77,11 +77,13 @@ class ChatPage extends StatelessWidget {
                             (doc) => doc.data() as Map<String, dynamic>,
                           )
                           .toList();
+                        
                       Map<String, dynamic> filterduse = allUser.firstWhere(
                           (element) => element["uid"] == _auth.currentUser!.uid,
                           orElse: () => {});
                       List<dynamic> matchList = filterduse['match'];
                       String currentUserName=filterduse["name"];
+                 
                          ZegoUIKitPrebuiltCallInvitationService().init(
                         appID: CallInfo.appId /*input your AppID*/,
                    appSign: CallInfo.appSign /*input your AppSign*/,
@@ -97,10 +99,12 @@ class ChatPage extends StatelessWidget {
                           scrollDirection: Axis.horizontal,
                           itemCount: matchList.length,
                           itemBuilder: (context, index) {
+                            
                             Map<String, dynamic> myuser = allUser.firstWhere(
                               (element) => element['uid'] == matchList[index],
                               orElse: () => {},
                             );
+                            
                             String name = myuser["name"];
                             String uid = myuser["uid"];
                             List<dynamic> image = myuser["image"];

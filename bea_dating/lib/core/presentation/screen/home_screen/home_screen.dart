@@ -178,6 +178,7 @@ class _HomeScreenPageState extends State<HomeScreenPage>
                         List<dynamic> likeList = mydata['like'];
                         List<dynamic> ageRange = mydata['ageRange'];
                         final String showMe = mydata["showme"];
+                        List<String>blockList=List<String>.from(mydata['blockList']);
                              boost=int.parse(mydata["boost"]);
                         //  distance filter
                         dataList.removeWhere(
@@ -190,6 +191,10 @@ class _HomeScreenPageState extends State<HomeScreenPage>
                           dataList.removeWhere(
                             (user) => user['uid'] == uid,
                           );
+                          // Removing blocked users
+                          dataList.removeWhere((element) => blockList.contains(element['uid']),);
+                          //Removing reported users
+                          dataList.removeWhere((element) => element["isReport"].toString().contains("true"),);
                           if (likeList.isNotEmpty) {
                             dataList.removeWhere(
                               (user) => likeList.contains(user["uid"]),
@@ -295,7 +300,7 @@ class _HomeScreenPageState extends State<HomeScreenPage>
     int? currentIndex,
     CardSwiperDirection direction,
 
-    
+
   ) {
     debugPrint(
       'The card $previousIndex was swiped to the ${direction.name}. Now the card $currentIndex is on top',

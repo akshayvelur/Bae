@@ -5,7 +5,7 @@ import 'package:bea_dating/core/presentation/screen/welcome&rule/welcome_screen.
 import 'package:bea_dating/core/presentation/utilit/color.dart';
 import 'package:bea_dating/core/presentation/utilit/logo.dart';
 import 'package:bea_dating/core/presentation/utilit/page_transcation/fade_transition.dart';
-import 'package:bea_dating/core/presentation/widgets/profile_widget/settings.dart';
+import 'package:bea_dating/core/presentation/screen/profile_page/settings/settings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:zego_uikit_prebuilt_call/zego_uikit_prebuilt_call.dart';
