@@ -143,4 +143,14 @@ return userData  ;
   print('Error getting user data: $error');
 });
   }
+
+  
+  Stream<QuerySnapshot<Map<String, dynamic>>> getAllMedia(String chatRoomUid) {
+    return _firestore
+        .collection("messages")
+        .doc(chatRoomUid)
+        .collection('message')
+        .orderBy("timestamp")
+        .snapshots();
+  }
 }

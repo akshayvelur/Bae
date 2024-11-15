@@ -5,9 +5,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class Block{
+  FirebaseAuth _auth=FirebaseAuth.instance;
   blockService(String uid)async{
     try{
- FirebaseAuth _auth=FirebaseAuth.instance;
+ 
 DocumentReference documentReference=await FirebaseFirestore.instance.collection("users").doc(_auth.currentUser!.uid);
 DocumentSnapshot snapshot=await documentReference.get();
 // adding to block list
@@ -49,5 +50,17 @@ if(blockermatch.contains(_auth.currentUser!.uid)){
     }catch(e){
       log("block service Error:${e}");
     }
+  }
+  unblockingService (String unblockId)async{
+try{
+DocumentReference documentReference =await FirebaseFirestore.instance.collection("users").doc(_auth.currentUser!.uid);
+DocumentSnapshot snapshot=await documentReference.get();
+List<dynamic>blockList=snapshot.get("blockList");
+
+blockList.remove(unblockId);
+documentReference.update({'blockList':blockList});
+}catch(e){
+  log("unlocking error${e}");
+}
   }
 }

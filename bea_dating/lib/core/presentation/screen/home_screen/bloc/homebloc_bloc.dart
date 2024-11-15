@@ -245,15 +245,19 @@ class HomeblocBloc extends Bloc<HomeblocEvent, HomeblocState> {
     //     age1: state.age1,
     //     age2: state.age2,
     //     distance: state.distance));
-    String maxDistance;
-    String showme;
+    String ?maxDistance;
+    String? showme;
     List<String> ageRange = [];
-    showme = state.gender.toString();
+    if(state.gender!=null){
+    showme = state.gender.toString(); 
+    }
+    if(state.distance!=null){
     maxDistance = state.distance!.round().toString();
+    }
     if(state.age1!=null){
     ageRange.add(state.age1!.round().toString());
     }
-          print("discovery back${state.age1}");
+         // print("discovery back${state.age1}")
             if(state.age2!=null){
     ageRange.add(state.age2!.round().toString());
             }

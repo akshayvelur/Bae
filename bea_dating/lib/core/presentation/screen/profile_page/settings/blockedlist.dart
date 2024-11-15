@@ -1,3 +1,4 @@
+import 'package:bea_dating/core/data/service/block_service.dart';
 import 'package:bea_dating/core/presentation/utilit/color.dart';
 import 'package:bea_dating/core/presentation/utilit/fonts.dart';
 import 'package:bea_dating/core/presentation/utilit/mediaquery.dart';
@@ -15,6 +16,7 @@ class BlockedListPage extends StatelessWidget {
   Stream<QuerySnapshot<Map<String, dynamic>>> getBlockUsers =
       FirebaseFirestore.instance.collection("users").snapshots();
   AppFonts appFonts = AppFonts();
+  Block block=Block();
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -58,7 +60,7 @@ class BlockedListPage extends StatelessWidget {
             );
             blockUserId = List<String>.from(user["blockList"]);
             //  Removing unblocked users
-            return ListView.separated(
+            return blockUserId.isNotEmpty? ListView.separated(
               itemCount: blockUserId.length,
               itemBuilder: (context, index) {
                 Map<String, dynamic> blockeUserList = allUsers.firstWhere(
@@ -102,6 +104,7 @@ class BlockedListPage extends StatelessWidget {
                         child: TextButton(
                           onPressed: () {
                             // unblocking button
+                            block.unblockingService(blockeUserList['uid']);
                           },
                           child: Text(
                             'Unblock',
@@ -115,7 +118,7 @@ class BlockedListPage extends StatelessWidget {
               separatorBuilder: (context, index) => Divider(
                 color: whiteclr,
               ),
-            );
+            ):Center(child: Text("No blocked users",style: appFonts.flextext(blackclr,Fweight:400,size: 14),),);
           },
         ),
       ),

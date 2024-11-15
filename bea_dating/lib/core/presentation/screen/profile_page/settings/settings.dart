@@ -1,5 +1,6 @@
 import 'package:bea_dating/core/domin/usecase/authentication.dart';
 import 'package:bea_dating/core/presentation/screen/profile_page/settings/blockedlist.dart';
+import 'package:bea_dating/core/presentation/screen/profile_page/settings/mydata_page.dart';
 import 'package:bea_dating/core/presentation/screen/welcome&rule/welcome_screen.dart';
 import 'package:bea_dating/core/presentation/utilit/color.dart';
 import 'package:bea_dating/core/presentation/utilit/fonts.dart';
@@ -63,7 +64,7 @@ class _SettingsPageState extends State<SettingsPage> {
                children: [
                  Text("Personal data",style: appFonts.flextext(blackclr,size: 18,Fweight: 500),),
                  SizedBox(height: mediaqueryHight(.01, context),),
-                 TextButton(onPressed: (){}, child: Text("My data",style: appFonts.flextext(blackclr,size: 15,Fweight: 400),))
+                 TextButton(onPressed: (){Navigator.of(context).push(FadeTransitionPageRoute(child: MydataPage()));}, child: Text("My data",style: appFonts.flextext(blackclr,size: 15,Fweight: 400),))
                   ,TextButton(onPressed: (){}, child: Text("Delete my account",style: appFonts.flextext(blackclr,size: 15,Fweight: 400),)),
                   TextButton(onPressed: (){Navigator.of(context).push(FadeTransitionPageRoute(child: BlockedListPage()));}, child: Text("Blocked",style: appFonts.flextext(blackclr,size: 15,Fweight: 400),))
                ,TextButton(onPressed: (){
