@@ -67,7 +67,7 @@ class _ProfilePageState extends State<ProfilePage> {
           if (state is IninitState) {
             myuser = state.user;
       
-          } else if (state is LoadingSuccessState) {
+          }  if (state is LoadingSuccessState) {
     
             myuser = state.user;
             return Scaffold(

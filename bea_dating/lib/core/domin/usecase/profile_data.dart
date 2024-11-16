@@ -8,12 +8,19 @@ class ProfileData{
 
  Future<dynamic> dataUpload(Map<String,dynamic>datas)async{
 
-print("userprofile");
      try {
       DocumentReference documentReference =
           await FirebaseFirestore.instance.collection("users").doc(_auth.currentUser!.uid);
           log("${_auth.currentUser!.uid}");
-      await documentReference.update({"Profile":datas});
+          DocumentSnapshot snapshot=await documentReference.get();
+          Map<String,dynamic>_profile=snapshot.get('Profile');
+         
+          datas.forEach((key, value) {
+            if(datas[key]!=null){
+              _profile[key]=value;
+            }
+          },);
+      await documentReference.update({"Profile":_profile});
     } catch (e) {
       log("data uploading${e}");  
     }

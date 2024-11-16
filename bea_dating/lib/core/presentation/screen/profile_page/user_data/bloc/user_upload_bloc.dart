@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:bea_dating/core/domin/usecase/profile_data.dart';
 import 'package:bloc/bloc.dart';
@@ -8,7 +9,7 @@ part 'user_upload_event.dart';
 part 'user_upload_state.dart';
 
 class UserUploadBloc extends Bloc<UserUploadEvent, UserUploadState> {
-  UserUploadBloc() : super(UserUploadInitial(interest: '', about: '', relationship: '',reindex:null, heights: null, drink: '', gym: '', smoke: '')) {
+  UserUploadBloc() : super(UserUploadInitial(interest: '', about: '', relationship: '',reindex:null, heights: '', drink: '', gym: '', smoke: '')) {
 on<UserLoadingEvent>(userLoadingEvent);
 on<UserInterestAddingEvent>(userInterestAddingEvent);
 on<UserAboutAddingEvent>(userAboutAddingEvent);
@@ -59,24 +60,26 @@ emit(UserLoadingSuccessState(interest: state.interest, about: state.about, relat
   }
 
   FutureOr<void> userBackDataUpload(UserBackDataUpload event, Emitter<UserUploadState> emit)async {
-    print(state.drink);
+     
     Map<String,dynamic>?data={};
-  // if(event.about.isNotEmpty) {emit(UserAboutSelectedState(interest: state.interest, about: event.about, relationship: state.relationship, reindex: state.reindex, heights:state.heights, drink:state.drink, gym:state.gym, smoke:state.smoke));
-  //   data["about"]=state.about;}
-   if(state.interest!.isNotEmpty) {  data["interest type"]=state.interest;}
-   if(state.relationship!.isNotEmpty) {data["relationship"]=state.relationship;}
-    if(state.heights!.isNotEmpty){data["height"]=state.heights;}
-  if(state.drink!.isNotEmpty)  {data["drink"]=state.drink;}
-  if(state.gym!.isNotEmpty){ data["gym"]=state.gym;}
-    if(state.smoke!.isNotEmpty){data["smoke"]=state.smoke;}
-    print(data);
+
+  try{
+  if(event.about.isNotEmpty) {emit(UserAboutSelectedState(interest: state.interest, about: event.about, relationship: state.relationship, reindex: state.reindex, heights:state.heights, drink:state.drink, gym:state.gym, smoke:state.smoke));
+    data["about"]=state.about;}
+    if(state.interest!.isNotEmpty) {  data["interest type"]=state.interest;}
+    if(state.relationship!.isNotEmpty) {data["relationship"]=state.relationship;}
+     if(state.heights!.isNotEmpty){data["height"]=state.heights;}
+    if(state.drink!.isNotEmpty)  {data["drink"]=state.drink;}
+    if(state.gym!.isNotEmpty){ data["gym"]=state.gym;}
+     if(state.smoke!.isNotEmpty){data["smoke"]=state.smoke;}
     if(data.isNotEmpty){
-    ProfileData profileData=ProfileData();
+      ProfileData profileData=ProfileData();
     await profileData.dataUpload(data);
-    emit(UserBackDataSubmitted(interest: state.interest, about: state.about, relationship: state.relationship, reindex: state.reindex, heights:state.heights, drink:state.drink, gym:state.gym, smoke:state.smoke));
+     emit(UserBackDataSubmitted(interest: state.interest, about: state.about, relationship: state.relationship, reindex: state.reindex, heights:state.heights, drink:state.drink, gym:state.gym, smoke:state.smoke));
+     
     }
-    else if(data.isEmpty){
-        emit(UserBackDataSubmitted(interest: state.interest, about: state.about, relationship: state.relationship, reindex: state.reindex, heights:state.heights, drink:state.drink, gym:state.gym, smoke:state.smoke));
-    }     
+   }catch(e){
+    log("profile details submitting error${e}");
+  }   
   }
 }

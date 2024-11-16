@@ -68,10 +68,12 @@ class _UserdataUploadState extends State<UserdataUpload> {
     if (widget.userModel.profile['interest type'] != null) {
       dropdownValue = widget.userModel.profile['interest type'];
     }
-    // if (widget.userModel.profile['about']!) {
-    //   about = widget.userModel.profile['about'];
-    // }
-    
+    if (widget.userModel.profile['about']!=null) {
+      about = widget.userModel.profile['about'];
+      aboutController.text=about!;
+    }
+
+    print(about);
     // TODO: implement initState
     super.initState();
   }
@@ -81,14 +83,15 @@ class _UserdataUploadState extends State<UserdataUpload> {
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
-        appBar: AppBar(
+        appBar: AppBar(centerTitle: true,
           leading: IconButton(
               onPressed: () {
-                //  context.read<ProfileBloc>().add(NavigateBackToProfilEvent());
+                 
                 //  print(aboutController.text);
                 context
                     .read<UserUploadBloc>()
                     .add(UserBackDataUpload(about: aboutController.text));
+                     context.read<ProfileBloc>().add(NavigateBackToProfilEvent());
               },
               icon: Icon(Icons.arrow_back_ios)),
           title: Text(

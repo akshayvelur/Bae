@@ -43,8 +43,12 @@ on< NavigateBackToProfilEvent>( navigateBackToProfilEvent);
   }
   }
 
-  FutureOr<void> navigateBackToProfilEvent(NavigateBackToProfilEvent event, Emitter<ProfileState> emit) {
-     emit(LoadingSuccessState(user:state.user));
+  FutureOr<void> navigateBackToProfilEvent(NavigateBackToProfilEvent event, Emitter<ProfileState> emit) async{
+         UserData userData = UserData();
+    UserModel? user = await userData.getUserData();
+    if(user!=null){
+     emit(LoadingSuccessState(user:user));
+    }
      print(state.user!.interest);
  emit(NavigateBacktoProfileState(user:state.user,));
 
