@@ -73,10 +73,10 @@ heightBottomsheet(context,String ?height) {
                               size: 14, Fweight: 300),
                         ),
                       ),
-                      Container(height: 58,
+                      Container(height: 72,
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: TextFormField(
+                          child: TextFormField(maxLength: 3,
                           controller: textEditingController,
                             keyboardType:TextInputType.number,
                             decoration: InputDecoration(labelText: "Centimeteres",

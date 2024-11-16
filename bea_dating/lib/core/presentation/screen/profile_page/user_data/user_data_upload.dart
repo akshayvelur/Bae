@@ -3,6 +3,7 @@ import 'package:bea_dating/core/data/model/usermodel.dart';
 import 'package:bea_dating/core/presentation/screen/profile_page/Profile/bloc/profile_bloc.dart';
 import 'package:bea_dating/core/presentation/screen/profile_page/Profile/profile_page.dart';
 import 'package:bea_dating/core/presentation/screen/profile_page/user_data/bloc/user_upload_bloc.dart';
+import 'package:bea_dating/core/presentation/screen/profile_page/user_data/widget/interest_dropdown.dart';
 import 'package:bea_dating/core/presentation/screen/profile_page/user_widget/drink_bottom_sheet.dart';
 import 'package:bea_dating/core/presentation/screen/profile_page/user_widget/gym_bottom_sheet.dart';
 import 'package:bea_dating/core/presentation/screen/profile_page/user_widget/height_bottom_sheet.dart';
@@ -68,9 +69,9 @@ class _UserdataUploadState extends State<UserdataUpload> {
     if (widget.userModel.profile['interest type'] != null) {
       dropdownValue = widget.userModel.profile['interest type'];
     }
-    if (widget.userModel.profile['about']!=null) {
+    if (widget.userModel.profile['about'] != null) {
       about = widget.userModel.profile['about'];
-      aboutController.text=about!;
+      aboutController.text = about!;
     }
 
     print(about);
@@ -83,15 +84,15 @@ class _UserdataUploadState extends State<UserdataUpload> {
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
-        appBar: AppBar(centerTitle: true,
+        appBar: AppBar(
+          centerTitle: true,
           leading: IconButton(
               onPressed: () {
-                 
                 //  print(aboutController.text);
                 context
                     .read<UserUploadBloc>()
                     .add(UserBackDataUpload(about: aboutController.text));
-                     context.read<ProfileBloc>().add(NavigateBackToProfilEvent());
+                context.read<ProfileBloc>().add(NavigateBackToProfilEvent());
               },
               icon: Icon(Icons.arrow_back_ios)),
           title: Text(
@@ -170,45 +171,10 @@ class _UserdataUploadState extends State<UserdataUpload> {
                             style: appFonts.flextext(blackclr,
                                 size: 16, Fweight: 600),
                           ),
-                          Container(
-                            height: mediaqueryHight(.06, context),
-                            width: mediaqueryWidth(100, context),
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                color: useraboutContainer),
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.only(left: 12, right: 23),
-                              child: DropdownButton(
-                                isExpanded: true,
-                                borderRadius: BorderRadius.circular(10),
-
-                                // Initial Value
-                                value: dropdownValue,
-
-                                // Down Arrow Icon
-                                icon: const Icon(Icons.keyboard_arrow_down),
-
-                                // Array list of items
-                                items: dropitem.map((String items) {
-                                  return DropdownMenuItem(
-                                    value: items,
-                                    child: Text(
-                                      items,
-                                      style: appFonts.flextext(blackclr,
-                                          size: 14, Fweight: 400),
-                                    ),
-                                  );
-                                }).toList(),
-                                //
-                                onChanged: (String? newValue) {
-                                  context.read<UserUploadBloc>().add(
-                                      UserInterestAddingEvent(
-                                          interest: newValue!));
-                                },
-                              ),
-                            ),
-                          ),
+                          InterestWidget(
+                              dropdownValue: dropdownValue,
+                              dropitem: dropitem,
+                              appFonts: appFonts),
                           SizedBox(
                             height: mediaqueryHight(.01, context),
                           ),
@@ -342,7 +308,7 @@ class _UserdataUploadState extends State<UserdataUpload> {
                                       left: 15, right: 25),
                                   child: InkWell(
                                     onTap: () {
-                                      DrinkBottomsheet(context, baseData.Drinks,
+                                      DrinkBottomsheet(context, baseData.Drinks,drink!,
                                           "How often do you drink?");
                                     },
                                     child: ListTile(
@@ -383,7 +349,7 @@ class _UserdataUploadState extends State<UserdataUpload> {
                                       left: 15, right: 25),
                                   child: InkWell(
                                     onTap: () {
-                                      gymBottomsheet(context, baseData.gym,
+                                      gymBottomsheet(context, baseData.gym,gym!,
                                           "Do you workout?");
                                     },
                                     child: ListTile(
@@ -424,7 +390,7 @@ class _UserdataUploadState extends State<UserdataUpload> {
                                       left: 15, right: 25),
                                   child: InkWell(
                                     onTap: () {
-                                      smokeBottomsheet(context, baseData.smoke,
+                                      smokeBottomsheet(context, baseData.smoke,smoke!,
                                           "How often do you smoke?");
                                     },
                                     child: ListTile(

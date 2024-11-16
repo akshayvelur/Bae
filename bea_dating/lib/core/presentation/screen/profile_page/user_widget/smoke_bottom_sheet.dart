@@ -5,10 +5,12 @@ import 'package:bea_dating/core/presentation/utilit/mediaquery.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-smokeBottomsheet(context, List<String> items, String headline) {
+smokeBottomsheet(context, List<String> items,String presmoke, String headline) {
   AppFonts appfonts = AppFonts();
   int? selected;
-  
+if(presmoke.isNotEmpty){
+  selected=items.indexOf(presmoke);
+}
   
 
 
