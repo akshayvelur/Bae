@@ -9,3 +9,10 @@ class InitStateEvent extends ProfileEvent{
 
 class NavigateToUserDataEvent extends ProfileEvent{}
 class NavigateBackToProfilEvent extends ProfileEvent{}
+class ProImageUploadingEvent extends ProfileEvent{}
+class ProfilePhotoDetetingEvent extends ProfileEvent{
+  final String deleteId;
+
+  ProfilePhotoDetetingEvent({required this.deleteId});
+}
+

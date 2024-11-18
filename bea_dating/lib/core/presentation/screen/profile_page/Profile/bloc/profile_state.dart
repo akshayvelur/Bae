@@ -34,3 +34,9 @@ class NavigateBacktoProfileState extends ProfileState{
 class UserLoadingState extends ProfileState{
   UserLoadingState({required super.user});
 }
+class ProImageUploadingState extends ProfileState{
+  ProImageUploadingState({required super.user}); 
+}
+class ProfilePhotoDetetingSate extends ProfileState{
+  ProfilePhotoDetetingSate({required super.user});
+}

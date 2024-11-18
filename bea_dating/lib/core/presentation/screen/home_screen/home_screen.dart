@@ -195,11 +195,12 @@ class _HomeScreenPageState extends State<HomeScreenPage>
                           dataList.removeWhere((element) => blockList.contains(element['uid']),);
                           //Removing reported users
                           dataList.removeWhere((element) => element["isReport"].toString().contains("true"),);
-                          if (likeList.isNotEmpty) {
-                            dataList.removeWhere(
-                              (user) => likeList.contains(user["uid"]),
-                            );
-                          }
+                        //  removing like
+                          // if (likeList.isNotEmpty) {
+                          //   dataList.removeWhere(
+                          //     (user) => likeList.contains(user["uid"]),
+                          //   );
+                          // }
                         }
                         // nearby us
                         //log("myUser${myUser["name"]}");
@@ -233,9 +234,7 @@ class _HomeScreenPageState extends State<HomeScreenPage>
                           profile = user["Profile"];
                           dob = user['dob'];
                       
-                      print("boost${boost}");
-
-                          print(dataList.length);
+                    
                        
                           if (profile == null &&
                               mainindex < filteredList.length - 1) 
@@ -243,8 +242,7 @@ class _HomeScreenPageState extends State<HomeScreenPage>
                           numberOfUser =(filteredList.length- 1.abs() > boost! )?boost!-1:filteredList.length- 1.abs();
                           //  filteredList.length - 1.abs();
                         }
-                        print(
-                            "User profile  Not Found>>>>>>>>>>${user['profile']}");
+                      
                         
                         // reported users
                         // dataList.removeWhere((element) => element["isReport"]=="false",);

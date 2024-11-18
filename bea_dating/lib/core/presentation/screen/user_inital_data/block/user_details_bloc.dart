@@ -322,7 +322,7 @@ if(location.containsKey("longitude")&&location.containsKey("latitude")){
         print(event.image.length);
       } else {}
     } catch (e) {log("image adding${e}");}
-    print(event.image.length);
+   // print(event.image.length);
     emit(ImageSelectedSatate(
         username: state.username,
         dob: state.dob,
