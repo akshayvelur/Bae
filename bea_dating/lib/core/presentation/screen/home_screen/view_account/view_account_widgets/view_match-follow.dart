@@ -11,6 +11,8 @@ import 'package:bea_dating/core/presentation/utilit/fonts.dart';
 import 'package:bea_dating/core/presentation/utilit/mediaquery.dart';
 import 'package:bea_dating/core/presentation/utilit/page_transcation/fade_transition.dart';
 import 'package:bea_dating/core/presentation/widgets/profile_widget/profile_widget.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -22,7 +24,7 @@ class ViewMatchAndFollowWidget extends StatefulWidget {
 
   final AppFonts appFonts;
   UserModel user;
- 
+ FirebaseAuth _auth=FirebaseAuth.instance;
 
   @override
   State<ViewMatchAndFollowWidget> createState() =>
@@ -102,7 +104,9 @@ class _ViewMatchAndFollowWidgetState extends State<ViewMatchAndFollowWidget> {
               padding: const EdgeInsets.only(left: 35),
               child: InkWell(
                 onTap: () {
+                 
                    context.read<HomeblocBloc>().add(UnfollowFromProfileEvent(unlik: widget.user.uid));
+                  
                 },
                 child: Container(
                     height: mediaqueryHight(.05, context),
@@ -127,7 +131,9 @@ class _ViewMatchAndFollowWidgetState extends State<ViewMatchAndFollowWidget> {
               padding: const EdgeInsets.only(left: 35),
               child: InkWell(
                 onTap: () {
+                   if(widget.user.uid!=widget._auth.currentUser!.uid){
                   context.read<HomeblocBloc>().add(LikeFromProfileEvent(like: widget.user.uid));
+                   }
                     // liketoUser(widget.user.uid); 
                 },
                 child: Container(

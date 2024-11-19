@@ -117,6 +117,13 @@ class _CategoryViewScreenState extends State<CategoryViewScreen> {
                      // ignore: unnecessary_cast
                      .map((doc) => doc.data() as Map<String, dynamic>)
                        .toList();
+                        //   removing current users likes
+                              Map<String,dynamic>currentUser=dataList.firstWhere((element) => element['uid']==uid,);
+                              List<String>likedUsers=List<String>.from(currentUser['like']);
+                              dataList.removeWhere((element) => likedUsers.contains(element['uid']),);
+                              // removing blocked account
+                              List<String>blockList=List<String>.from(currentUser['blockList']);
+                              dataList.removeWhere((element) => blockList.contains(element['uid']),);
                      // log(dataList.toString());
                        if (uid != null) {
                              dataList.removeWhere((user) =>user['uid']==uid,);
@@ -127,8 +134,10 @@ class _CategoryViewScreenState extends State<CategoryViewScreen> {
                                    var name;
                                    Map user={};
                              int numberOfUser =0;
+                         
                                List<Map<String, dynamic>> filterduser= dataList.where((user) => user['Profile']?['interest type']?.toString().trim().toUpperCase()==filter?.trim().toUpperCase(),).toList();
                                 log(widget.catId.toString());
+                           
 
                                if(filterduser.isNotEmpty){
                                
@@ -143,7 +152,7 @@ class _CategoryViewScreenState extends State<CategoryViewScreen> {
                         profile = user["Profile"];
                          dob=user['dob'];
                         if(profile==null&&mainindex < filterduser.length - 1)
-                        mainindex++;
+                         mainindex++;
                           
                         
                        numberOfUser= filterduser.length-1.abs();

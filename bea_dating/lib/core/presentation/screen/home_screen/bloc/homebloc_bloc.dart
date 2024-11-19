@@ -269,6 +269,7 @@ class HomeblocBloc extends Bloc<HomeblocEvent, HomeblocState> {
    print("discovery back${state.age1}");
       await discovery.discoveryUpload(ageRange??[], maxDistance??"", showme??"");
   emit(DiscoverySubmissionState(gender: state.gender, index:state. index, age1:state. age1, age2:state. age2, distance:state. distance));
+  add(InitUserEvent());
   }
 
   FutureOr<void> navigateToDiacoveryEvent(

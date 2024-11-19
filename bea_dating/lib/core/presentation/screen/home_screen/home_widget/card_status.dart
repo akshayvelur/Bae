@@ -107,7 +107,7 @@ class _CardStatusState extends State<CardStatus> {
                      context.read<HomeblocBloc>().add(UserLikeEvent(likeduser: widget.user['uid']));
                   }
                   if(widget.mainindex<widget.numberOfUser){
-                 context.read<HomeblocBloc>().add(CountEvent(count:widget.mainindex+1));
+                 context.read<HomeblocBloc>().add(CountEvent(count:widget.mainindex));
               }
                
                     widget.controller.swipe(CardSwiperDirection.right);},
