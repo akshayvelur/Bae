@@ -1,4 +1,4 @@
-import 'package:bea_dating/core/data/data_uploading/boost_service.dart';
+import 'package:bea_dating/core/data/service/boost_service.dart';
 import 'package:bea_dating/core/presentation/screen/category/boost/bloc/boost_bloc.dart';
 import 'package:bea_dating/core/presentation/screen/category/boost/razorpay_page.dart';
 import 'package:bea_dating/core/presentation/screen/category/boost/widget/cards.dart';

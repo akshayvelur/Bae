@@ -43,6 +43,7 @@ class _ViewAccountState extends State<ViewAccount> {
   AppFonts appFonts = AppFonts();
   UserModel? myuser;
   bool isLoading = false;
+    List<String>LikedUsers=[];
 
   @override
   void initState() {
@@ -66,6 +67,10 @@ class _ViewAccountState extends State<ViewAccount> {
             myuser = state.user;
       
           } 
+           if(state is CurrentUserLikeState){
+            LikedUsers=state.like;
+          
+        }
           else if (state is ProfileLoadingSuccessState) {
     
             myuser = state.user;

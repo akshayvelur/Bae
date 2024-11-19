@@ -18,8 +18,8 @@ class EmojiPickerWidget extends StatelessWidget {
       height: 290, // Adjusted height for emoji picker
       child: EmojiPicker(
         onEmojiSelected: (Category? category, Emoji emoji) {
-          textController.text =
-              textController.text + emoji.emoji;
+          // textController.text =
+          //     textController.text + emoji.emoji;
         },
         textEditingController: textController,
         config: Config(

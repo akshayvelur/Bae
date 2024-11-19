@@ -1,5 +1,5 @@
 
-import 'package:bea_dating/core/data/data_uploading/boost_service.dart';
+import 'package:bea_dating/core/data/service/boost_service.dart';
 import 'package:bea_dating/core/presentation/screen/category/boost/boostpage.dart';
 import 'package:bea_dating/core/presentation/screen/home_screen/bloc/homebloc_bloc.dart';
 import 'package:bea_dating/core/presentation/utilit/color.dart';

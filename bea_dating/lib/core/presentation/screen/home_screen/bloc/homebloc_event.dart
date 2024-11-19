@@ -67,7 +67,19 @@ class NumberOfUserEvent extends HomeblocEvent{
 
   }
   class NavigateToDiacoveryEvent extends HomeblocEvent{
-    
+  }
+  class CurrentUserLikeEvent extends HomeblocEvent{
+
+  }
+  class LikeFromProfileEvent extends HomeblocEvent{
+  final String like;
+
+  LikeFromProfileEvent({required this.like});
+  }
+    class UnfollowFromProfileEvent extends HomeblocEvent{
+  final String unlik;
+
+  UnfollowFromProfileEvent({required this.unlik});
   }
 
 

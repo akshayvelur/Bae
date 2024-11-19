@@ -7,6 +7,7 @@ import 'package:bea_dating/core/data/data_source_getting/userdata.dart';
 import 'package:bea_dating/core/data/data_uploading/discovery_upload.dart';
 import 'package:bea_dating/core/data/distance_finding/distance_finding.dart';
 import 'package:bea_dating/core/data/model/usermodel.dart';
+import 'package:bea_dating/core/data/service/boost_service.dart';
 import 'package:bea_dating/core/domin/usecase/authentication.dart';
 import 'package:bea_dating/core/data/data_source_getting/like_user.dart';
 import 'package:bea_dating/core/domin/usecase/viewed_account.dart';
@@ -43,6 +44,9 @@ class HomeblocBloc extends Bloc<HomeblocEvent, HomeblocState> {
     on<ShowmeEvent>(showmeEvent);
     on<DiscoverySubmissionEvent>(discoverySubmissionEvent);
     on<NavigateToDiacoveryEvent>(navigateToDiacoveryEvent);
+    on<CurrentUserLikeEvent>(currentUserLikeEvent);
+    on<LikeFromProfileEvent>(likeFromProfileEvent);
+    on<UnfollowFromProfileEvent>(unfollowFromProfileEvent);
   }
 
   FutureOr<void> bottoNavigatorEindexEvent(
@@ -124,7 +128,8 @@ class HomeblocBloc extends Bloc<HomeblocEvent, HomeblocState> {
       UserModel? user = await userData.viewProfile(event.uid);
       if (user != null) {
         print("profile data fetched");
-
+ await Future.delayed(Duration(microseconds: 1));
+ 
         emit(ProfileViewInitState(
             user: user,
             gender: state.gender,
@@ -316,5 +321,48 @@ class HomeblocBloc extends Bloc<HomeblocEvent, HomeblocState> {
     } catch (e) {
       print("everything oki error${e}");
     }
+  }
+
+  FutureOr<void> currentUserLikeEvent(CurrentUserLikeEvent event, Emitter<HomeblocState> emit) async{
+ try{
+  FirebaseAuth _auth=FirebaseAuth.instance;
+  DocumentReference documentReference=await FirebaseFirestore.instance.collection("users").doc(_auth.currentUser!.uid);
+  DocumentSnapshot snapshot =await documentReference.get();
+  List<String>LikedUser=List<String>.from(snapshot.get('like'));
+  log("home liked${LikedUser}");
+  emit(CurrentUserLikeState(
+              gender: state.gender,
+              index: state.index,
+              age1: state.age1,
+              age2: state.age2,
+              distance: state.distance,like:LikedUser));
+ }catch(e){
+  log("home liked user finding error${e}");
+ }
+}
+
+  FutureOr<void> likeFromProfileEvent(LikeFromProfileEvent event, Emitter<HomeblocState> emit) {
+    liketoUser(event.like);
+    Boost boost=Boost();
+    boost. boostReducing(1);
+    add(ProfileViewInitEvent(uid: event.like));
+   //add(CurrentUserLikeEvent());
+    emit(LikeFromProfileState( gender: state.gender,
+              index: state.index,
+              age1: state.age1,
+              age2: state.age2,
+              distance: state.distance));
+  }
+
+
+  FutureOr<void> unfollowFromProfileEvent(UnfollowFromProfileEvent event, Emitter<HomeblocState> emit) {
+     unLike(event.unlik);
+    add(ProfileViewInitEvent(uid: event.unlik));
+  // add(CurrentUserLikeEvent());
+    emit(UnfollowFromProfileState( gender: state.gender,
+              index: state.index,
+              age1: state.age1,
+              age2: state.age2,
+              distance: state.distance));
   }
 }

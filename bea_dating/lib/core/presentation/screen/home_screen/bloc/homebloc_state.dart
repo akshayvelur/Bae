@@ -99,3 +99,16 @@ class DistanceFilterState extends HomeblocState{
   NavigateToDiacoveryState({required this.ageRange,required this.maxDistance,required this.showme,required super.gender, required super.index, required super.age1, required super.age2, required super.distance});
     
   }
+   class CurrentUserLikeState extends HomeblocState{
+   final List<String>like;
+
+  CurrentUserLikeState({required super.gender, required super.index, required super.age1, required super.age2, required super.distance, required this.like});
+ 
+
+   }
+  class LikeFromProfileState extends  HomeActionState{
+  LikeFromProfileState({required super.gender, required super.index, required super.age1, required super.age2, required super.distance});
+  }
+ class UnfollowFromProfileState extends  HomeActionState{
+UnfollowFromProfileState({required super.gender, required super.index, required super.age1, required super.age2, required super.distance});
+  }

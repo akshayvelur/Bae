@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:bea_dating/core/data/data_uploading/boost_service.dart';
+import 'package:bea_dating/core/data/service/boost_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 

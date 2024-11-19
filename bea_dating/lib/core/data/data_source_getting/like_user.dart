@@ -67,3 +67,28 @@ await acceptedReference.update({"request": acceptedRequest});
   log("request Accespted in opposit:${e}");
 }
 }
+unLike(String unfollower)async{
+  // removing from unfollwer account
+  try{
+DocumentReference documentReference=await FirebaseFirestore.instance.collection("users").doc(unfollower);
+DocumentSnapshot snapshot=await documentReference.get();
+List<dynamic>unfollwerMatch=snapshot.get("match");
+if(unfollwerMatch.contains(_auth.currentUser!.uid)){
+  unfollwerMatch.remove(_auth.currentUser!.uid);
+  documentReference.update({'match':unfollwerMatch});
+}
+// removing from current user account
+DocumentReference currentDoc=await FirebaseFirestore.instance.collection("users").doc(_auth.currentUser!.uid);
+DocumentSnapshot currentSnapshort=await currentDoc.get();
+List<dynamic>currentUserLike=currentSnapshort.get("like");
+if(currentUserLike.contains(unfollower)){
+  currentUserLike.remove(unfollower);
+  currentDoc.update({"like":currentUserLike});
+}
+
+
+
+}catch(e){
+  log('Unfollower error${e}');
+}
+}
