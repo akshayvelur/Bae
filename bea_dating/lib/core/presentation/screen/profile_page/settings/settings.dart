@@ -1,3 +1,4 @@
+import 'package:bea_dating/core/data/service/account_deleting_service.dart';
 import 'package:bea_dating/core/domin/usecase/authentication.dart';
 import 'package:bea_dating/core/presentation/screen/profile_page/settings/blockedlist.dart';
 import 'package:bea_dating/core/presentation/screen/profile_page/settings/mydata_page.dart';
@@ -6,6 +7,7 @@ import 'package:bea_dating/core/presentation/utilit/color.dart';
 import 'package:bea_dating/core/presentation/utilit/fonts.dart';
 import 'package:bea_dating/core/presentation/utilit/mediaquery.dart';
 import 'package:bea_dating/core/presentation/utilit/page_transcation/fade_transition.dart';
+import 'package:bea_dating/core/presentation/widgets/profile_widget/privacy_policy.dart';
 import 'package:bea_dating/core/presentation/widgets/profile_widget/terms_and_condition.dart';
 import 'package:flutter/material.dart';
 
@@ -49,7 +51,9 @@ class _SettingsPageState extends State<SettingsPage> {
                  TextButton(onPressed: (){
                   Navigator.of(context).push(FadeTransitionPageRoute(child: TermsAndCondtionPage()));
                  }, child: Text("Terms and conditions of user",style: appFonts.flextext(blackclr,size: 15,Fweight: 400),))
-                  ,TextButton(onPressed: (){}, child: Text("Privacy policy",style: appFonts.flextext(blackclr,size: 15,Fweight: 400),))
+                  ,TextButton(onPressed: (){
+                    Navigator.of(context).push(FadeTransitionPageRoute(child: PrivacyPolicyPage()));
+                  }, child: Text("Privacy policy",style: appFonts.flextext(blackclr,size: 15,Fweight: 400),))
                ],
              ),
            ), ),SizedBox(height: mediaqueryHight(.01, context),)
@@ -65,7 +69,9 @@ class _SettingsPageState extends State<SettingsPage> {
                  Text("Personal data",style: appFonts.flextext(blackclr,size: 18,Fweight: 500),),
                  SizedBox(height: mediaqueryHight(.01, context),),
                  TextButton(onPressed: (){Navigator.of(context).push(FadeTransitionPageRoute(child: MydataPage()));}, child: Text("My data",style: appFonts.flextext(blackclr,size: 15,Fweight: 400),))
-                  ,TextButton(onPressed: (){}, child: Text("Delete my account",style: appFonts.flextext(blackclr,size: 15,Fweight: 400),)),
+                  ,TextButton(onPressed: (){
+                    DeleteAlertDialog(context, authentic);
+                  }, child: Text("Delete my account",style: appFonts.flextext(blackclr,size: 15,Fweight: 400),)),
                   TextButton(onPressed: (){Navigator.of(context).push(FadeTransitionPageRoute(child: BlockedListPage()));}, child: Text("Blocked",style: appFonts.flextext(blackclr,size: 15,Fweight: 400),))
                ,TextButton(onPressed: (){
                 showAlertDialog(context, authentic);
@@ -81,7 +87,8 @@ class _SettingsPageState extends State<SettingsPage> {
 }
  showAlertDialog(BuildContext context,Authentic authentic){
  showDialog(context: context, builder: (context) {
-   return AlertDialog(title: Text("Logo Out"),actions: [
+  AppFonts appFonts =AppFonts();
+   return AlertDialog(title: Text("Are you sure you want to log out?",style: appFonts.flextext(blackclr,Fweight: 400,size: 14),),actions: [
     TextButton(onPressed: (){
 Navigator.of(context).pop();
     }, child: Text("cancel")),TextButton(onPressed: () {
@@ -91,4 +98,20 @@ Navigator.of(context).pop();
                 ));
    }, child: Text("ok"))],);
  },);
+  }
+  DeleteAlertDialog(BuildContext context,Authentic authentic){
+    showDialog(context: context, builder: (context) {
+        AppFonts appFonts =AppFonts();
+      return AlertDialog(title:  Text("Are you sure you want to delete your account? This action cannot be undone. ⚠️",style: appFonts.flextext(blackclr,Fweight: 400,size: 15),),actions: [
+    TextButton(onPressed: (){
+Navigator.of(context).pop();
+    }, child: Text("cancel")),TextButton(onPressed: () {
+         accountDeleting();
+       //  authentic.signOutFromGoogle();
+                Navigator.of(context).pushReplacement(MaterialPageRoute(
+                  builder: (context) => WelcomeScreen(),
+                ));
+   }, child: Text("delete",style: TextStyle(color: clrRed),))]);
+      
+    },);
   }
