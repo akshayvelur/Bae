@@ -12,7 +12,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class ChatMorePage extends StatelessWidget {
   ChatMorePage({super.key, required this.user});
   final Map<String, dynamic> user;
-  @override
   AppFonts appFonts = AppFonts();
   Reporting reporting=Reporting();
   Block block=Block();

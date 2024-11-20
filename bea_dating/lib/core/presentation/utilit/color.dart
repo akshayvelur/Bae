@@ -45,3 +45,4 @@ final clrRed= Colors.red;
 final whiteclrshadow=const Color.fromARGB(170, 255, 255, 255);
 final whiteBlackshadow=const Color.fromARGB(170, 255, 255, 255);
 final offWhiteshadow=const Color.fromARGB(195, 236, 232, 232);
+final blackTransparent=Color.fromARGB(204, 38, 37, 37);

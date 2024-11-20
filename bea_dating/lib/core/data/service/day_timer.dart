@@ -12,6 +12,7 @@ void scheduleDailyTask() async{
   FirebaseAuth _auth=FirebaseAuth.instance;
 DocumentReference documentReference=FirebaseFirestore.instance.collection("users").doc(_auth.currentUser!.uid) ;
  DocumentSnapshot snapshot=await documentReference.get();
+ // ignore: unused_local_variable
  Timestamp boostTime=snapshot.get('freeBoostTime');
    DateTime nextDay ;
 

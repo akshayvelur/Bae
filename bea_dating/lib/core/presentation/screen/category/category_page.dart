@@ -43,7 +43,7 @@ CatVariable catVariable=CatVariable();
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    TopScrollWidget(cat: catVariable.cat, appFonts: appFonts),
+                    // TopScrollWidget(cat: catVariable.cat, appFonts: appFonts),
                     Text(
                       "Welcome to Explore",
                       style: appFonts.flexhead(blackclr, size: 18),

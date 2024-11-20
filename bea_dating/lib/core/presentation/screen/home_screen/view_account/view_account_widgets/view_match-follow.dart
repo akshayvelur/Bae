@@ -32,8 +32,7 @@ class ViewMatchAndFollowWidget extends StatefulWidget {
 }
 
 class _ViewMatchAndFollowWidgetState extends State<ViewMatchAndFollowWidget> {
-  @override
-   List<String>LikedUsers=[];
+  List<String>LikedUsers=[];
   void initState() {
     context.read<HomeblocBloc>().add(CurrentUserLikeEvent());
     // TODO: implement initState

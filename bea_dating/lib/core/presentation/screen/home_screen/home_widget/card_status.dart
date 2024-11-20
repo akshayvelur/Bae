@@ -34,8 +34,7 @@ class CardStatus extends StatefulWidget {
 }
 
 class _CardStatusState extends State<CardStatus> {
-    @override
-  int currentyear =DateTime.now().year;
+    int currentyear =DateTime.now().year;
     int age=0;
    
   void initState() {

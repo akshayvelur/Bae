@@ -26,7 +26,6 @@ class _DiscoverySettingsState extends State<DiscoverySettings> {
     super.initState();
   }
 
-  @override
   AppFonts appFonts = AppFonts();
   List<String> genderpre = ["Men", "Women", "Others", "All"];
   double _currentValue = 20;

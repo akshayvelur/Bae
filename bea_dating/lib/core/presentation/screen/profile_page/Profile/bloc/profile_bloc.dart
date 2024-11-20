@@ -62,9 +62,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
 
   FutureOr<void> proImageUploadingEvent(
       ProImageUploadingEvent event, Emitter<ProfileState> emit) async {
-    List<XFile> image = [];
     String ?_imgUrl ;
-    Authentic _authentic = Authentic();
     ProfileImageUpdating profileImageUpdating=ProfileImageUpdating();
 
   

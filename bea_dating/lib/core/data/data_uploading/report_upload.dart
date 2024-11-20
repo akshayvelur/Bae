@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 class Reporting{
   reportUploading(String reportUid)async{
+    // ignore: unused_local_variable
     FirebaseAuth _auth=FirebaseAuth.instance;
     try{
       DocumentReference documentReference=await FirebaseFirestore.instance.collection('admin').doc("UsGDurBfKPJVxR1kInqh");

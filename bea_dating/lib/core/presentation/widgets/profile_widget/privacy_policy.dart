@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 class PrivacyPolicyPage extends StatelessWidget {
   PrivacyPolicyPage({super.key});
 
-  @override
   AppFonts appFonts = AppFonts();
   Widget build(BuildContext context) {
     return Scaffold(

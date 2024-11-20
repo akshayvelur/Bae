@@ -78,7 +78,7 @@ class LikeListView extends StatelessWidget {
                   return Center(child: Text('No likes found'));
                 }
                 return Container(
-                  height: mediaqueryHight(.82, context),
+                  height: mediaqueryHight(.80, context),
                   child: ListView.separated(
                     itemCount: likedUsers.length,
                     separatorBuilder: (context, index) {

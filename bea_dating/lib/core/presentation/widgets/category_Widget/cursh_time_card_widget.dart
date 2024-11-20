@@ -18,7 +18,7 @@ class CrushTimeCardWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: mediaqueryHight(.22, context),
+      height: mediaqueryHight(.23, context),
       width: mediaqueryWidth(100, context),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),

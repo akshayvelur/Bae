@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 class TermsAndCondtionPage extends StatelessWidget {
    TermsAndCondtionPage({super.key});
 
-  @override
   AppFonts appFonts=AppFonts();
   Widget build(BuildContext context) {
     return Scaffold(backgroundColor: whiteclr,

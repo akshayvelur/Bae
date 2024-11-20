@@ -52,23 +52,24 @@ class _ProfilePageState extends State<ProfilePage> {
         buildWhen: (previous, current) => current is ProfileActionState,
         listener: (context, state) {
           if (state is NavigateToUserDataState) {
-            Navigator.of(context)
-                .push(FadeTransitionPageRoute(child: UserdataUpload(userModel: myuser!,)));
+            Navigator.of(context).push(FadeTransitionPageRoute(
+                child: UserdataUpload(
+              userModel: myuser!,
+            )));
           }
-       
+
           if (state is LoadingSuccessState) {
             //  Navigator.pop(context);
           }
         },
         builder: (context, state) {
           if (state is LoadingState) {
-            myuser=state.user;
+            myuser = state.user;
           }
           if (state is IninitState) {
             myuser = state.user;
-      
-          }  if (state is LoadingSuccessState) {
-    
+          }
+          if (state is LoadingSuccessState) {
             myuser = state.user;
             return Scaffold(
               backgroundColor: whiteclr,
@@ -90,10 +91,15 @@ class _ProfilePageState extends State<ProfilePage> {
                               ),
                             Column(
                               children: [
-                            if(myuser!=null
-                            // ignore: unnecessary_null_comparison
-                            &&myuser!.like!=null&&myuser!.match!=null
-                            )    MatchAndFollowWidget(appFonts: appFonts,user: myuser!,),
+                                if (myuser != null
+                                    // ignore: unnecessary_null_comparison
+                                    &&
+                                    myuser!.like != null &&
+                                    myuser!.match != null)
+                                  MatchAndFollowWidget(
+                                    appFonts: appFonts,
+                                    user: myuser!,
+                                  ),
                                 SizedBox(
                                   height: mediaqueryHight(.02, context),
                                 ),
@@ -117,80 +123,107 @@ class _ProfilePageState extends State<ProfilePage> {
                         SizedBox(
                           height: mediaqueryHight(.01, context),
                         ),
-                     if(myuser!.profile.isNotEmpty) LifeStyleWidget(appFonts: appFonts,myuser: myuser!,),
+                        if (myuser!.profile.isNotEmpty)
+                          LifeStyleWidget(
+                            appFonts: appFonts,
+                            myuser: myuser!,
+                          ),
                         SizedBox(
                           height: mediaqueryHight(.01, context),
                         ),
                         Container(
                           width: mediaqueryWidth(100, context),
-                        //  height: mediaqueryHight(.34, context),
+                          //  height: mediaqueryHight(.34, context),
                           decoration: BoxDecoration(
-                              color: useraboutContainer,image: DecorationImage(image: AssetImage("assets/drows.jpeg"),fit: BoxFit.cover),
+                              color: useraboutContainer,
+                              image: DecorationImage(
+                                  image: AssetImage("assets/drows.jpeg"),
+                                  fit: BoxFit.cover),
                               borderRadius: BorderRadius.circular(20)),
                           child: Padding(
-                            padding: const EdgeInsets.only(left: 20,right: 8,top: 12,bottom: 17),
+                            padding: const EdgeInsets.only(
+                                left: 20, right: 8, top: 12, bottom: 17),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 CommonTextWidget(
                                   text: "About User",
-                                  textfont: appFonts.flexhead(Colors.amber, size: 20),
+                                  textfont:
+                                      appFonts.flexhead(Colors.amber, size: 20),
                                 ),
                                 SizedBox(
                                   height: mediaqueryHight(.02, context),
                                 ),
-                            // if(myuser!=null)UserCoreCollection(
-                            //       headline: "Height",
-                            //       userOut: myuser!.profile['height'].toString(),
-                            //     ),
-                              // ignore: unnecessary_null_comparison
-                              if(myuser!.gender!=null)   UserCoreCollection(
-                                  headline: "Gender?",
-                                  userOut: myuser!.gender,
-                                ),
-                                SizedBox(
-                                  height: mediaqueryHight(.01, context),
-                                ),if(myuser!.profile.containsKey('height'))   UserCoreCollection(
-                                  headline: "Height?",
-                                  userOut: myuser!.profile['height'],
-                                ),  SizedBox(
-                                  height: mediaqueryHight(.01, context),
-                                ),
-                               // ignore: unnecessary_null_comparison
-                               if(myuser!.expectation!=null) UserCoreCollection(
-                                  headline: "Expectation ?",
-                                  userOut: myuser!.expectation,
-                                ),
+                                // if(myuser!=null)UserCoreCollection(
+                                //       headline: "Height",
+                                //       userOut: myuser!.profile['height'].toString(),
+                                //     ),
+                                // ignore: unnecessary_null_comparison
+                                if (myuser!.gender != null)
+                                  UserCoreCollection(
+                                    headline: "Gender?",
+                                    userOut: myuser!.gender,
+                                  ),
                                 SizedBox(
                                   height: mediaqueryHight(.01, context),
                                 ),
-                               // ignore: unnecessary_null_comparison
-                               if(myuser!.interest !=null)   UserCoreCollection(
-                                  headline: "Gender preference?",
-                                  userOut: myuser!.interest,
-                                ), SizedBox(
+                                if (myuser!.profile.containsKey('height'))
+                                  UserCoreCollection(
+                                    headline: "Height?",
+                                    userOut: myuser!.profile['height'],
+                                  ),
+                                SizedBox(
                                   height: mediaqueryHight(.01, context),
                                 ),
-                                 if(myuser!.profile['interest type']!=null)   UserCoreCollection(
-                                  headline: "interest?",
-                                  userOut: myuser!.profile['interest type'].toString(),
-                                ),
-                                  SizedBox(
+                                // ignore: unnecessary_null_comparison
+                                if (myuser!.expectation != null)
+                                  UserCoreCollection(
+                                    headline: "Expectation ?",
+                                    userOut: myuser!.expectation,
+                                  ),
+                                SizedBox(
                                   height: mediaqueryHight(.01, context),
-                                ),  if(myuser!.profile.containsKey('relationship'))   UserCoreCollection(
-                                  headline: "Relationship?",
-                                  userOut: myuser!.profile['relationship'],
-                                ), SizedBox(
-                                  height: mediaqueryHight(.01, context),
-                                ),  if(myuser!.profile.containsKey('interest type'))   UserCoreCollection(
-                                  headline: "Interest type?",
-                                  userOut: myuser!.profile['interest type'],
                                 ),
+                                // ignore: unnecessary_null_comparison
+                                if (myuser!.interest != null)
+                                  UserCoreCollection(
+                                    headline: "Gender preference?",
+                                    userOut: myuser!.interest,
+                                  ),
+                                SizedBox(
+                                  height: mediaqueryHight(.01, context),
+                                ),
+                                if (myuser!.profile['interest type'] != null)
+                                  UserCoreCollection(
+                                    headline: "interest?",
+                                    userOut: myuser!.profile['interest type']
+                                        .toString(),
+                                  ),
+                                SizedBox(
+                                  height: mediaqueryHight(.01, context),
+                                ),
+                                if (myuser!.profile.containsKey('relationship'))
+                                  UserCoreCollection(
+                                    headline: "Relationship?",
+                                    userOut: myuser!.profile['relationship'],
+                                  ),
+                                SizedBox(
+                                  height: mediaqueryHight(.01, context),
+                                ),
+                                if (myuser!.profile
+                                    .containsKey('interest type'))
+                                  UserCoreCollection(
+                                    headline: "Interest type?",
+                                    userOut: myuser!.profile['interest type'],
+                                  ),
                               ],
                             ),
                           ),
                         ),
-                     SizedBox(height:mediaqueryHight(.1, context),) ],
+                        SizedBox(
+                          height: mediaqueryHight(.1, context),
+                        )
+                      ],
                     ),
                   ),
                 ),
@@ -198,79 +231,78 @@ class _ProfilePageState extends State<ProfilePage> {
             );
           }
           return Scaffold(
-      appBar: profileAppbar(context, authentic),
-      backgroundColor: whiteclr,
-      body: Padding(
-        padding: const EdgeInsets.only(left: 15, right: 15, top: 15),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                ShimmingContainer(
-                  height: mediaqueryHight(.2, context),
-                  width: mediaqueryWidth(.28, context),
-                ),
-                Column(
-                  children: [
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(left: 65),
-                          child: ShimmingContainer(
-                            height: mediaqueryHight(.07, context),
-                            width: mediaqueryWidth(.12, context),
+            appBar: profileAppbar(context, authentic),
+            backgroundColor: whiteclr,
+            body: Padding(
+              padding: const EdgeInsets.only(left: 15, right: 15, top: 15),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      ShimmingContainer(
+                        height: mediaqueryHight(.2, context),
+                        width: mediaqueryWidth(.28, context),
+                      ),
+                      Column(
+                        children: [
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(left: 65),
+                                child: ShimmingContainer(
+                                  height: mediaqueryHight(.07, context),
+                                  width: mediaqueryWidth(.12, context),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 50),
+                                child: ShimmingContainer(
+                                  height: mediaqueryHight(.07, context),
+                                  width: mediaqueryWidth(.12, context),
+                                ),
+                              ),
+                            ],
                           ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 50),
-                          child: ShimmingContainer(
-                            height: mediaqueryHight(.07, context),
-                            width: mediaqueryWidth(.12, context),
-                          ),
-                        ),
-                      ],
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 65, top: 20),
-                      child: ShimmingContainer(
-                          width: mediaqueryWidth(.3, context),
-                          height: mediaqueryHight(.045, context)),
-                    )
-                  ],
-                ),
-              ],
+                          Padding(
+                            padding: const EdgeInsets.only(left: 65, top: 20),
+                            child: ShimmingContainer(
+                                width: mediaqueryWidth(.3, context),
+                                height: mediaqueryHight(.045, context)),
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 27),
+                    child: ShimmingContainer(
+                        width: mediaqueryWidth(.38, context),
+                        height: mediaqueryHight(.03, context)),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 18),
+                    child: ShimmingContainer(
+                        width: mediaqueryWidth(.58, context),
+                        height: mediaqueryHight(.02, context)),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 38),
+                    child: ShimmingContainer(
+                        width: mediaqueryWidth(100, context),
+                        height: mediaqueryHight(.14, context)),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 12),
+                    child: ShimmingContainer(
+                        width: mediaqueryWidth(100, context),
+                        height: mediaqueryHight(.27, context)),
+                  )
+                ],
+              ),
             ),
-            Padding(
-              padding: const EdgeInsets.only(top: 27),
-              child: ShimmingContainer(
-                  width: mediaqueryWidth(.38, context),
-                  height: mediaqueryHight(.03, context)),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 18),
-              child: ShimmingContainer(
-                  width: mediaqueryWidth(.58, context),
-                  height: mediaqueryHight(.02, context)),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 38),
-              child: ShimmingContainer(
-                  width: mediaqueryWidth(100, context),
-                  height: mediaqueryHight(.14, context)),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 12),
-              child: ShimmingContainer(
-                  width: mediaqueryWidth(100, context),
-                  height: mediaqueryHight(.27, context)),
-            )
-          ],
-        ),
-      ),
-    );
+          );
         });
   }
-  
 }

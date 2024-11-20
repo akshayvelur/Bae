@@ -5,15 +5,13 @@ import 'package:bea_dating/core/presentation/utilit/mediaquery.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-smokeBottomsheet(context, List<String> items,String presmoke, String headline) {
+smokeBottomsheet(
+    context, List<String> items, String presmoke, String headline) {
   AppFonts appfonts = AppFonts();
   int? selected;
-if(presmoke.isNotEmpty){
-  selected=items.indexOf(presmoke);
-}
-  
-
-
+  if (presmoke.isNotEmpty) {
+    selected = items.indexOf(presmoke);
+  }
 
   showModalBottomSheet(
     context: context,
@@ -22,7 +20,7 @@ if(presmoke.isNotEmpty){
         listener: (context, state) {
           if (state is SmokeSelectedState) {
             selected = state.smokeindex;
-           // print();
+            // print();
           }
           // TODO: implement listener
         },
@@ -52,7 +50,9 @@ if(presmoke.isNotEmpty){
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                  SizedBox(height: mediaqueryHight(.03, context),),
+                      SizedBox(
+                        height: mediaqueryHight(.03, context),
+                      ),
                       Text(
                         headline,
                         style:
@@ -73,14 +73,22 @@ if(presmoke.isNotEmpty){
                                     mainAxisSpacing: 10),
                             itemCount: items.length,
                             itemBuilder: (context, index) {
-                              return InkWell(onTap: (){
-                                context.read<UserUploadBloc>().add(SmokeSelectEvent(smoke: items[index], smokeindext:index));
-                              },
+                              return InkWell(
+                                onTap: () {
+                                  context.read<UserUploadBloc>().add(
+                                      SmokeSelectEvent(
+                                          smoke: items[index],
+                                          smokeindext: index));
+                                },
                                 child: Container(
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(10),
-                                      color:selected==index?exbuttonGreen: useraboutContainer,
-                                      border:selected==index? Border.all():null),
+                                      color: selected == index
+                                          ? exbuttonGreen
+                                          : useraboutContainer,
+                                      border: selected == index
+                                          ? Border.all()
+                                          : null),
                                   child: Center(child: Text(items[index])),
                                 ),
                               );
@@ -89,7 +97,6 @@ if(presmoke.isNotEmpty){
                     ],
                   ),
                 ),
-              
               ],
             ),
           );

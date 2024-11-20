@@ -77,7 +77,7 @@ class MatchListView extends StatelessWidget {
                   return Center(child: Text('No matches found'));
                 }
                 return Container(
-                  height: mediaqueryHight(.82, context),
+                  height: mediaqueryHight(.80, context),
                   child: ListView.separated(
                     itemCount: matchedUsers.length,
                     separatorBuilder: (context, index) {
@@ -89,17 +89,18 @@ class MatchListView extends StatelessWidget {
                       Map<String, dynamic> preuser = matchedUsers[index];
                       String name = preuser['name'];
                       var image = preuser['image'];
-                       String uids = preuser['uid'];
+                      String uids = preuser['uid'];
 
                       return Container(
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
                               color: listTileclr),
-                          child: InkWell(onTap: () {
-                             Navigator.of(context).push(
+                          child: InkWell(
+                            onTap: () {
+                              Navigator.of(context).push(
                                   FadeTransitionPageRoute(
                                       child: ViewAccount(uid: uids)));
-                          },
+                            },
                             child: ListTile(
                               leading: CircleAvatar(
                                 maxRadius: 26,

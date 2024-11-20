@@ -5,6 +5,7 @@ import 'package:bea_dating/core/presentation/screen/profile_page/Profile/profile
 import 'package:bea_dating/core/presentation/screen/chat_page/chat_page.dart';
 import 'package:bea_dating/core/presentation/screen/home_screen/home_screen.dart';
 import 'package:bea_dating/core/presentation/screen/notification_page/notification_page.dart';
+import 'package:bea_dating/core/presentation/utilit/color.dart';
 import 'package:bea_dating/core/presentation/utilit/fonts.dart';
 import 'package:bea_dating/core/presentation/utilit/mediaquery.dart';
 import 'package:flutter/material.dart';
@@ -59,7 +60,7 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
                   child: Container(
                     height: mediaqueryHight(.08, context),
                     decoration: BoxDecoration(
-                      color: Color.fromARGB(204, 38, 37, 37),
+                      color: blackTransparent,
                       borderRadius: BorderRadius.circular(15),
                     ),
                     child: Row(
