@@ -112,3 +112,10 @@ class DistanceFilterState extends HomeblocState{
  class UnfollowFromProfileState extends  HomeActionState{
 UnfollowFromProfileState({required super.gender, required super.index, required super.age1, required super.age2, required super.distance});
   }
+  class FilterationState extends HomeblocState{
+   final List<Map<String, dynamic>> filteredList;
+   final int boost;
+  FilterationState({required super.gender, required super.index, required super.age1, required super.age2, required super.distance,required this.filteredList,required this.boost});
+
+ 
+}

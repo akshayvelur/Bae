@@ -6,15 +6,18 @@ import 'package:bea_dating/core/presentation/utilit/mediaquery.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-relationBottomSheet(context) {
+relationBottomSheet(context,String relationship ) {
   AppFonts appfonts = AppFonts();
   int? selected;
-  List<String> items = [
+ List<String> items = [
     "Short-term",
     "Long-term",
     "Situationship",
     "Settle down"
   ];
+    if(relationship.isNotEmpty){
+    selected=items.indexOf(relationship);
+  }
   showModalBottomSheet(
     context: context,
     builder: (context) {
@@ -27,7 +30,7 @@ relationBottomSheet(context) {
         },
         builder: (context, state) {
           return Container(
-            height: mediaqueryHight(.35, context),
+            height: mediaqueryHight(.38, context),
             width: mediaqueryWidth(100, context),
             decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
             child: Column(

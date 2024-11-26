@@ -2,7 +2,7 @@ part of 'chat_bloc.dart';
 
 @immutable
 abstract class ChatState {
-  void add() {}
+ 
 }
 
 class ChatInitial extends ChatState {}
@@ -24,4 +24,9 @@ class ImagePickedState extends ChatState{
 }
 class CameraPickedState extends ChatState{
   
+}
+class ImageloadingState extends ChatState{
+final String sentImage;
+
+  ImageloadingState({required this.sentImage});
 }

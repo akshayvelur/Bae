@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'package:bea_dating/core/data/service/online_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -134,7 +135,7 @@ class Authentic {
       await GoogleSignIn().signOut();
       await FirebaseAuth.instance.signOut();
       clearSharedpreference();
-
+      liveStatus("offline");
       print("sign out");
       return true;
     } catch (e) {

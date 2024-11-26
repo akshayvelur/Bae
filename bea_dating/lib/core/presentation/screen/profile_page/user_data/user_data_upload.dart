@@ -188,7 +188,7 @@ class _UserdataUploadState extends State<UserdataUpload> {
                           ),
                           InkWell(
                             onTap: () {
-                              relationBottomSheet(context);
+                              relationBottomSheet(context,relationship!);
                             },
                             child: Container(
                               height: mediaqueryHight(.06, context),

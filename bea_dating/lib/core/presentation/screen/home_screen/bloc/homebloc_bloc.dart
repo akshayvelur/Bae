@@ -12,6 +12,7 @@ import 'package:bea_dating/core/domin/usecase/authentication.dart';
 import 'package:bea_dating/core/data/data_source_getting/like_user.dart';
 import 'package:bea_dating/core/domin/usecase/viewed_account.dart';
 import 'package:bea_dating/core/presentation/screen/profile_page/Profile/bloc/profile_bloc.dart';
+import 'package:bea_dating/core/presentation/utilit/home_varriables.dart';
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -47,6 +48,7 @@ class HomeblocBloc extends Bloc<HomeblocEvent, HomeblocState> {
     on<CurrentUserLikeEvent>(currentUserLikeEvent);
     on<LikeFromProfileEvent>(likeFromProfileEvent);
     on<UnfollowFromProfileEvent>(unfollowFromProfileEvent);
+    on<FilterationEvent>(filterationEvent);
   }
 
   FutureOr<void> bottoNavigatorEindexEvent(
@@ -356,10 +358,20 @@ class HomeblocBloc extends Bloc<HomeblocEvent, HomeblocState> {
   }
 
   FutureOr<void> likeFromProfileEvent(
-      LikeFromProfileEvent event, Emitter<HomeblocState> emit) {
-    liketoUser(event.like);
-    Boost boost = Boost();
-    boost.boostReducing(1);
+      LikeFromProfileEvent event, Emitter<HomeblocState> emit) async{
+        try{
+        FirebaseAuth _auth= FirebaseAuth.instance;
+        DocumentReference documentReference=await FirebaseFirestore.instance.collection("users").doc(_auth.currentUser!.uid);
+        DocumentSnapshot snapshot=await documentReference.get();
+        int boostCount=int.parse(snapshot.get("boost"));
+        if(boostCount>0){
+        Boost boost=Boost();
+       boost.boostReducing(1);
+       liketoUser(event.like);
+        }}catch(e){
+          log("likefromprofile${e}");
+        }
+        
     add(ProfileViewInitEvent(uid: event.like));
     //add(CurrentUserLikeEvent());
     emit(LikeFromProfileState(
@@ -381,5 +393,87 @@ class HomeblocBloc extends Bloc<HomeblocEvent, HomeblocState> {
         age1: state.age1,
         age2: state.age2,
         distance: state.distance));
+  }
+
+  FutureOr<void> filterationEvent(FilterationEvent event, Emitter<HomeblocState> emit) {
+    FirebaseAuth _auth=FirebaseAuth.instance;
+    HomeVaribale homeVaribale=HomeVaribale();
+    String uid=_auth.currentUser!.uid;
+                        var image;
+                        var profile;
+                        var dob = "";
+                        var name;
+                        Map user = {};
+                        int numberOfUser = 0;
+      
+                        var mydata = event.dataList.firstWhere(
+                          (element) => element["uid"] == uid,
+                        );
+                        List<dynamic> likeList = mydata['like'];
+                        List<dynamic> ageRange = mydata['ageRange'];
+                        final String showMe = mydata["showme"];
+                        List<String> blockList =
+                            List<String>.from(mydata['blockList']);
+                        homeVaribale.boost = int.parse(mydata["boost"]);
+                   
+                     //   if (homeVaribale.uid != null) {
+                          // removing Current user Account
+                          event.dataList.removeWhere(
+                            (user) => user['uid'] == homeVaribale.uid,
+                          );
+                       
+                          // Removing blocked users
+                           event.dataList.removeWhere(
+                            (element) => blockList.contains(element['uid']),
+                          );
+                     
+                        //  gender filter
+                        List<Map<String, dynamic>> genderfilter = [];
+                        if (showMe.contains('All')) {
+                          genderfilter = [... event.dataList];
+                        } else {
+                          genderfilter =  event.dataList.where(
+                            (element) {
+                              return element['gender']
+                                      .toString()
+                                      .toLowerCase() ==
+                                  showMe.toLowerCase();
+                            },
+                          ).toList();
+                        }
+                              
+                        //distance filetr
+                        List<Map<String, dynamic>> distanceFinfilter =
+                            genderfilter
+                                .where(
+                                  (element) => event.distance
+                                      .contains(element['uid']),
+                                )
+                                .toList();
+                                 
+                        //liked filter
+                        List<Map<String, dynamic>> likedFilterd =
+                            distanceFinfilter
+                                .where(
+                                  (element) =>
+                                      !likeList.contains(element['uid']),
+                                )
+                                .toList();
+                        //age filter
+                        List<Map<String, dynamic>> filteredList =
+                            likedFilterd.where(
+                          (element) {
+                            int age = homeVaribale.currentyear -
+                                int.parse(element['dob'].split("/").last);
+                            return age >= int.parse(ageRange[0]) &&
+                                age <= int.parse(ageRange[1]);
+                          },
+                        ).toList();
+                    
+                        emit(FilterationState(  gender: state.gender,
+                           index: state.index,
+                             age1: state.age1,
+                              age2: state.age2,
+                             distance: state.distance,filteredList: filteredList,boost: int.parse( homeVaribale.boost.toString())));
   }
 }

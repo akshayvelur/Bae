@@ -49,7 +49,7 @@ class _ViewMatchAndFollowWidgetState extends State<ViewMatchAndFollowWidget> {
       builder: (context, state) {
         if(state is CurrentUserLikeState){
             LikedUsers=state.like;
-          
+          context.read<ProfileBloc>().add(InitStateEvent());
         }
         return Column(
           children: [

@@ -70,8 +70,12 @@ class MatchListView extends StatelessWidget {
                       (user) => user.data() as Map<String, dynamic>,
                     )
                     .toList();
+                       Map<String, dynamic> userProfile = userdata.firstWhere(
+                      (element) => element['uid'] == user.uid,
+                    );
+
                 List<Map<String, dynamic>> matchedUsers = userdata
-                    .where((userData) => user.match.contains(userData['uid']))
+                    .where((userData) =>  userProfile['match'].contains(userData['uid']))
                     .toList();
                 if (matchedUsers.isEmpty) {
                   return Center(child: Text('No matches found'));

@@ -81,6 +81,11 @@ class NumberOfUserEvent extends HomeblocEvent{
 
   UnfollowFromProfileEvent({required this.unlik});
   }
+class FilterationEvent extends HomeblocEvent{
+   final List<Map<String, dynamic>> dataList ;
+   final List<String>distance;
 
+  FilterationEvent({required this.dataList,required this.distance});
+}
 
 
